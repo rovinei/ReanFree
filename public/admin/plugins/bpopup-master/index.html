@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.bpopup.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+        <meta charset="utf-8">
+        <script type="text/javascript">
+         ;(function($){
+             $(function() {
+                $(document).ready(function(){
+            
+                      $('#popup').bPopup(
+                        {content:'iframe'},
+                        function(){
+                            $('#skip').click(function(){$('.b-close').click();})
+                  var count=10;
+                   $('.timer').text(count);
+                   var counter= setInterval( timer, 500);
+                    $('#pause').bind( "click", function(ev){
+                        ev.preventDefault();
+                        if($(this).attr('data-click') == 0) {
+                            $(this).attr('data-click', 1)
+                           clearInterval(counter);
+                        $(this).css('background-color', 'red');
+                         } else {
+                         $(this).attr('data-click', 0);
+                            counter= setInterval( timer, 500);
+                            $(this).css('background-color', '');
+                        }
+                    });
+                  function timer(){
+                    count=count-1;
+                  
+                    if(count<=0){
+                        clearInterval(counter);
+                        return;
+                    }
+                    if(count===1){
+                        $('.b-close').click();
+                    }
+                    $('.timer').text(count);
+                  }
+                })
+             });
+            });
+         })(jQuery);
+        </script>
+        <style type="text/css">
+         #popup{
+            display: none;
+         }
+         .counter{
+            position: absolute;
+            right: 0px;
+            bottom:4px;
+         }
+         .counter span{
+            padding: 2px;
+
+         }
+         .counter .timer{
+            float: left;
+            position: relative;
+            top:25px;
+            right: 3px;
+            width: 20px;
+            background-color: #DDD;
+            border-radius: 12px;
+         }
+        </style>
+    </head>
+    <body>
+
+    <span class="button small pop1" data-bpopup={"modalClose":false,"opacity":0.6,"positionStyle":"fixed"}'>Pop it up</span>
+      <div id="popup">
+        <span class="button b-close"><span>X</span></span>
+         <h1>Helllo wold </h1>
+         <div class="counter"><span class="button small" data-click="0" id="pause">Pause</span><span class="button small" id="skip">Skip</span><span class="timer"></span></div>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,24 @@
+@import 'plugin/bourbon/_bourbon.scss';
+/*
+ * PAGE : Main visaul
+ * SECTION : Header navigation
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Dosis:100,300,400,500,600,700');
+html{
+	background: none;
+	background-image: none;
+}
+body{
+	position: relative;
+	background: #fff;
+	font-family: "Dosis", sans-serif !important;
+	font-size: 14px;
+	font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	letter-spacing: 0;
+	/*padding-top: 100px;*/
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
