@@ -71,8 +71,8 @@
                                     {{ $post->createdBy->username }}
                                 @endif
                                 </td>
-                                <td>{{ $post->created_at }}</td>
-                                <td>{{ $post->updated_at }}</td>
+                                <td>{{ $post->created_at->diffForHumans() }}</td>
+                                <td>{{ $post->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <button class="action-btn"><i class="fa fa-ellipsis-v"></i></button>
 

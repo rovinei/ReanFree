@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>180 Media News | Admin Login Page</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 <body>
 

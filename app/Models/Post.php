@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Conner\Tagging\Taggable;
+use URL;
 
 class Post extends Model
 {
@@ -110,6 +111,15 @@ class Post extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
+
+    public function setSoundUrlAttribute($value){
+        $this->attributes['sound_url'] = str_replace(URL('/'),'',$value);
+    }
+
+    public function setFeaturedImageAttribute($value){
+        $this->attributes['featured_image'] = str_replace(url('/'), '', $value);
+        $this->attributes['featured_image'] = str_replace('uploads', 'thumbs', $value);
+    }
 
     /**
      * @override boot function in order to fire up model events

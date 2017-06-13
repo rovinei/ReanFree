@@ -9,7 +9,7 @@
     </div>
 
     <div class="uk-modal-body">
-      <iframe width="100%" height="500" src="/admin/filemanager/dialog.php?type=1&field_id=txtFeaturedImage'&fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
+      <iframe id="fileManagerIframe" width="100%" height="500" src="/admin/filemanager/dialog.php?type=1&field_id=txtFeaturedImage'&fldr=" frameborder="0" style="overflow: scroll; overflow-x: hidden; overflow-y: scroll; "></iframe>
     </div>
 
   </div>

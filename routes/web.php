@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', 'PageController@homePage')->name('visitor.homepage');
-
 Auth::routes();
 
 // Admin Authentication Route Group
@@ -110,6 +108,31 @@ Route::group([
     // Store images
     Route::post('images', 'ImageController@store');
 
+});
+
+Route::group([
+    'middleware' => 'web'
+    ], function(){
+
+    Route::get('/', 'PageController@homePage')->name('visitor.index.page');
+
+    // Video route
+    Route::get('/page/videos', 'PageController@videoPage')->name('visitor.video.page');
+    Route::get('/page/video/category/{category_id}', 'PageController@videoCategory')->name('visitor.video.category');
+    Route::get('/page/video/watch/{video_id}', 'PageController@videoDetail')->name('visitor.video.detail');
+
+    // Article route
+    Route::get('/page/articles', 'PageController@articlePage')->name('visitor.article.page');
+    Route::get('/page/article/category/{category_id}', 'PageController@articleCategory')->name('visitor.article.category');
+    Route::get('/page/article/read/{article_id}', 'PageController@articleDetail')->name('visitor.article.detail');
+
+    // Audio route
+    Route::get('/page/audios', 'PageController@audioPage')->name('visitor.audio.page');
+    Route::get('/page/audio/category/{audio_id}', 'PageController@audioCategory')->name('visitor.audio.category');
+    Route::get('/page/audio/listen/{audio_id}', 'PageController@audioDetail')->name('visitor.audio.detail');
+
+    // Search
+    Route::get('/search', 'PageController@search')->name('visitor.search');
 });
 
 // Admin AJAX API Route

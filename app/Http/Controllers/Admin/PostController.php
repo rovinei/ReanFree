@@ -52,23 +52,28 @@ class PostController extends Controller
         // Query all existing tags with any post
         $tags = Post::existingTags()->pluck('name');
 
-        // Query all category which belong to articale type #1
-        try{
-            $articalType = CategoryType::findOrFail(1);
-        }catch(ModelNotFoundException $e){
-            Session::flash('error_message', 'Cannot find media type reading');
-            return redirect()->back();
-        }
-
-        $categories = $articalType->categories;
-
         // Query all series related to articale type #1
         $series = PlaylistSerie::where('mediatype_id','=', 1)->get();
-        return view('admin.post.create_post')->with([
-                'tags' => $tags,
-                'categories' => $categories,
-                'series' => $series
-            ]);
+
+        // Query all category which belong to articale type #1
+        try{
+            $articalType = CategoryType::find(1);
+            $categories = $articalType->categories;
+            $categories = $articalType->categories;
+            return view('admin.post.create_post')->with([
+                    'tags' => $tags,
+                    'categories' => $categories,
+                    'series' => $series
+                ]);
+
+        }catch(ModelNotFoundException $e){
+            Session::flash('error_message', 'Seems there is no category record yet! Create it now.');
+            return view('admin.post.create_post')->with([
+                    'tags' => $tags,
+                    'series' => $series
+                ]);
+        }
+
     }
 
     /**
@@ -121,11 +126,6 @@ class PostController extends Controller
             // Associate post with admin
             $post->createdBy()->associate(Auth::user());
 
-            if($request->has('featured_image')){
-                $post->featured_image = $request->input('featured_image');
-                $post->featured_image = str_replace('uploads','thumbs',$post->featured_image);
-            }
-
             // Save post once before attach Series and Tags
             $post->save();
 
@@ -142,7 +142,8 @@ class PostController extends Controller
 
             // Create session successful message and redirect back
             Session::flash('success_message', 'Post successfully added!');
-            return redirect(route('admin.post.edit', $post->id));
+            return redirect()->back();
+            // return redirect(route('admin.post.edit', $post->id));
         }catch(Exception $e){
             Session::flash('error_message', 'Ops! Something went wrong');
             return redirect()->back();
@@ -259,12 +260,6 @@ class PostController extends Controller
 
             if(!$category->count() <= 0){
                 $post->category()->associate($category);
-
-                // Check for thumbnail image
-                if($request->has('featured_image')){
-                    $post->featured_image = $request->input('featured_image');
-                    $post->featured_image = str_replace('uploads','thumbs',$post->featured_image);
-                }
 
                 if($request->has('series')){
                     $post->attachSeries($request->input('series'));

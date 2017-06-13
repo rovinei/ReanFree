@@ -22,7 +22,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>Users</p>
-                                            @if($usersCount & $usersCount > 0)
+                                            @if($usersCount > 0)
                                             {{ $usersCount }} total
                                             @else
                                             0 total
@@ -53,7 +53,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>Posts</p>
-                                            @if($articlesCount & $articlesCount > 0)
+                                            @if($articlesCount > 0)
                                             {{ $articlesCount }} record
                                             @else
                                             0 record
@@ -84,7 +84,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>Playlist</p>
-                                            @if($seriesCount & $seriesCount > 0)
+                                            @if($seriesCount > 0)
                                             {{ $seriesCount }} series
                                             @else
                                             0 series
@@ -110,15 +110,15 @@
                             <div class="row">
                                 <div class="uk-grid-collapse" uk-grid>
                                     <div class="uk-width-1-3">
-                                        <i class="fa fa-gg icon-big" style="color:#56445D;"></i>
+                                        <i class="fa fa-user icon-big" style="color:#56445D;"></i>
                                     </div>
                                     <div class="uk-width-2-3">
                                         <div class="number">
-                                            <p>Media Types</p>
-                                            @if($mediaTypesCount & $mediaTypesCount > 0)
-                                            {{ $mediaTypesCount }} types
+                                            <p>Staff</p>
+                                            @if($staffsCount > 0)
+                                            {{ $staffsCount }} staffs
                                             @else
-                                            0 types
+                                            0 staff
                                             @endif
                                         </div>
                                     </div>
@@ -177,7 +177,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>Tags</p>
-                                            @if($tagsCount & $tagsCount > 0)
+                                            @if($tagsCount > 0)
                                             {{ $tagsCount }} tags
                                             @else
                                             0 tags
@@ -208,7 +208,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>Video</p>
-                                            @if($videosCount & $videosCount > 0)
+                                            @if($videosCount > 0)
                                             {{ $videosCount }} episodes
                                             @else
                                             0 episodes
@@ -239,7 +239,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>MP3 SOUND</p>
-                                            @if($soundsCount & $soundsCount)
+                                            @if($soundsCount)
                                             {{ $soundsCount }} sounds
                                             @else
                                             0 sounds
@@ -270,7 +270,7 @@
                                     <div class="uk-width-2-3">
                                         <div class="number">
                                             <p>File Manager</p>
-                                            @if($filesCount & $filesCount > 0)
+                                            @if($filesCount > 0)
                                             {{ $filesCount }} files
                                             @else
                                             0 files

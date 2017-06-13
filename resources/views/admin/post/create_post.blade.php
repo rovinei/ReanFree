@@ -210,7 +210,7 @@
                         <!-- Featured image field -->
                         <div class="custom-form-group">
                             <div class="file-input-wrapper">
-                                <button class="custom-upload-btn image" uk-toggle="target : #fileManagerModal"><i class="fa fa-upload"></i> Upload</button>
+                                <button class="custom-upload-btn image uploadFile" data-type="image" id="uploadImage"><i class="fa fa-upload"></i> Upload</button>
                                 <input type="hidden" name="featured_image" id="txtFeaturedImage" />
                             </div>
                             <div class="imagePreview">
@@ -223,15 +223,11 @@
                         <div class="custom-form-group" id="soundUpload">
                             <div class="file-input-wrapper">
                                 <!-- <label for="uploadSoundFile">Attach Sound File</label> -->
-                                <input type="file" name="soundFile" class="custom-upload-btn sound" id="uploadSoundFile" />
+                                <button class="custom-upload-btn sound uploadFile" data-type="sound" id="uploadSound"><i class="fa fa-sound"></i> Attach Sound File</button>
                                 <input type="hidden" class="custom-input-text" name="sound_url" id="sound_url">
 
-                                <div id="progressbar-wrap">
-                                    <div class="progress-bar"></div>
-                                    <div class="status">0%</div>
-                                </div>
                                 <div id="soundPreview">
-
+                                    <audio preload id="audioEle" controls="controls">Your browser does not support HTML5 Audio!</audio>
                                 </div>
                             </div>
                         </div>
@@ -264,8 +260,10 @@
 
 @push('script_dependencies')
     <script type="text/javascript" src="{{ asset('admin/plugins/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/plugins/tinymce/tinymce-config.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/done-typing.js') }}"></script>
-    <script src="{{ asset('admin/js/crud.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/js/crud.js') }}"></script>
 @endpush
 
 @section('script')
@@ -273,7 +271,7 @@
     <script>
 
         var tagOptions = [
-            @if($tags)
+            @if(!empty($tags))
                 @foreach ($tags as $tag)
                 {tag: "{{$tag}}" },
                 @endforeach
@@ -281,7 +279,7 @@
         ];
 
         var serieOptions = [
-            @if($series)
+            @if(!empty($series))
                 @foreach ($series as $serie)
                 { id: "{{ $serie->id }}", title: "{{ $serie->title }}" },
                 @endforeach
@@ -289,272 +287,47 @@
         ];
 
         var categoryOptions = [
-            @if($categories)
+            @if(!empty($categories))
                 @foreach ($categories as $category)
                 { id: "{{ $category->id }}", name: "{{ $category->name }}" },
                 @endforeach
             @endif
         ];
 
-        var tagSelect = $('#tags').selectize({
-            plugins: ['restore_on_backspace', 'remove_button'],
-            delimiter: ',',
-            persist: false,
-            valueField: 'tag',
-            labelField: 'tag',
-            searchField: 'tag',
-            options: tagOptions,
-            placeholder: 'Attach tags ...',
-            create: function(input) {
-                return {
-                    tag: input
-                }
-            }
-        });
-
-        var serieSelect = $('#seriesField').selectize({
-            plugins: ['restore_on_backspace', 'remove_button'],
-            delimiter: ',',
-            persist: false,
-            valueField: 'id',
-            labelField: 'title',
-            searchField: 'title',
-            options: serieOptions,
-            placeholder: 'Attach series ...',
-            render: {
-                option: function(item, escape) {
-                    return '<div class="option">' + escape(item.title) + '</div>';
-                }
-            },
-            create: function(input) {
-                $thisSelect = serieSelect[0].selectize;
-                $.ajax({
-                    url: "{{ route('admin.ajax.add_serie') }}",
-                    type: "POST",
-                    data: {
-                        title: input,
-                        type: $('#mediaField').val() || 'null'
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    error: function(err){
-                        swal({
-                            title: "Opp! Something went wrong",
-                            text: err,
-                            type: "error",
-                            timer: 5000,
-                            allowOutsideClick: true
-                        });
-                    },
-                    success: function(res){
-                        if(res.status == 200){
-
-                            serieOptions.push({
-                                id: res.data.id,
-                                title: res.data.title
-                            });
-
-                            $thisSelect.load(function(callback){
-                                callback(serieOptions);
-                            });
-
-                            swal({
-                                title: "succeed",
-                                text: res.success.message,
-                                type: "success",
-                                timer: 2500,
-                                allowOutsideClick: true
-                            });
-
-                        }else{
-                            swal({
-                                title: "Opp! Something went wrong",
-                                text: res.error.message,
-                                type: "error",
-                                timer: 5000,
-                                allowOutsideClick: true
-                            });
-                        }
-                    }
-                });
-            }
-        });
-
-        var mediaSelect = $('#mediaField').selectize({
-            delimiter: ',',
-            persist: false,
-            valueField: 'mediaId',
-            labelField: 'mediaName',
-            searchField: 'mediaName',
-            options: [
-                {mediaId: 1, mediaName: 'Reading'},
-                {mediaId: 2, mediaName: 'Listening'},
-                {mediaId: 3, mediaName: 'Watching'}
-            ],
-            items: [
-                1
-            ],
-            placeholder: 'Type',
-            onChange: function(value){
-                categoryOptions = [];
-                serieOptions = [];
-                if(value == 2){
-                    $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
-                    $('#soundUpload').toggleClass('visible');
-
-                }else if(value == 3){
-                    $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
-                    $('#videoUpload').toggleClass('visible');
-                }else if(value == 1){
-                    $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
-                    $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
-                }else{
-                    return;
-                }
-
-                $('.sidebar-form-advance')
-                .addClass('avoid-click');
-                $.ajax({
-                    url: '{{ route('admin.ajax.typeCategories') }}',
-                    data: {typeid: value, },
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    error: function(err) {
-                        swal({
-                            title: "Opp! Something went wrong",
-                            text: err,
-                            type: "error",
-                            timer: 5000,
-                            allowOutsideClick: true
-                        });
-                        $('.sidebar-form-advance').removeClass('avoid-click');
-                    },
-                    success: function(res) {
-                        var category_select = categorySelect[0].selectize;
-                        var series_select = serieSelect[0].selectize;
-                        $(res['categories']).each(function(){
-                            categoryOptions.push({id: this.id, name: this.name});
-                        });
-
-                        $(res['series']).each(function(){
-                            serieOptions.push({id: this.id, title: this.title});
-                        });
-
-                        category_select.clear();
-                        category_select.clearOptions();
-                        category_select.renderCache['option'] = {};
-                        category_select.renderCache['item'] = {};
-                        category_select.load(function(callback){
-                            callback(categoryOptions);
-                        });
-
-                        series_select.clear();
-                        series_select.clearOptions();
-                        series_select.renderCache['option'] = {};
-                        series_select.renderCache['item'] = {};
-                        series_select.load(function(callback){
-                            callback(serieOptions);
-                        });
-
-                        $('.sidebar-form-advance').removeClass('avoid-click');
-                        $(category_select).focus();
-                    }
-                });
-            },
-            create: false
-        });
-
-        var categorySelect = $('#categoryField').selectize({
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            create: false,
-            options: categoryOptions,
-            placeholder: 'Choose category',
-        });
-
-        // Tinymce Editor Configuration
-        tinymce.init({
-            selector: "textarea",theme: "modern", width: "99.5%",height: 300,
-            external_filemanager_path:"/admin/filemanager/",
-            filemanager_title:"Responsive Filemanager" ,
-            external_plugins: { "filemanager" : "/admin/filemanager/plugin.min.js"},
-            plugins: [
-                "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons template textcolor paste textcolor colorpicker jbimages"
-            ],
-
-            toolbar1: "newdocument | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
-            toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
-            toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
-            file_browser_callback : function(field_name, url, type, win) {
-                var w = window,
-                d = document,
-                e = d.documentElement,
-                g = d.getElementsByTagName('body')[0],
-                x = w.innerWidth || e.clientWidth || g.clientWidth,
-                y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-
-                var cmsURL = '{{ url('') }}/admin/filemanager/show?&field_name='+field_name+'&lang='+tinymce.settings.language;
-
-                if(type == 'image') {
-                    cmsURL = cmsURL + "&type=images";
-                }
-
-                tinyMCE.activeEditor.windowManager.open({
-                    file : cmsURL,
-                    title : 'Filemanager',
-                    width : x * 0.8,
-                    height : y * 0.8,
-                    resizable : "yes",
-                    close_previous : "no"
-                });
-
-            },
-            menubar: false,
-            toolbar_items_size: 'small',
-
-            // Image Path Convert URL
-            relative_urls: false,
-            remove_script_host: false,
-
-            document_base_url: '{{ url('') }}',
-            font_formats: "Hanuman='Hanuman', serif;"+
-                "Arial=arial,helvetica,sans-serif;"+
-                "Arial Black=arial black,avant garde;"+
-                "Book Antiqua=book antiqua,palatino;"+
-                "Comic Sans MS=comic sans ms,sans-serif;"+
-                "Courier New=courier new,courier;"+
-                "Georgia=georgia,palatino;"+
-                "Helvetica=helvetica;"+
-                "Impact=impact,chicago;"+
-                "Symbol=symbol;"+
-                "Tahoma=tahoma,arial,helvetica,sans-serif;"+
-                "Terminal=terminal,monaco;"+
-                "Times New Roman=times new roman,times;"+
-                "Trebuchet MS=trebuchet ms,geneva;"+
-                "Verdana=verdana,geneva;"+
-                "Webdings=webdings;"+
-                "Wingdings=wingdings,zapf dingbats"
-        });
-
-        // Custom file callback of Responsive File Manager Library
         function responsive_filemanager_callback(field_id){
-            var imageUrl = $('#'+field_id).val();
-            var uploadImageModal = UIkit.modal("#fileManagerModal");
+            var uploadImageModal = UIkit.modal("#fileManagerModal")
+                imageUrl="";
+            switch(field_id){
+                case 'txtFeaturedImage':
+                    imageUrl = $('#'+field_id).val();
+                    $('#imagePreviewDiv').css({
+                        'background' : 'url("'+imageUrl+'") center center / cover no-repeat',
+                        'position' : 'relative',
+                        'min-height' : '130px'
+                    });
+                    break;
+                case 'sound_url':
+                    var playing = false,
+                        audioEle = $('#audioEle').bind('play', function () {
+                                    playing = true;
+                                }).bind('pause', function () {
+                                    playing = false;
+                                }).bind('ended', function () {
+                                    audio.pause();
+                                }).get(0);
+                    var supportsAudio = !!document.createElement('audio').canPlayType;
+                    if (supportsAudio){
+                        $(audioEle).attr('src', $('#'+field_id).val());
+                    }
+                    break;
+
+                default:
+                    return;
+
+            }
+
             uploadImageModal.toggle();
-            // $('#imagePreviewDiv').empty().append(
-            //     '<img src="'+imageUrl+'" class="img-responsive"/>'
-            // );
-            $('#imagePreviewDiv').css({
-                'background' : 'url("'+imageUrl+'") center center / cover no-repeat',
-                'position' : 'relative',
-                'min-height' : '130px'
-            });
+
         }
 
         $(document).on('click','#removeImage',function(){
@@ -569,33 +342,197 @@
                 $('#videoPreview').empty().append($iframe);
             }, 2000);
 
-            $("#uploadSoundFile").on("change", function(e){
-                var fileObj = $(this)[0].files[0];
-                var formData = new FormData();
-                formData.append('sound_file', fileObj, fileObj.name);
-                formData.append('path', 'musics/');
-                var route = '{{ route('admin.file.store', 'public') }}';
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                var upload = new BIGK.crud.upload(route, formData, csrfToken, function(res){
-                    console.log(res);
-                    if(res.status == 200){
-                        var audio = $('<audio></audio>');
-                        audio.attr('src', '/admin/sound/'+res.data.id+'/preview');
-                        $('#sound_url').val(res.data.location_url);
-                        $('#soundPreview').empty().append(audio);
-                    }else{
-                        swal({
-                            title: "Oop! Something went wrong",
-                            text: res.error.message,
-                            type: "error",
-                            allowOutsideClick: true,
-                        });
+            var tagSelect = $('#tags').selectize({
+                plugins: ['restore_on_backspace', 'remove_button'],
+                delimiter: ',',
+                persist: false,
+                valueField: 'tag',
+                labelField: 'tag',
+                searchField: 'tag',
+                options: tagOptions,
+                placeholder: 'Attach tags ...',
+                create: function(input) {
+                    return {
+                        tag: input
                     }
-                });
-                upload.startUpload();
+                }
             });
 
+            var serieSelect = $('#seriesField').selectize({
+                plugins: ['restore_on_backspace', 'remove_button'],
+                delimiter: ',',
+                persist: false,
+                valueField: 'id',
+                labelField: 'title',
+                searchField: 'title',
+                options: serieOptions,
+                placeholder: 'Attach series ...',
+                render: {
+                    option: function(item, escape) {
+                        return '<div class="option">' + escape(item.title) + '</div>';
+                    }
+                },
+                create: function(input) {
+                    $thisSelect = serieSelect[0].selectize;
+                    $.ajax({
+                        url: "{{ route('admin.ajax.add_serie') }}",
+                        type: "POST",
+                        data: {
+                            title: input,
+                            type: $('#mediaField').val() || 'null'
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        error: function(err){
+                            swal({
+                                title: "Opp! Something went wrong",
+                                text: err,
+                                type: "error",
+                                timer: 5000,
+                                allowOutsideClick: true
+                            });
+                        },
+                        success: function(res){
+                            if(res.status == 200){
 
+                                serieOptions.push({
+                                    id: res.data.id,
+                                    title: res.data.title
+                                });
+
+                                $thisSelect.load(function(callback){
+                                    callback(serieOptions);
+                                });
+
+                                swal({
+                                    title: "succeed",
+                                    text: res.success.message,
+                                    type: "success",
+                                    timer: 2500,
+                                    allowOutsideClick: true
+                                });
+
+                            }else{
+                                swal({
+                                    title: "Opp! Something went wrong",
+                                    text: res.error.message,
+                                    type: "error",
+                                    timer: 5000,
+                                    allowOutsideClick: true
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+            var mediaSelect = $('#mediaField').selectize({
+                delimiter: ',',
+                persist: false,
+                valueField: 'mediaId',
+                labelField: 'mediaName',
+                searchField: 'mediaName',
+                options: [
+                    {mediaId: 1, mediaName: 'Reading'},
+                    {mediaId: 2, mediaName: 'Listening'},
+                    {mediaId: 3, mediaName: 'Watching'}
+                ],
+                items: [
+                    1
+                ],
+                placeholder: 'Type',
+                onChange: function(value){
+                    var category_select = categorySelect[0].selectize;
+                    var series_select = serieSelect[0].selectize;
+
+                    category_select.clear();
+                    category_select.clearOptions();
+                    category_select.renderCache['option'] = {};
+                    category_select.renderCache['item'] = {};
+
+                    series_select.clear();
+                    series_select.clearOptions();
+                    series_select.renderCache['option'] = {};
+                    series_select.renderCache['item'] = {};
+
+                    categoryOptions = [];
+                    serieOptions = [];
+                    if(value == 2){
+                        $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
+                        $('#soundUpload').toggleClass('visible');
+
+                    }else if(value == 3){
+                        $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
+                        $('#videoUpload').toggleClass('visible');
+                    }else if(value == 1){
+                        $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
+                        $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
+                    }else{
+                        return;
+                    }
+
+                    $('.sidebar-form-advance')
+                    .addClass('avoid-click');
+                    $.ajax({
+                        url: '{{ route('admin.ajax.typeCategories') }}',
+                        data: {typeid: value, },
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        error: function(err) {
+                            swal({
+                                title: "Opp! Something went wrong",
+                                text: err,
+                                type: "error",
+                                timer: 5000,
+                                allowOutsideClick: true
+                            });
+                            $('.sidebar-form-advance').removeClass('avoid-click');
+                        },
+                        success: function(res) {
+
+                            $(res['categories']).each(function(){
+                                categoryOptions.push({id: this.id, name: this.name});
+                            });
+
+                            $(res['series']).each(function(){
+                                serieOptions.push({id: this.id, title: this.title});
+                            });
+
+                            category_select.clear();
+                            category_select.clearOptions();
+                            category_select.renderCache['option'] = {};
+                            category_select.renderCache['item'] = {};
+                            category_select.load(function(callback){
+                                callback(categoryOptions);
+                            });
+
+                            series_select.clear();
+                            series_select.clearOptions();
+                            series_select.renderCache['option'] = {};
+                            series_select.renderCache['item'] = {};
+                            series_select.load(function(callback){
+                                callback(serieOptions);
+                            });
+
+                            $('.sidebar-form-advance').removeClass('avoid-click');
+                            $(category_select).focus();
+                        }
+                    });
+                },
+                create: false
+            });
+
+            var categorySelect = $('#categoryField').selectize({
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                create: false,
+                options: categoryOptions,
+                placeholder: 'Choose category',
+            });
         });
 
     </script>

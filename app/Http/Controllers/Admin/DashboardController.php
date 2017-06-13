@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
-use App\Models\MediaType;
 use App\Models\Category;
+use App\Models\CategoryType;
 use App\Models\PlaylistSerie;
 use App\Models\User;
 use App\Models\Admin;
@@ -19,15 +19,9 @@ class DashboardController extends Controller
 
     public function index(){
 
-        $mediaTypes = MediaType::all();
-        $articleType = $mediaTypes->where('name', '=', 'reading')->first();
-        $soundType = $mediaTypes->where('name', '=', 'listening')->first();
-        $videoType = $mediaTypes->where('name', '=', 'watching')->first();
-
-        $mediaTypesCount = $mediaTypes->count();
-        $articlesCount = $articleType->posts()->count();
-        $soundsCount = $soundType->posts()->count();
-        $videosCount = $videoType->posts()->count();
+        $articlesCount = Post::where('mediatype_id', '=', 1)->count();
+        $soundsCount = Post::where('mediatype_id', '=', 2)->count();
+        $videosCount = Post::where('mediatype_id', '=', 3)->count();
         $categoriesCount = Category::count();
         $tagsCount = DB::table('tagging_tags')->count();
         $seriesCount = PlaylistSerie::count();
@@ -44,7 +38,6 @@ class DashboardController extends Controller
             'usersCount' => $usersCount,
             'staffsCount' => $staffsCount,
             'departmentsCount' => $departmentsCount,
-            'mediaTypesCount' => $mediaTypesCount,
             'tagsCount' => $tagsCount,
             'filesCount' => $filesCount
         ]);

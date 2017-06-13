@@ -1,0 +1,15 @@
+INSERT INTO categories (name) VALUES ("សង្គម");
+INSERT INTO categories (name) VALUES ("សិល្បះកម្សាន្ត");
+INSERT INTO categories (name) VALUES ("បច្ចេកវិទ្យា");
+INSERT INTO categories (name) VALUES ("អក្សរសាស្ត្រ");
+INSERT INTO categories (name) VALUES ("គំនិតជោគជ័យ");
+INSERT INTO categories (name) VALUES ("សុខភាព​និងសម្រស់");
+INSERT INTO categories (name) VALUES ("ល្ខោននិយាយ");
+INSERT INTO categories (name) VALUES ("បទយកការណ៍");
+INSERT INTO categories (name) VALUES ("ប្រវត្តសាស្រ្តនិងវប្បធម៏");
+INSERT INTO categories (name) VALUES ("ព្រះធម៌");
+INSERT INTO categories (name) VALUES ("តាមផ្លូវ");
+INSERT INTO categories (name) VALUES ("គូរស្នេហ៏");
+INSERT INTO categories (name) VALUES ("ជញ្ជាំងអង្គរ");
+INSERT INTO categories (name) VALUES ("BE PROFESSIONAL");
+INSERT INTO categories (name) VALUES ("SHORT FILM/MV");

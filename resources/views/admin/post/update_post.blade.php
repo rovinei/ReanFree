@@ -233,8 +233,10 @@
 
 @push('script_dependencies')
     <script type="text/javascript" src="{{ asset('admin/plugins/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/plugins/tinymce/tinymce-config.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/done-typing.js') }}"></script>
-    <script src="{{ asset('admin/js/crud.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/js/crud.js') }}"></script>
 @endpush
 
 @section('script')
@@ -283,303 +285,268 @@
         var videoCode = '{{ $post->video_url }}';
         @endif
 
-        var tagSelect = $('#tags').selectize({
-            plugins: ['restore_on_backspace', 'remove_button'],
-            delimiter: ',',
-            persist: false,
-            valueField: 'tag',
-            labelField: 'tag',
-            searchField: 'tag',
-            options: tagOptions,
-            items: [
-                @if($post->tagged)
-                    @foreach($post->tagged as $tag)
-                    '{{ $tag->tag_name }}',
-                    @endforeach
-                @endif
-            ],
-            placeholder: 'Attach tags ...',
-            create: function(input) {
-                return {
-                    tag: input
-                }
-            }
-        });
-
-        var serieSelect = $('#seriesField').selectize({
-            plugins: ['restore_on_backspace', 'remove_button'],
-            delimiter: ',',
-            persist: false,
-            valueField: 'id',
-            labelField: 'title',
-            searchField: 'title',
-            options: serieOptions,
-            placeholder: 'Attach series ...',
-            items: [
-                @if($post->series)
-                    @foreach($post->series as $serie)
-                    {{ $serie->id }},
-                    @endforeach
-                @endif
-            ],
-            render: {
-                option: function(item, escape) {
-                    return '<div class="option">' + escape(item.title) + '</div>';
-                }
-            },
-            create: function(input) {
-                $thisSelect = serieSelect[0].selectize;
-                $.ajax({
-                    url: "{{ route('admin.ajax.add_serie') }}",
-                    type: "POST",
-                    data: {
-                        title: input,
-                        type: $('#mediaField').val() || 'null'
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    error: function(err){
-                        swal({
-                            title: "Opp! Something went wrong",
-                            text: err,
-                            type: "error",
-                            timer: 5000,
-                            allowOutsideClick: true
-                        });
-                    },
-                    success: function(res){
-                        if(res.status == 200){
-
-                            serieOptions.push({
-                                id: res.data.id,
-                                title: res.data.title
-                            });
-
-                            $thisSelect.load(function(callback){
-                                callback(serieOptions);
-                            });
-
-                            swal({
-                                title: "succeed",
-                                text: res.success.message,
-                                type: "success",
-                                timer: 2500,
-                                allowOutsideClick: true
-                            });
-
-                        }else{
-                            swal({
-                                title: "Opp! Something went wrong",
-                                text: res.error.message,
-                                type: "error",
-                                timer: 5000,
-                                allowOutsideClick: true
-                            });
-                        }
-                    }
-                });
-            }
-        });
-
-        var mediaSelect = $('#mediaField').selectize({
-            delimiter: ',',
-            persist: false,
-            valueField: 'mediaId',
-            labelField: 'mediaName',
-            searchField: 'mediaName',
-            options: [
-                {mediaId: 1, mediaName: 'Reading'},
-                {mediaId: 2, mediaName: 'Listening'},
-                {mediaId: 3, mediaName: 'Watching'}
-            ],
-            placeholder: 'Type',
-            items: [
-                @if($post->mediatype_id)
-                    {{ $post->mediatype_id }}
-                @endif
-            ],
-            onChange: function(value){
-                var category_select = categorySelect[0].selectize;
-                var series_select = serieSelect[0].selectize;
-                categoryOptions = [];
-                serieOptions = [];
-                if(value == 2){
-                    $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
-                    $('#soundUpload').toggleClass('visible');
-
-                }else if(value == 3){
-                    $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
-                    $('#videoUpload').toggleClass('visible');
-                }else if(value == 1){
-                    $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
-                    $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
-                }else{
-                    return;
-                }
-                $('.sidebar-form-advance')
-                .addClass('avoid-click');
-                $.ajax({
-                    url: '{{ route('admin.ajax.typeCategories') }}',
-                    data: {typeid: value, },
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    error: function(err) {
-                        swal({
-                            title: "Opp! Something went wrong",
-                            text: err,
-                            type: "error",
-                            timer: 5000,
-                            allowOutsideClick: true
-                        });
-                        $('.sidebar-form-advance').removeClass('avoid-click');
-                    },
-                    success: function(res) {
-
-                        $(res['categories']).each(function(){
-                            categoryOptions.push({id: this.id, name: this.name});
-                        });
-
-                        $(res['series']).each(function(){
-                            serieOptions.push({id: this.id, title: this.title});
-                        });
-
-                        category_select.clear();
-                        category_select.clearOptions();
-                        category_select.renderCache['option'] = {};
-                        category_select.renderCache['item'] = {};
-                        category_select.load(function(callback){
-                            callback(categoryOptions);
-                        });
-                        category_select.addItem(categorySeletedItems, true);
-
-                        series_select.clear();
-                        series_select.clearOptions();
-                        series_select.renderCache['option'] = {};
-                        series_select.renderCache['item'] = {};
-                        series_select.load(function(callback){
-                            callback(serieOptions);
-                        });
-                        series_select.addItems(serieSeletedItems, true);
-                        $('.sidebar-form-advance').removeClass('avoid-click');
-                        $(category_select).focus();
-                    }
-                });
-            },
-
-            create: false
-        });
-
-        var categorySelect = $('#categoryField').selectize({
-            valueField: 'id',
-            labelField: 'name',
-            searchField: 'name',
-            create: false,
-            options: categoryOptions,
-            placeholder: 'Choose category',
-            items: [
-                @if($post->category)
-                    {{ $post->category->id }},
-                @endif
-            ],
-        });
-
-
-        // Tinymce Editor Configuration
-        tinymce.init({
-            selector: "textarea",theme: "modern", width: "99.5%",height: 300,
-            external_filemanager_path:"/admin/filemanager/",
-            filemanager_title:"Responsive Filemanager" ,
-            external_plugins: { "filemanager" : "/admin/filemanager/plugin.min.js"},
-            plugins: [
-                "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
-                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons template textcolor paste textcolor colorpicker jbimages"
-            ],
-
-            toolbar1: "newdocument | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
-            toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
-            toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
-            file_browser_callback : function(field_name, url, type, win) {
-                var w = window,
-                d = document,
-                e = d.documentElement,
-                g = d.getElementsByTagName('body')[0],
-                x = w.innerWidth || e.clientWidth || g.clientWidth,
-                y = w.innerHeight|| e.clientHeight|| g.clientHeight;
-
-                var cmsURL = '{{ url('') }}/admin/filemanager/show?&field_name='+field_name+'&lang='+tinymce.settings.language;
-
-                if(type == 'image') {
-                    cmsURL = cmsURL + "&type=images";
-                }
-
-                tinyMCE.activeEditor.windowManager.open({
-                    file : cmsURL,
-                    title : 'Filemanager',
-                    width : x * 0.8,
-                    height : y * 0.8,
-                    resizable : "yes",
-                    close_previous : "no"
-                });
-
-            },
-            menubar: false,
-            toolbar_items_size: 'small',
-
-            // Image Path Convert URL
-            relative_urls: false,
-            remove_script_host: false,
-
-            document_base_url: '{{ url('') }}',
-            font_formats: "Hanuman='Hanuman', serif;"+
-                "Arial=arial,helvetica,sans-serif;"+
-                "Arial Black=arial black,avant garde;"+
-                "Book Antiqua=book antiqua,palatino;"+
-                "Comic Sans MS=comic sans ms,sans-serif;"+
-                "Courier New=courier new,courier;"+
-                "Georgia=georgia,palatino;"+
-                "Helvetica=helvetica;"+
-                "Impact=impact,chicago;"+
-                "Symbol=symbol;"+
-                "Tahoma=tahoma,arial,helvetica,sans-serif;"+
-                "Terminal=terminal,monaco;"+
-                "Times New Roman=times new roman,times;"+
-                "Trebuchet MS=trebuchet ms,geneva;"+
-                "Verdana=verdana,geneva;"+
-                "Webdings=webdings;"+
-                "Wingdings=wingdings,zapf dingbats"
-        });
-
-        // Custom file callback of Responsive File Manager Library
-        function responsive_filemanager_callback(field_id){
-            var imageUrl = $('#'+field_id).val();
-            var uploadImageModal = UIkit.modal("#fileManagerModal");
-            uploadImageModal.toggle();
-            // $('#imagePreviewDiv').empty().append(
-            //     '<img src="'+imageUrl+'" class="img-responsive"/>'
-            // );
-            $('#imagePreviewDiv').empty().css({
-                'background' : 'url("'+imageUrl+'") center center / cover no-repeat',
-                'position' : 'relative',
-                'min-height' : '130px'
-            });
-        }
-
         $(document).on('click','#removeImage',function(){
             $('#imagePreviewDiv').empty();
             $("#txtFeaturedImage").val('');
         });
 
+        function responsive_filemanager_callback(field_id){
+            var uploadImageModal = UIkit.modal("#fileManagerModal")
+                imageUrl="";
+            switch(field_id){
+                case 'txtFeaturedImage':
+                    imageUrl = $('#'+field_id).val();
+                    $('#imagePreviewDiv').css({
+                        'background' : 'url("'+imageUrl+'") center center / cover no-repeat',
+                        'position' : 'relative',
+                        'min-height' : '130px'
+                    });
+                    break;
+                case 'sound_url':
+                    var playing = false,
+                        audioEle = $('#audioEle').bind('play', function () {
+                                    playing = true;
+                                }).bind('pause', function () {
+                                    playing = false;
+                                }).bind('ended', function () {
+                                    audio.pause();
+                                }).get(0);
+                    var supportsAudio = !!document.createElement('audio').canPlayType;
+                    if (supportsAudio){
+                        $(audioEle).attr('src', $('#'+field_id).val());
+                    }
+                    break;
+
+                default:
+                    return;
+
+            }
+
+            uploadImageModal.toggle();
+
+        }
 
         $(document).ready(function(){
+
             $('#video_url').donetyping(function(){
                 $iframe = $('<iframe></iframe>');
                 $iframe.attr('src', 'https://www.youtube.com/embed/'+$.trim($(this).val())).css({'width':'100%'});
                 $('#videoPreview').empty().append($iframe);
             }, 2000);
+
+            var tagSelect = $('#tags').selectize({
+                plugins: ['restore_on_backspace', 'remove_button'],
+                delimiter: ',',
+                persist: false,
+                valueField: 'tag',
+                labelField: 'tag',
+                searchField: 'tag',
+                options: tagOptions,
+                items: [
+                    @if($post->tagged)
+                        @foreach($post->tagged as $tag)
+                        '{{ $tag->tag_name }}',
+                        @endforeach
+                    @endif
+                ],
+                placeholder: 'Attach tags ...',
+                create: function(input) {
+                    return {
+                        tag: input
+                    }
+                }
+            });
+
+            var serieSelect = $('#seriesField').selectize({
+                plugins: ['restore_on_backspace', 'remove_button'],
+                delimiter: ',',
+                persist: false,
+                valueField: 'id',
+                labelField: 'title',
+                searchField: 'title',
+                options: serieOptions,
+                placeholder: 'Attach series ...',
+                items: [
+                    @if($post->series)
+                        @foreach($post->series as $serie)
+                        {{ $serie->id }},
+                        @endforeach
+                    @endif
+                ],
+                render: {
+                    option: function(item, escape) {
+                        return '<div class="option">' + escape(item.title) + '</div>';
+                    }
+                },
+                create: function(input) {
+                    $thisSelect = serieSelect[0].selectize;
+                    $.ajax({
+                        url: "{{ route('admin.ajax.add_serie') }}",
+                        type: "POST",
+                        data: {
+                            title: input,
+                            type: $('#mediaField').val() || 'null'
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        error: function(err){
+                            swal({
+                                title: "Opp! Something went wrong",
+                                text: err,
+                                type: "error",
+                                timer: 5000,
+                                allowOutsideClick: true
+                            });
+                        },
+                        success: function(res){
+                            if(res.status == 200){
+
+                                serieOptions.push({
+                                    id: res.data.id,
+                                    title: res.data.title
+                                });
+
+                                $thisSelect.load(function(callback){
+                                    callback(serieOptions);
+                                });
+
+                                swal({
+                                    title: "succeed",
+                                    text: res.success.message,
+                                    type: "success",
+                                    timer: 2500,
+                                    allowOutsideClick: true
+                                });
+
+                            }else{
+                                swal({
+                                    title: "Opp! Something went wrong",
+                                    text: res.error.message,
+                                    type: "error",
+                                    timer: 5000,
+                                    allowOutsideClick: true
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+            var mediaSelect = $('#mediaField').selectize({
+                delimiter: ',',
+                persist: false,
+                valueField: 'mediaId',
+                labelField: 'mediaName',
+                searchField: 'mediaName',
+                options: [
+                    {mediaId: 1, mediaName: 'Reading'},
+                    {mediaId: 2, mediaName: 'Listening'},
+                    {mediaId: 3, mediaName: 'Watching'}
+                ],
+                placeholder: 'Type',
+                items: [
+                    @if($post->mediatype_id)
+                        {{ $post->mediatype_id }}
+                    @endif
+                ],
+                onChange: function(value){
+                    var category_select = categorySelect[0].selectize;
+                    var series_select = serieSelect[0].selectize;
+
+                    category_select.clear();
+                    category_select.clearOptions();
+                    category_select.renderCache['option'] = {};
+                    category_select.renderCache['item'] = {};
+
+                    series_select.clear();
+                    series_select.clearOptions();
+                    series_select.renderCache['option'] = {};
+                    series_select.renderCache['item'] = {};
+
+                    categoryOptions = [];
+                    serieOptions = [];
+                    if(value == 2){
+                        $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
+                        $('#soundUpload').toggleClass('visible');
+
+                    }else if(value == 3){
+                        $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
+                        $('#videoUpload').toggleClass('visible');
+                    }else if(value == 1){
+                        $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
+                        $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
+                    }else{
+                        return;
+                    }
+                    $('.sidebar-form-advance')
+                    .addClass('avoid-click');
+                    $.ajax({
+                        url: '{{ route('admin.ajax.typeCategories') }}',
+                        data: {typeid: value, },
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        error: function(err) {
+                            swal({
+                                title: "Opp! Something went wrong",
+                                text: err,
+                                type: "error",
+                                timer: 5000,
+                                allowOutsideClick: true
+                            });
+                            $('.sidebar-form-advance').removeClass('avoid-click');
+                        },
+                        success: function(res) {
+
+                            $(res['categories']).each(function(){
+                                categoryOptions.push({id: this.id, name: this.name});
+                            });
+
+                            $(res['series']).each(function(){
+                                serieOptions.push({id: this.id, title: this.title});
+                            });
+
+                            category_select.clear();
+                            category_select.clearOptions();
+                            category_select.renderCache['option'] = {};
+                            category_select.renderCache['item'] = {};
+                            category_select.load(function(callback){
+                                callback(categoryOptions);
+                            });
+                            category_select.addItem(categorySeletedItems, true);
+
+                            series_select.clear();
+                            series_select.clearOptions();
+                            series_select.renderCache['option'] = {};
+                            series_select.renderCache['item'] = {};
+                            series_select.load(function(callback){
+                                callback(serieOptions);
+                            });
+                            series_select.addItems(serieSeletedItems, true);
+                            $('.sidebar-form-advance').removeClass('avoid-click');
+                            $(category_select).focus();
+                        }
+                    });
+                },
+
+                create: false
+            });
+
+            var categorySelect = $('#categoryField').selectize({
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                create: false,
+                options: categoryOptions,
+                placeholder: 'Choose category',
+                items: [
+                    @if($post->category)
+                        {{ $post->category->id }},
+                    @endif
+                ],
+            });
         });
 
     </script>

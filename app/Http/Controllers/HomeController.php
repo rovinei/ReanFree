@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
-use App\Models\MediaType;
 
 class HomeController extends Controller
 {

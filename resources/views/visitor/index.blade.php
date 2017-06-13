@@ -1,99 +1,162 @@
-<!doctype html>
-<html lang="{{ config('app.locale') }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('visitor.layouts.main')
 
-        <title>Laravel</title>
+@section('page_title', 'welcome to 180 inspire website')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+@push('styles')
+<style type="text/css">
 
-            .full-height {
-                height: 100vh;
-            }
+</style>
+@endpush
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+@section('slideshow')
+    @includeIf('visitor.partials._homepage_slideshow')
+@endsection
 
-            .position-ref {
-                position: relative;
-            }
+@section('content')
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+<!-- Latest article -->
+<div class="section">
+    <div class="latest-article">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-collapse">
 
-            .content {
-                text-align: center;
-            }
+                <div class="uk-width-small-1-1 uk-width-medium-2-3 uk-width-large-2-3 uk-width-xlarge-2-3">
+                    <div class="section-heading bottom-line">
+                        <h3 class="bg_grey font-kh-siemreap">
+                            <i class="fa fa-newspaper-o"></i>
+                            @lang('visitor.latest_post')
+                        </h3>
+                    </div>
 
-            .title {
-                font-size: 84px;
-            }
+                    <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3">
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                        @foreach($articles as $article)
+                            @includeIf('visitor.components.article.post_grid_index', ['article' => $article])
+                        @endforeach
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app" class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                    </div>
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3 uk-width-xlarge-1-3">
+                    <div class="section-advert__right padding-left__sm">
+                        <div class="advert-box">
+                            <div class="inner">
+                                <a href="#" class="custom-advert__link">
+                                    <img src="{{ asset('images/ads/media_ads_video.png') }}"alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="advert-box">
+                            <div class="inner">
+                                <a href="#" class="custom-advert__link">
+                                    <img src="{{ asset('images/ads/media_ads_bigk_film.png') }}" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Latest article -->
+
+<!-- Latest video grid -->
+<div class="section">
+    <div class="latest-video">
+        <div class="uk-container uk-container-center">
+
+            <div class="section-heading bottom-line">
+                <h3 class="bg_grey font-kh-siemreap">
+                    <i class="fa fa-play"></i>
+                    @lang('visitor.latest_video')
+                </h3>
+            </div>
+
+            <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4">
+                @foreach($videos as $video)
+                    @includeIf('visitor.components.video.video_grid_index', ['video' => $video])
+                @endforeach
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /Latest video grid -->
+
+<!-- Latest music -->
+<div class="section">
+    <div class="latest-song">
+        <div class="uk-container uk-container-center">
+            <div class="section-heading bottom-line">
+                <h3 class="bg_grey font-kh-siemreap">
+                    <i class="fa fa-music"></i>
+                    @lang('visitor.latest_song')
+                </h3>
+            </div>
+
+            <div class="section-bg__dark">
+                <div class="uk-panel uk-panel-body">
+                    <div class="uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-1 uk-grid-width-medium-1-2 uk-grid-width-large-1-2 uk-grid-width-xlarge-1-2">
+
+                        <div class="music-box__thumbnail">
+                            <div class="uk-cover-background uk-position-cover">
+                                <img src="{{ asset('images/musics/song_player_album_featured_image.png') }}" alt="">
+                            </div>
+                        </div>
+
+                        <div class="music-box__player">
+                            <div class="column">
+                                <div class="music-box__player-wrap">
+                                    <div class="music-box__player-nowPlay">
+                                        <span class="left music-box__player-action">Paused...</span>
+                                        <span class="right music-box__player-title"></span>
+                                    </div>
+                                    <div class="music-box__player-audiowrap">
+                                        <div id="audio0">
+                                            <audio preload id="audioEle" controls="controls">Your browser does not support HTML5 Audio!</audio>
+                                        </div>
+                                        <div class="music-box__player-tracks">
+                                            <a class="audio-control-next-pre" id="music-box__player-btnPrev">&laquo;</a>
+                                            <a class="audio-control-next-pre" id="music-box__player-btnNext">&raquo;</a>
+                                        </div>
+                                    </div>
+                                    <div class="music-box__playlist-wrap">
+                                        <ul id="music-box__playlist"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-        <script src="/js/manifest.js"></script>
-        <script src="/js/vendor.js"></script>
-        <script src="/js/app.js"></script>
-    </body>
-</html>
+    </div>
+</div>
+<!-- /Latest music -->
+
+@endsection
+
+@push('script_dependencies')
+    <script type="text/javascript">
+        var tracks = [
+            @if(!empty($audios))
+                @foreach($audios as $key => $audio)
+                {
+                    "track": '{{ ++$key }}',
+                    "name": "{{ $audio->title }}",
+                    "length": "3:26",
+                    "file": "{{ $audio->sound_url }}"
+                },
+                @endforeach
+            @endif
+        ];
+    </script>
+    <script src="{{ asset('js/sound-player.js') }}"></script>
+@endpush
+
+@section('scripts')
+
+@endsection

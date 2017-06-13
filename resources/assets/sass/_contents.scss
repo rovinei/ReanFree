@@ -1,0 +1,178 @@
+/* Font Family
+================================================== */
+
+@import url("//fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200,300,400");
+
+
+* {
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+-webkit-tap-highlight-color:transparent;
+}
+
+
+/* Highlight Styles */
+::selection { background-color:#262223; color:#444; }
+
+
+/* Audio Player Styles
+================================================== */
+
+/* Default / Desktop / Firefox */
+audio { width:670px; }
+.music-box__player-wrap { position: relative; width: 100%; @include clearfix(); box-shadow:0 0 6px 1px rgba(0,0,0,.25); }
+.music-box__player-audiowrap { position: relative; width: 100%; float: left; @include clearfix(); background-color:#231F20; margin:0 auto; }
+.music-box__playlist-wrap { margin:0 auto; }
+.music-box__player-tracks { position:relative; text-align:center; }
+.music-box__player-nowPlay { position: relative; width: 100%; float: left; background: #fafafa; @include clearfix(); }
+.music-box__player-title { margin:0; padding:21px; text-align:right; }
+.music-box__player-action { padding:21px; position:absolute; }
+#music-box__playlist { position: relative; width: 100%; float: left; @include clearfix(); margin:0; padding: 0;}
+#music-box__playlist li { background-color:#231F20; cursor:pointer; display:block; margin:0; padding:15px 0; }
+#music-box__playlist li:hover { background-color:#262223; }
+.playlist__item { position:relative; }
+.playlist__title { left:50px; overflow:hidden; position:absolute; right:65px; text-overflow:ellipsis; top:0; white-space:nowrap; }
+.playlist__track-number { padding-left:21px; width:50px; }
+.playlist__track-length { padding-left:21px; position:absolute; right:21px; top:0; }
+.plSel,.plSel:hover { background-color:#262223!important; cursor:default!important; }
+.audio-control-next-pre { background-color:#231F20; color:#C8C7C8; cursor:pointer; display:inline-block; font-size:50px; margin:0; padding:21px 27px; text-decoration:none; }
+.audio-control-next-pre:last-child { margin-left:-4px; }
+.audio-control-next-pre:hover,.audio-control-next-pre:active {text-decoration: none; background-color:#262223; }
+.audio-control-next-pre::-moz-focus-inner {text-decoration: none; border:0; padding:0; }
+
+/* IE 9 */
+html[data-useragent*="MSIE 9.0"] audio { margin-top: 31px; outline:none; width:680px; }
+html[data-useragent*="MSIE 9.0"] .music-box__player-audiowrap { background-color:#000; }
+html[data-useragent*="MSIE 9.0"] .audio-control-next-pre {text-decoration: none; background-color:#000; }
+html[data-useragent*="MSIE 9.0"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
+html[data-useragent*="MSIE 9.0"] #music-box__playlist li { background-color:#000; }
+html[data-useragent*="MSIE 9.0"] #music-box__playlist li:hover { background-color:#080808; }
+html[data-useragent*="MSIE 9.0"] .plSel,
+html[data-useragent*="MSIE 9.0"] .plSel:hover { background-color:#080808!important; }
+
+/* IE 10 */
+html[data-useragent*="MSIE 10.0"] audio { margin-top: 31px; width:687px; }
+html[data-useragent*="MSIE 10.0"] .music-box__player-audiowrap { background-color:#000; }
+html[data-useragent*="MSIE 10.0"] .audio-control-next-pre { background-color:#000; }
+html[data-useragent*="MSIE 10.0"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
+html[data-useragent*="MSIE 10.0"] #music-box__playlist li { background-color:#000; }
+html[data-useragent*="MSIE 10.0"] #music-box__playlist li:hover { background-color:#080808; }
+html[data-useragent*="MSIE 10.0"] .plSel,
+html[data-useragent*="MSIE 10.0"] .plSel:hover { background-color:#080808!important; }
+
+/* IE 11 */
+html[data-useragent*="rv:11.0"] audio { margin-top: 31px; width:695px; }
+html[data-useragent*="rv:11.0"] .music-box__player-audiowrap { background-color:#000; }
+html[data-useragent*="rv:11.0"] .audio-control-next-pre { background-color:#000; }
+html[data-useragent*="rv:11.0"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
+html[data-useragent*="rv:11.0"] #music-box__playlist li { background-color:#000; }
+html[data-useragent*="rv:11.0"] #music-box__playlist li:hover { background-color:#080808; }
+html[data-useragent*="rv:11.0"] .plSel,
+html[data-useragent*="rv:11.0"] .plSel:hover { background-color:#080808!important; }
+
+/* All Apple Products */
+html[data-useragent*="Apple"] audio { margin-top: 31px; width:100%; }
+html[data-useragent*="Apple"] .music-box__player-audiowrap { background-color:#000; }
+html[data-useragent*="Apple"] .audio-control-next-pre { background-color:#000; }
+html[data-useragent*="Apple"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
+html[data-useragent*="Apple"] #music-box__playlist li { background-color:#000; }
+html[data-useragent*="Apple"] #music-box__playlist li:hover { background-color:#080808; }
+html[data-useragent*="Apple"] .plSel,
+html[data-useragent*="Apple"] .plSel:hover { background-color:#080808!important; }
+
+/* IOS 7 */
+
+html[data-useragent*="OS 7"] audio { margin-top: 31px; width:690px; }
+html[data-useragent*="OS 7"] .music-box__player-audiowrap { background-color:#e6e6e6; }
+html[data-useragent*="OS 7"] .audio-control-next-pre { background-color:#e6e6e6; color:#373837; }
+html[data-useragent*="OS 7"] .audio-control-next-pre:hover { text-decoration: none; background-color:#eee; }
+html[data-useragent*="OS 7"] #music-box__playlist li { background-color:#e6e6e6; }
+html[data-useragent*="OS 7"] #music-box__playlist li:hover { background-color:#eee; }
+html[data-useragent*="OS 7"] .plSel,
+html[data-useragent*="OS 7"] .plSel:hover { background-color:#eee!important; }
+
+/* IOS 8 */
+html[data-useragent*="OS 8"] audio { margin-top: 31px; width:694px; }
+html[data-useragent*="OS 8"] .music-box__player-audiowrap { background-color:#e4e4e4; }
+html[data-useragent*="OS 8"] .audio-control-next-pre { background-color:#e4e4e4; color:#373837; }
+html[data-useragent*="OS 8"] .audio-control-next-pre:hover { text-decoration: none; background-color:#eee; }
+html[data-useragent*="OS 8"] #music-box__playlist li { background-color:#e4e4e4; }
+html[data-useragent*="OS 8"] #music-box__playlist li:hover { background-color:#eee; }
+html[data-useragent*="OS 8"] .plSel,
+html[data-useragent*="OS 8"] .plSel:hover { background-color:#eee!important; }
+
+/* IOS 9 */
+html[data-useragent*="OS 9"] audio { margin-top: 31px; width:694px; }
+html[data-useragent*="OS 9"] .music-box__player-audiowrap { background-color:#d5d5d5; }
+html[data-useragent*="OS 9"] .audio-control-next-pre { background-color:#d5d5d5; color:#373837; }
+html[data-useragent*="OS 9"] .audio-control-next-pre:hover { text-decoration: none; background-color:#eee; }
+html[data-useragent*="OS 9"] #music-box__playlist li { background-color:#d5d5d5; }
+html[data-useragent*="OS 9"] #music-box__playlist li:hover { background-color:#eee; }
+html[data-useragent*="OS 9"] .plSel,
+html[data-useragent*="OS 9"] .plSel:hover { background-color:#eee!important; }
+
+/* Chrome */
+
+html[data-useragent*="Chrome"] audio { margin-top: 31px; width:677px; }
+html[data-useragent*="Chrome"] .music-box__player-audiowrap { background-color:#fafafa; }
+html[data-useragent*="Chrome"] .audio-control-next-pre { background-color:#fafafa; color:#5a5a5a; }
+html[data-useragent*="Chrome"] .audio-control-next-pre:hover { text-decoration: none; background-color:#eee; }
+html[data-useragent*="Chrome"] #music-box__playlist li { background-color:#fafafa; }
+html[data-useragent*="Chrome"] #music-box__playlist li:hover { background-color:#eee; }
+html[data-useragent*="Chrome"] .plSel,
+html[data-useragent*="Chrome"] .plSel:hover { background-color:#eee!important; }
+
+/* Chrome / Android / Tablet */
+
+html[data-useragent*="Chrome"][data-useragent*="Android"] audio { margin-top: 31px; width:689px; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] .music-box__player-audiowrap { background-color:#fafafa; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] .audio-control-next-pre { background-color:#fafafa; color:#373837; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] .audio-control-next-pre:hover { text-decoration: none; background-color:#eee; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] #music-box__playlist li { background-color:#fafafa; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] #music-box__playlist li:hover { background-color:#eee; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] .plSel,
+html[data-useragent*="Chrome"][data-useragent*="Android"] .plSel:hover { background-color:#eee!important; }
+
+
+/* Audio Player Media Queries
+================================================== */
+
+/* Tablet Portrait */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+audio { margin-top: 25px; width:526px; }
+html[data-useragent*="MSIE 9.0"] audio { width:536px; }
+html[data-useragent*="MSIE 10.0"] audio { width:543px; }
+html[data-useragent*="rv:11.0"] audio { width:551px; }
+html[data-useragent*="OS 7"] audio { width:546px; }
+html[data-useragent*="OS 8"] audio { width:550px; }
+html[data-useragent*="OS 9"] audio { width:550px; }
+html[data-useragent*="Chrome"] audio { width:533px; }
+html[data-useragent*="Chrome"][data-useragent*="Android"] audio { margin-top: 25px; width:545px; }
+}
+
+/* Mobile Landscape */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+audio { width:390px; }
+html[data-useragent*="MSIE 9.0"] audio { width:400px; }
+html[data-useragent*="MSIE 10.0"] audio { width:407px; }
+html[data-useragent*="rv:11.0"] audio { width:415px; }
+html[data-useragent*="OS 7"] audio { width:410px; }
+html[data-useragent*="OS 8"] audio { width:414px; }
+html[data-useragent*="OS 9"] audio { width:414px; }
+html[data-useragent*="Chrome"] audio { width:397px; }
+html[data-useragent*="Chrome"][data-useragent*="Mobile"] audio { margin-top: 25px; width:410px; }
+.music-box__player-title { width:245px; }
+}
+
+/* Mobile Portrait */
+@media only screen and (max-width: 479px) {
+audio { width:270px; }
+html[data-useragent*="MSIE 9.0"] audio { width:280px; }
+html[data-useragent*="MSIE 10.0"] audio { width:287px; }
+html[data-useragent*="rv:11.0"] audio { width:295px; }
+html[data-useragent*="OS 7"] audio { width:290px; }
+html[data-useragent*="OS 8"] audio { width:294px; }
+html[data-useragent*="OS 9"] audio { width:294px; }
+html[data-useragent*="Chrome"] audio { width:277px; }
+html[data-useragent*="Chrome"][data-useragent*="Mobile"] audio { margin-top: 25px; width:290px; }
+.music-box__player-title { width:167px; }
+}
