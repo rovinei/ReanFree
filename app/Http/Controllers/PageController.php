@@ -21,18 +21,26 @@ class PageController extends Controller
 
         // Query 8 latest videos post
         $videos = Post::where('mediatype_id', '=', 3)
-                        ->with('tagged', 'category', 'series')
+                        ->with('tagged', 'category')
                         ->take(8)->get();
 
         // Query 8 popular audios
         $audios = Post::where('mediatype_id', '=', 2)
-                        ->with('tagged', 'category', 'series')
+                        ->with('tagged', 'category')
                         ->take(8)->get();
+
+        $menus = CategoryType::with('categories')->get();
+        $reading_menus = $menus->where('mediatype_id', '=', 1)->first();
+        $listen_menus = $menus->where('mediatype_id', '=', 2)->first();
+        $video_menus = $menus->where('mediatype_id', '=', 3)->first();
 
         return view('visitor.index')->with([
                 'articles' => $articles,
                 'videos' => $videos,
-                'audios' => $audios
+                'audios' => $audios,
+                'reading_menus' => $reading_menus,
+                'listen_menus' => $listen_menus,
+                'video_menus' => $video_menus,
             ]);
     }
 

@@ -59,98 +59,39 @@
                     <div class="header-nav__category">
                         <div class="inner">
                             <ul class="uk-hidden-small category_menu custom-navbar active reading_menu">
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        សង្គម
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        សិល្បះកម្សាន្ត
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                       បច្ចេកវិទ្យា
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        អក្សរសាស្ត្រ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        គំនិតជោគជ័យ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        សុខភាព​និងសម្រស់
-                                    </a>
-                                </li>
+                                @if(!empty($reading_menus))
+                                    @foreach($reading_menus->categories as $category)
+                                    <li>
+                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                            {{ $category->name }}
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                @endif
                             </ul>
 
                             <ul class="uk-hidden-small category_menu custom-navbar listen_menu">
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        គំនិតជោគជ័យ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        ល្ខោននិយាយ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                       បទយកការណ៍
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        ប្រវត្តសាស្រ្តនិងវប្បធម៏
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        ព្រះធម៌
-                                    </a>
-                                </li>
-
+                                @if(!empty($listen_menus))
+                                    @foreach($listen_menus->categories as $category)
+                                    <li>
+                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                            {{ $category->name }}
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                @endif
                             </ul>
 
                             <ul class="uk-hidden-small category_menu custom-navbar video_menu">
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        តាមផ្លូវ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        គូរស្នេហ៏
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                       ជញ្ជាំងអង្គរ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-en-opensans-cond">
-                                        Be Professional
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-en-opensans-cond">
-                                        Short Film/MV
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="custom-a__link font-kh-siemreap">
-                                        សុខភាព​និងសម្រស់
-                                    </a>
-                                </li>
+                                @if(!empty($video_menus))
+                                    @foreach($video_menus->categories as $category)
+                                    <li>
+                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                            {{ $category->name }}
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                @endif
                             </ul>
 
                             <!-- Display up to 767px -->
@@ -192,98 +133,39 @@
                 </div>
 
                 <ul class="category_menu custom-navbar reading_menu active">
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            សង្គម
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            សិល្បះកម្សាន្ត
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                           បច្ចេកវិទ្យា
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            អក្សរសាស្ត្រ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            គំនិតជោគជ័យ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            សុខភាព​និងសម្រស់
-                        </a>
-                    </li>
+                    @if(!empty($reading_menus))
+                        @foreach($reading_menus->categories as $category)
+                        <li>
+                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    @endif
                 </ul>
 
                 <ul class="category_menu custom-navbar listen_menu">
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            គំនិតជោគជ័យ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            ល្ខោននិយាយ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                           បទយកការណ៍
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            ប្រវត្តសាស្រ្តនិងវប្បធម៏
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            ព្រះធម៌
-                        </a>
-                    </li>
-
+                    @if(!empty($listen_menus))
+                        @foreach($listen_menus->categories as $category)
+                        <li>
+                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    @endif
                 </ul>
 
                 <ul class="category_menu custom-navbar video_menu">
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            តាមផ្លូវ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            គូរស្នេហ៏
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                           ជញ្ជាំងអង្គរ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-en-opensans-cond">
-                            Be Professional
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-en-opensans-cond">
-                            Short Film/MV
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="custom-a__link font-kh-siemreap">
-                            សុខភាព​និងសម្រស់
-                        </a>
-                    </li>
+                    @if(!empty($video_menus))
+                        @foreach($video_menus->categories as $category)
+                        <li>
+                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
         </div>
