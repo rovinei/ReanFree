@@ -65,7 +65,26 @@ class Category extends Model
         return $this->belongsTo('App\Models\Admin', 'updated_by');
     }
 
-    public function posts(){
+    public function latestArticle()
+    {
+      return $this->hasOne('App\Models\Post')->where('mediatype_id', '=', 1)->latest();
+    }
+
+    public function latestAudio()
+    {
+      return $this->hasOne('App\Models\Post')->where('mediatype_id', '=', 2)->latest();
+    }
+
+    public function latestVideo()
+    {
+      return $this->hasOne('App\Models\Post')->where('mediatype_id', '=', 3)->latest();
+    }
+
+    public function posts($type=null){
+        if(!$type==null){
+            return $this->hasMany('App\Models\Post')->where('mediatype_id', '=', $type);
+        }
+
         return $this->hasMany('App\Models\Post');
     }
 }

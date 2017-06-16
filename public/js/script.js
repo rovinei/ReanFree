@@ -36,6 +36,11 @@
     });
 
 
+    // Prevent default event for element
+    $('.preventDefaultElement').on('click submit', function(e){
+        e.preventDefault();
+    });
+
     // Move navigation location when responsive breakdown
     $(window).resize(function(){
         var winWidth = $(window).width() || 0,

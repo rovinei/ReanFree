@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\CategoryType;
+use Carbon\Carbon;
 
 class PageController extends Controller
 {
@@ -17,31 +18,72 @@ class PageController extends Controller
         // Query 6 latest aricles post
         $articles = Post::where('mediatype_id', '=', 1)
                         ->with('tagged', 'category')
+                        ->latest()
                         ->take(6)->get();
 
         // Query 8 latest videos post
         $videos = Post::where('mediatype_id', '=', 3)
                         ->with('tagged', 'category')
+                        ->latest()
                         ->take(8)->get();
 
         // Query 8 popular audios
         $audios = Post::where('mediatype_id', '=', 2)
                         ->with('tagged', 'category')
+                        ->latest()
                         ->take(8)->get();
-
-        $menus = CategoryType::with('categories')->get();
-        $reading_menus = $menus->where('mediatype_id', '=', 1)->first();
-        $listen_menus = $menus->where('mediatype_id', '=', 2)->first();
-        $video_menus = $menus->where('mediatype_id', '=', 3)->first();
 
         return view('visitor.index')->with([
                 'articles' => $articles,
                 'videos' => $videos,
                 'audios' => $audios,
-                'reading_menus' => $reading_menus,
-                'listen_menus' => $listen_menus,
-                'video_menus' => $video_menus,
             ]);
+    }
+
+    // Article Page
+    public function articlePage(){
+
+        // Find categories of type reading
+        $categories = CategoryType::find(1)->with(['categories'=>function($query){
+            $query->has('latestArticle')->get();
+        }])->first();
+        $articles = Post::where('mediatype_id', '=', 1)->latest()->take(6)->get();
+        $suggestArticles = Post::where('mediatype_id', '=', 1)
+                                ->where('created_at', '<', Carbon::today())
+                                ->take(4)->get();
+        return view('visitor.article.index')->with([
+                'categories' => $categories,
+                'articles' => $articles,
+                'suggestArticles' => $suggestArticles
+            ]);
+
+    }
+
+    // Article Category Page
+    public function articleCategory(Request $request, $category_id){
+
+        // Find category by id
+        try{
+            $category = Category::find(1)->with(['posts'=>function($query){
+                $query->where('mediatype_id', '=', 1)->latest()->paginate(16);
+            }]);
+            $suggestArticles = Post::where('mediatype_id', '=', 1)
+                                ->where('created_at', '<', Carbon::today()->subDay())
+                                ->take(4)->get();
+        }catch(ModelNotFoundException $e){
+            absort(404, 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
+        }
+
+        return view('visitor.article.article_category')->with([
+            'category' => $category,
+            'suggestArticles' => $suggestArticles
+        ]);
+
+    }
+
+    // Article Detail Page
+    public function articleDetail(Request $request, $article_id){
+
     }
 
     // Video Page
@@ -59,20 +101,6 @@ class PageController extends Controller
 
     }
 
-    // Article Page
-    public function articlePage(){
-
-    }
-
-    // Article Category Page
-    public function articleCategory(Request $request, $category_id){
-
-    }
-
-    // Article Detail Page
-    public function articleDetail(Request $request, $article_id){
-
-    }
 
     // Audio Page
     public function audioPage(){

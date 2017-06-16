@@ -7,9 +7,7 @@
     @includeIf('visitor.partials._navigation')
     @yield('slideshow')
 
-    <div class="page-wrapper__bg">
-        @yield('content')
-    </div>
+    @yield('content')
 
     @includeIf('visitor.partials._footer')
     <!-- Required script -->
