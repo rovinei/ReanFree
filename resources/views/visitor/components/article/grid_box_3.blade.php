@@ -2,7 +2,7 @@
     <div class="section-bg__white uk-panel">
         <a href="{{ route('visitor.article.detail', $article->id) }}" class="post-grid__box">
             <div class="post-thumbnail">
-                <img src="@if($article->featured_image){{ {{ asset($article->featured_image) }} }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="{{ $article->title }}">
+                <img src="@if($article->featured_image){{ asset($article->featured_image) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="{{ $article->title }}">
             </div>
             <div class="post-grid__caption">
                 <span class="post-grid__datetime">
