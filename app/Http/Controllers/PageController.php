@@ -64,18 +64,21 @@ class PageController extends Controller
 
         // Find category by id
         try{
-            $category = Category::find(1)->with(['posts'=>function($query){
-                $query->where('mediatype_id', '=', 1)->latest()->paginate(16);
-            }]);
+            $articles = Post::where('mediatype_id', '=', 1)
+                            ->where('category_id', '=', 1)
+                            ->latest()
+                            ->paginate(16);
             $suggestArticles = Post::where('mediatype_id', '=', 1)
-                                ->where('created_at', '<', Carbon::today()->subDay())
+                                ->where('created_at', '<=', Carbon::today())
                                 ->take(4)->get();
+            $category_name = $articles[0]->category->name;
         }catch(ModelNotFoundException $e){
             absort(404, 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
         }
 
         return view('visitor.article.article_category')->with([
-            'category' => $category,
+            'articles' => $articles,
+            'category_name' => $category_name,
             'suggestArticles' => $suggestArticles
         ]);
 

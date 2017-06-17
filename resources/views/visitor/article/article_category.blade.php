@@ -19,7 +19,7 @@
                 <a href="{{ route('visitor.article.page') }}">@lang('visitor.article')</a>
                 <i class="fa fa-angle-double-right"></i>
                 <a class="preventDefaultElement custom-a__link_disabled" href="#">
-                    {{ $category->name }}
+                    {{ $category_name }}
                 </a>
             </h3>
         </div>
@@ -30,18 +30,18 @@
 
                 <div class="section-heading bottom-line">
                     <h3 class="bg_black font-kh-siemreap extra-pad">
-                        {{ $category->name }}
+                        {{ $category_name }}
                     </h3>
                 </div>
 
                 <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4">
-                @foreach($category->posts as $article)
-                    @includeIf('visitor.components.article.grid_box_2')
+                @foreach($articles as $article)
+                    @includeIf('visitor.components.article.grid_box_2', ['article' => $articles])
                 @endforeach
                 </div>
 
                 <!-- Pagination -->
-                {{ $category->links('visitor.components.pagination') }}
+                {{ $articles->links('visitor.components.pagination') }}
                 <!-- /Pagination -->
 
             </div>

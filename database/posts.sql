@@ -1,0 +1,1 @@
+INSERT INTO posts (title,slug,content,category_id,mediatype_id,featured_image,sound_url,video_url,status,created_by,updated_by) SELECT title,slug,content,category_id,mediatype_id,featured_image,sound_url,video_url,status,created_by,updated_by FROM posts where id=1;
