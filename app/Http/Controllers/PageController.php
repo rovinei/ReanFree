@@ -94,15 +94,30 @@ class PageController extends Controller
         } catch (ModelNotFoundException $e) {
             return view('errors.404')->with('exception', 'Oop! article you requested does not exist!');
         }
+
+        // Query related article base on tag
         $relatedArticles = Post::where('id', '!=', $article_id)
                             ->where('mediatype_id', '=', 1)
                             ->withAnytag($article->tagNames())
                             ->latest()
                             ->take(6)->get();
+
+        // Query the most latest article cross category
         $recentArticles = Post::where('id', '!=', $article_id)
                             ->where('mediatype_id', '=', 1)
                             ->latest()
                             ->take(6)->get();
+
+        // if related article is empty,
+        // Query article base on category instead
+        if($relatedArticles->isEmpty()){
+            $relatedArticles = Post::where('id', '!=', $article_id)
+                            ->where('mediatype_id', '=', 1)
+                            ->where('category_id', '=', $article->category->id)
+                            ->latest()
+                            ->take(6)->get();
+        }
+
         return view('visitor.article.detail')->with([
             'article' => $article,
             'relatedArticles' => $relatedArticles,
