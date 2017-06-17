@@ -10,7 +10,7 @@
 
 @section('content')
 
-@includeIf('visitor.components.article.slideshow', ['slideshow' => $article[0]])
+@includeIf('visitor.components.article.slideshow', ['slideshow' => $articles[0]])
 
 <!-- Page content wrapper -->
 <div class="page-wrapper__bg">
