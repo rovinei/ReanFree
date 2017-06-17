@@ -47,12 +47,6 @@
                 @endforeach
             @endif
         @endforeach
-        <li class="current">
-            <a class="paginator__item current">
-                1
-            </a>
-        </li>
-
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
