@@ -39,7 +39,7 @@
                     </li>
                     @else
                     <li>
-                        <a href="{{ $url }}" class="paginator__item current">
+                        <a href="{{ $url }}" class="paginator__item">
                             {{ $page }}
                         </a>
                     </li>
