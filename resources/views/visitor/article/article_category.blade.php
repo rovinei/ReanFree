@@ -9,6 +9,9 @@
 @endpush
 
 @section('content')
+
+@includeIf('visitor.components.article.slideshow', ['slideshow' => $article[0]])
+
 <!-- Page content wrapper -->
 <div class="page-wrapper__bg">
     <div class="uk-container uk-container-center">
@@ -66,6 +69,7 @@
     </div>
 </div>
 <!-- /Page content wrapper -->
+
 @endsection
 
 @push('script_dependencies')
