@@ -74,7 +74,7 @@
                                 @if(!empty($listen_menus))
                                     @foreach($listen_menus->categories as $category)
                                     <li>
-                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                        <a href="{{ route('visitor.audio.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
                                             {{ $category->name }}
                                         </a>
                                     </li>
@@ -86,7 +86,7 @@
                                 @if(!empty($video_menus))
                                     @foreach($video_menus->categories as $category)
                                     <li>
-                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                        <a href="{{ route('visitor.video.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
                                             {{ $category->name }}
                                         </a>
                                     </li>

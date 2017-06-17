@@ -65,7 +65,7 @@ class PageController extends Controller
         // Find category by id
         try{
             $articles = Post::where('mediatype_id', '=', 1)
-                            ->where('category_id', '=', 1)
+                            ->where('category_id', '=', $category_id)
                             ->orderBy('created_at', 'desc')
                             ->paginate(16);
             $suggestArticles = Post::where('mediatype_id', '=', 1)
@@ -86,6 +86,28 @@ class PageController extends Controller
 
     // Article Detail Page
     public function articleDetail(Request $request, $article_id){
+
+        // Find article by id
+        try {
+            $article = Post::findOrFail($article_id);
+            $article->with('tagged','category');
+        } catch (ModelNotFoundException $e) {
+            return view('errors.404')->with('exception', 'Oop! article you requested does not exist!');
+        }
+        $relatedArticles = Post::where('id', '!=', $article_id)
+                            ->where('mediatype_id', '=', 1)
+                            ->withAnytag($article->tagNames())
+                            ->latest()
+                            ->take(6)->get();
+        $recentArticles = Post::where('id', '!=', $article_id)
+                            ->where('mediatype_id', '=', 1)
+                            ->latest()
+                            ->take(6)->get();
+        return view('visitor.article.detail')->with([
+            'article' => $article,
+            'relatedArticles' => $relatedArticles,
+            'recentArticles' => $recentArticles
+        ]);
 
     }
 
@@ -122,6 +144,11 @@ class PageController extends Controller
 
     // Search page
     public function search(Request $request){
+
+    }
+
+    // Find posts by tag
+    public function findPostsByTag(Request $request, $tag_id){
 
     }
 

@@ -131,6 +131,9 @@ Route::group([
     Route::get('/page/audio/category/{audio_id}', 'PageController@audioCategory')->name('visitor.audio.category');
     Route::get('/page/audio/listen/{audio_id}', 'PageController@audioDetail')->name('visitor.audio.detail');
 
+    // Tag
+    Route::get('/tag/{tag_id}', 'PageController@findPostsByTag')->name('visitor.tag_posts');
+
     // Search
     Route::get('/search', 'PageController@search')->name('visitor.search');
 });
