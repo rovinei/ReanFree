@@ -66,8 +66,8 @@ class PageController extends Controller
         try{
             $articles = Post::where('mediatype_id', '=', 1)
                             ->where('category_id', '=', 1)
-                            ->paginate(16)
-                            ->orderBy('created_at', 'desc');
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(16);
             $suggestArticles = Post::where('mediatype_id', '=', 1)
                                 ->where('created_at', '<=', Carbon::today())
                                 ->take(4)->get();
