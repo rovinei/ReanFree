@@ -37,7 +37,7 @@
                     </h3>
                 </div>
 
-                <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4">
+                <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 padding-small uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4">
                 @foreach($articles as $article)
                     @includeIf('visitor.components.article.grid_box_2', ['article' => $article])
                 @endforeach
@@ -53,12 +53,12 @@
 
         <!-- Bottom post grid -->
         <div class="section">
-            <div class="section-heading uk-margin-bottom">
+            <div class="section-heading">
                 <h3 class="bg_black font-en-opensans-cond extra-pad">
                     YOU SHOULD READ
                 </h3>
             </div>
-            <div class="bottom-post uk-grid uk-grid-medium uk-grid-small-medium uk-gird-width-1-2 uk-grid-width-small-1-2 uk-grid-width-medium-1-4 uk-grid-large-1-4 uk-grid-width-xlarge-1-4">
+            <div class="bottom-post suggest-post uk-grid uk-grid-medium uk-grid-small-medium uk-gird-width-1-2 uk-grid-width-small-1-2 uk-grid-width-medium-1-4 uk-grid-large-1-4 uk-grid-width-xlarge-1-4">
             @foreach($suggestArticles as $article)
                 @includeIf('visitor.components.article.grid_box_3', ['article' => $article])
             @endforeach
@@ -76,7 +76,7 @@
 
 @endpush
 
-@section('scripts')
+@section('script')
 <script>
     $(document).ready(function(){
 

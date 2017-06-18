@@ -8,12 +8,12 @@
 @endpush
 
 @section('slideshow')
-    @includeIf('visitor.components.video.slideshow', ['slideshow' => $videos[0]])
+    @includeIf('visitor.components.video.top_feature', ['video' => $videos[0]])
 @endsection
 
 @section('content')
 <!-- Page content wrapper -->
-<div class="page-bg__wrapper">
+<div class="page-wrapper__bg">
     <div class="uk-container uk-container-center">
 
         <div class="breadcrum uk-margin-top">
@@ -45,7 +45,43 @@
         </div>
         <!-- /Section videos feature -->
 
+        <!-- Category box -->
+        <div class="section">
+            <div class="uk-clearfix">
+                <div class="uk-width-1-1 uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2 uk-width-xlarge-1-2 uk-clearfix post-grid">
+                    <div class="uk-panel-body no-pad-right no-pad-bottom no-pad-left">
+                        <figure class="uk-overlay uk-overlay-hover">
+                            <div class="post-grid__categoy">
+                                <h3 class="font-kh-siemreap">{{ $categories->categories[0]->name }}</h3>
+                            </div>
+                            <img class="uk-overlay-scale" src="@if($categories->categories[0]->latestVideo->featured_image){{ asset($categories->categories[0]->latestVideo->featured_image) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="">
+                            <figcaption class="font-kh-freehand uk-overlay-background uk-ignore uk-overlay-panel uk-flex uk-flex-bottom">
+                                <div class="inner">
+                                    <p>
+                                        {{ str_limit($categories->categories[0]->latestVideo->title, 70) }}
+                                    </p>
+                                    <div class="datetime">
+                                        <i class="fa fa-clock-o"></i>
+                                        {{ $categories->categories[0]->latestVideo->created_at->format('d\\, M\\, Y') }}
+                                    </div>
+                                </div>
+                            </figcaption>
+                            <a href="{{ route('visitor.video.detail', $categories->categories[0]->latestVideo->id) }}" class="uk-position-cover"></a>
+                        </figure>
+                    </div>
+                </div>
 
+                <div class="uk-width-1-1 uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2 uk-width-xlarge-1-2 no-pad-top post-grid uk-grid uk-grid-collapse uk-grid-width-1-2">
+                @foreach($categories->categories as $key => $category)
+                    @if($key==0 || $key > 4)
+                    @else
+                        @includeIf('visitor.components.video.category_box', ['category' => $category])
+                    @endif
+                @endforeach
+                </div>
+            </div>
+        </div>
+        <!-- /Category box -->
 
         <!-- Bottom post grid -->
         <div class="section">
@@ -56,7 +92,7 @@
             </div>
 
             <div class="section-bg__white uk-panel-body suggest-video">
-                <div class="bottom-post uk-grid uk-grid-collapse uk-gird-width-1-2 uk-grid-width-small-1-2 uk-grid-width-medium-1-4 uk-grid-large-1-4 uk-grid-width-xlarge-1-4 uk-grid-match uk-margin-bottom uk-margin-top" uk-grid-match>
+                <div class="bottom-post uk-grid uk-grid-collapse uk-gird-width-1-2 uk-grid-width-small-1-2 uk-grid-width-medium-1-4 uk-grid-large-1-4 uk-grid-width-xlarge-1-4 uk-margin-bottom uk-margin-top">
                 @foreach($suggestVideos as $post)
                     @includeIf('visitor.components.video.grid_box_1', ['video' => $post])
                 @endforeach
@@ -71,12 +107,17 @@
 @endsection
 
 @push('script_dependencies')
-    <script src="{{ asset('lib/slick/slick.min.js') }}"></script>
     <script src="{{ asset('lib/jssocial/jssocials.min.js') }}"></script>
+    <script src="{{ asset('lib/slick/slick.min.js') }}"></script>
 @endpush
 
 @section('script')
     <script>
+
+        $(".social-share").jsSocials({
+            shares: ["facebook", "twitter", "googleplus", "linkedin"]
+        });
+
         // Slick Slideset Configuration
         $('.features-slider .slideset').slick({
             infinite: false,
@@ -119,8 +160,5 @@
           ]
         });
 
-        $(".social-share").jsSocials({
-            shares: ["facebook", "twitter", "googleplus", "linkedin"]
-        });
     </script>
 @endsection

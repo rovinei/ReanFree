@@ -908,9 +908,17 @@ body{
     }
 }
 
-.bottom-post{
+.bottom-post.suggest-post{
+    margin-left: -10px;
+    margin-right: -10px;
+
+    .custom-grid__item{
+        @include display-flex();
+        padding: 10px;
+    }
+
     .section-bg__white{
-        border-radius: 3px;
+        border-radius: 2px;
         padding: 7px;
     }
 
@@ -1274,7 +1282,6 @@ body{
     .inner{
         position: relative;
         width: 100%;
-        height: 100%;
         padding: 20px;
         & > * {
             display: block;
@@ -1308,11 +1315,11 @@ body{
     }
 
     .socials{
-        position: absolute;
+        position: relative;
         bottom: 0;
         left: 0;
         right: 0;
-        padding: 10px 20px;
+        padding: 10px 0;
     }
 }
 
@@ -1376,6 +1383,7 @@ body{
     .next-video{
         display: block;
         position: relative;
+        color: #2a2a2a;
         text-decoration: none;
         border-radius: 2px;
         width: 100%;
@@ -1415,7 +1423,7 @@ body{
         }
         .next-text,
         .next-title{
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             margin-right: 5px;
         }
 
@@ -1505,7 +1513,7 @@ body{
             padding: 0;
             display: block;
             padding-top: 5px;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #2a2a2a;
         }
 
@@ -1520,7 +1528,7 @@ body{
     .title{
         font-family: $font-siemreap;
         font-weight: 700;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         margin: 0;
     }
 }

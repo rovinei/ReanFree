@@ -23,9 +23,9 @@
 
 <link href="https://fonts.googleapis.com/css?family=Fasthand|Freehand|Metal|Open+Sans+Condensed:300,400,600|Open+Sans:400,500,600|Siemreap|Taprom&amp;subset=khmer" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit2/css/uikit.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit2/css/components/slideshow.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit2/css/components/sticky.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit2/css/components/dotnav.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit2/css/components/slidenav.gradient.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">

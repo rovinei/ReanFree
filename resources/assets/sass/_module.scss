@@ -319,10 +319,13 @@
 .suggest-video{
   .video-box-feature{
     padding: 10px;
+    margin: 0;
+    @include display-flex();
 
     .feature-box-text{
-      margin: 0;
+
       padding: 10px;
+      margin: 0;
     }
   }
 }
@@ -390,10 +393,8 @@
   margin: 0 10px;
 
   .inner{
-    height: 100%;
     background: #fff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(50, 200, 200, 0.08);
-
   }
 
   .mansory-container{
@@ -424,7 +425,7 @@
 
   .feature-box-text{
     margin-top: 10px;
-    padding: 0 10px;
+    padding: 0 10px 10px;
 
     h3{
       color: #2a2a2a;
@@ -508,7 +509,6 @@
 }
 .slick-slide {
     float: left;
-    height: 100%;
     min-height: 1px;
     [dir="rtl"] & {
         float: right;
@@ -528,6 +528,7 @@
 
     .slick-initialized & {
         display: block;
+        @include display-flex();
     }
 
     .slick-loading & {
@@ -566,7 +567,7 @@
     &.prev{
       height: 100%;
       width: 30px;
-      left: 10px;
+      left: 0;
       margin-top: 0;
       background: url(/images/common/back.png) no-repeat 0px 50%;
 
@@ -575,7 +576,7 @@
     &.next{
       margin-top: 0;
       height: 100%;
-      right: 10px;
+      right: 0;
       width: 30px;
       background: url(/images/common/next.png) no-repeat 0px 50%;
     }

@@ -28,7 +28,7 @@
                             </h3>
                         </div>
 
-                        <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3">
+                        <div class="section-bg__white padding-small uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3">
 
                             @foreach($articles as $article)
                                 @includeIf('visitor.components.article.grid_box_1', ['article' => $article])
@@ -74,7 +74,7 @@
                     </h3>
                 </div>
 
-                <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4">
+                <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4 padding-small">
                     @foreach($videos as $video)
                         @includeIf('visitor.components.video.video_grid_index', ['video' => $video])
                     @endforeach

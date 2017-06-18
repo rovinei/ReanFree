@@ -1,6 +1,6 @@
 @if(!empty($video))
 <div class="custom-grid__item">
-    <div class="uk-panel uk-panel-body">
+    <div class="uk-panel padding-small">
         <a href="{{ route('visitor.video.detail', $video->id) }}" class="post-grid__box">
             <div class="post-thumbnail">
                 <img src="@if($video->featured_image)
