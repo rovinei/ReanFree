@@ -3,25 +3,25 @@
 *,
 *:after,
 *::before{
-	@include box-sizing(border-box);
+    @include box-sizing(border-box);
 }
 
 html{
-	background: none;
-	background-image: none;
+    background: none;
+    background-image: none;
 }
 body{
-	position: relative;
-	background: #fafafa;
-	font-size: 14px;
-	font-weight: 400;
+    position: relative;
+    background: #fafafa;
+    font-size: 14px;
+    font-weight: 400;
     font-family: $font-opensans-cond;
-	-webkit-font-smoothing: antialiased;
-	font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
     -webkit-text-size-adjust:100%;
-	letter-spacing: 0;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
+    letter-spacing: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     &.responsive-nav__open{
         .responsive-navigation{
@@ -45,6 +45,7 @@ body{
     background: #fff;
     width: 100%;
     height: 80px;
+    top: 0;
     z-index: 10;
     @include clearfix();
 
@@ -545,10 +546,10 @@ body{
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;
+
     img{
         width: 100%;
-        display: block;
-
+        display: none;
     }
 }
 
@@ -897,6 +898,14 @@ body{
             }
         }
     }
+
+    .uk-overlay{
+        width: 100%;
+    }
+
+    img{
+        width: 100%;
+    }
 }
 
 .bottom-post{
@@ -1237,5 +1246,284 @@ body{
     }
 
 }
+
+/* Video pages */
+.video-slideshow{
+    position: relative;
+    background: #2a2a2a;
+}
+
+.video-slideshow__outter{
+    position: relative;
+    width: 100%;
+    padding: 30px 0;
+
+    .video-preview{
+        position: relative;
+        float: left;
+    }
+
+    .video-desc{
+        position: relative;
+        float: left;
+        background: rgba(0,0,0,0.3);
+    }
+}
+
+.video-desc{
+    .inner{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        & > * {
+            display: block;
+            float: left;
+            width: 100%;
+        }
+    }
+
+    .title{
+        font-family: $font-siemreap;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.8;
+    }
+
+    .datetime{
+        color: #c4c4c4;
+        font-size: 15px;
+        margin-bottom: 15px;
+
+        i{
+            margin-right: 5px;
+        }
+    }
+
+    .snippet{
+        color: #eee;
+        font-family: $font-siemreap;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .socials{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px 20px;
+    }
+}
+
+/* Video detail page */
+.video-detail{
+    position: relative;
+    width: 100%;
+    background: #2a2a2a;
+    @include clearfix();
+
+}
+.video-preview-fluid{
+    max-width: 980px;
+    padding: 0 25px;
+    margin-left: auto;
+    margin-right: auto;
+
+    iframe{
+        height: 500px;
+    }
+}
+
+.video-detail__bottom{
+
+    .detail-left{
+        position: relative;
+        width: calc(100% - 360px);
+        float: left;
+    }
+
+    .post-detail__title{
+        .title{
+            font-weight: 700;
+            font-family: "Open Sans", sans-serif;
+            font-size: 1.4rem;
+            color: #2a2a2a;
+            line-height: 1;
+        }
+    }
+
+    .post-detail__article{
+        p{
+            font-family: $font-siemreap;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+    }
+}
+
+.video-detail__sidebar{
+    position: relative;
+    float: left;
+    width: 360px;
+
+    .inner{
+        position: relative;
+        width: 100%;
+        padding-left: 15px;
+    }
+
+    .next-video{
+        display: block;
+        position: relative;
+        text-decoration: none;
+        border-radius: 2px;
+        width: 100%;
+        @include prefixer(transition, all 0.2s ease, webkit moz ms o);
+
+        &:hover,
+        &:focus,
+        &:visited{
+            text-decoration: none;
+            outline: none;
+            opacity: 0.9;
+        }
+
+        .thumbnail-outer{
+            width: 160px;
+        }
+
+        img{
+            width: 100%;
+            display: block;
+            vertical-align: top;
+        }
+
+        .text{
+            margin-left: 10px;
+
+        }
+
+        li{
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .next-text{
+            color: #9e9e9e;
+            font-weight: 500;
+        }
+        .next-text,
+        .next-title{
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+
+        .meta{
+            color: #9e9e9e;
+        }
+    }
+
+    .related-video__outer{
+        position: relative;
+        width: 100%;
+
+        .heading{
+            width: 100%;
+            position: relative;
+        }
+
+        .title{
+            margin: 0;
+            padding:15px 0;
+            font-weight: 700;
+            font-family: $font-opensans;
+            font-size: 1.4rem;
+        }
+
+        .total-episode{
+            font-size: 13px;
+            padding: 5px;
+            background: #fff;
+            vertical-align: middle;
+        }
+    }
+
+    .related-video{
+        position: relative;
+        width: 100%;
+
+        .link-item{
+            position: relative;
+            width: 100%;
+            display: block;
+            text-decoration: none;
+            @include clearfix();
+            @include prefixer(transition, all 0.2s ease, webkit moz ms o);
+
+            &:hover,
+            &:focus,
+            &:visited{
+                outline: none;
+                text-decoration: none;
+                opacity: 0.9;
+            }
+        }
+        .thumnail-outer{
+            width: 100%;
+            float: left;
+            position: relative;
+
+            img{
+                width: 100%;
+                display: block;
+                vertical-align: top;
+            }
+
+            .video-length{
+                color: #fff;
+                line-height: 1;
+                font-size: 12px;
+            }
+
+            .caption{
+                position: absolute;
+                right: 0;
+                padding: 2px 5px;
+                background: rgba(0,0,0,0.5);
+                bottom: 0;
+            }
+        }
+
+        .text{
+            width: 100%;
+            position: relative;
+            float: left;
+        }
+
+        .title{
+            padding: 0;
+            display: block;
+            padding-top: 5px;
+            font-size: 1.1rem;
+            color: #2a2a2a;
+        }
+
+        .meta{
+            display: block;
+            color: #9e9e9e;
+        }
+    }
+}
+
+.video-detail__title{
+    .title{
+        font-family: $font-siemreap;
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin: 0;
+    }
+}
+
 
 

@@ -6,4 +6,5 @@ return [
     'latest_song' => 'Popular Songs',
     'homepage' => 'Home',
     'article' => 'Article',
+    'video' => 'Video'
 ];

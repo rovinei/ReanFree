@@ -12,7 +12,7 @@
             </div>
             <div class="post-grid__caption">
                 <span class="post-grid__datetime">
-                    {{ $article->created_at->diffForHumans() }}
+                    {{ $article->created_at->format('D\\, d M\\, Y') }}
                 </span>
 
                 <p class="post-grid__title font-kh-freehand">

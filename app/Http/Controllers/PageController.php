@@ -52,10 +52,10 @@ class PageController extends Controller
                                 ->where('created_at', '<', Carbon::today())
                                 ->take(4)->get();
         return view('visitor.article.index')->with([
-                'categories' => $categories,
-                'articles' => $articles,
-                'suggestArticles' => $suggestArticles
-            ]);
+            'categories' => $categories,
+            'articles' => $articles,
+            'suggestArticles' => $suggestArticles
+        ]);
 
     }
 
@@ -128,7 +128,18 @@ class PageController extends Controller
 
     // Video Page
     public function videoPage(){
-
+        // Find categories of type video
+        $categories = CategoryType::find(3)->with(['categories'=>function($query){
+            $query->has('latestVideo')->get();
+        }])->first();
+        $videos = Post::where('mediatype_id', '=', 3)->latest()->take(12)->get();
+        $suggestVideos = Post::where('mediatype_id', '=', 3)
+                            ->take(8)->get();
+        return view('visitor.video.index')->with([
+            'categories' => $categories,
+            'videos' => $videos,
+            'suggestVideos' => $suggestVideos
+        ]);
     }
 
     // Video Category Page
