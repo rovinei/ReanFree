@@ -392,14 +392,22 @@ $transparentScrollbar: rgba(0,0,0,0.3);
 
 .custom-input-text{
   width: 100%;
-  border: 1px solid #dedede;
-  border-radius: 5px;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   font-size: 16px;
-  color: $primary_font_color;
-  height: 3em;
+  color: #6e6e6e;
+  height: auto;
   padding: 0.78em 0.88em;
-  font-weight: 600;
+  font-weight: 500;
+  padding: 12px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  @include prefixer(box-shadow, inset 0 1px 1px rgba(0,0,0,.075), webkit);
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  -moz-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  -ms-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 
   &::-webkit-input-placeholder{
     color: #d5d5d5;
@@ -476,11 +484,13 @@ $transparentScrollbar: rgba(0,0,0,0.3);
 
   select{
     border-radius: 0 5px 5px 0;
+    border: 1px dashed;
   }
 }
 .media_-select{
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 80px;
+  width: 85px;
+  max-width: 85px;
 
   select{
     border-radius: 5px 0 0 5px;
@@ -621,7 +631,7 @@ $transparentScrollbar: rgba(0,0,0,0.3);
   margin-top: 20px;
   min-height: 130px;
   background: rgba(#CFAA9E, 0.2);
-  border: 1px solid #dedede;
+  border: 2px dashed #dedede;
 
   p{
     position: absolute;
@@ -667,9 +677,9 @@ $transparentScrollbar: rgba(0,0,0,0.3);
 /* Sidebar advanced options form */
 .sidebar-form-advance{
   position: relative;
-  min-width: 200px;
-  max-width: 250px;
-  width: 250px;
+  min-width: 250px;
+  max-width: 280px;
+  width: 280px;
   background: #fff;
   border-left: 1px solid #d5d5d5;
 
@@ -790,14 +800,17 @@ button.action-btn {
     opacity: 0;
     @include prefixer(transform, scale(0.2, 0.2), webkit moz ms o);
     @include prefixer(transition, transform 0.2s ease, webkit moz ms o);
-    li{
+    a, li{
       list-style-type: none;
       display: block;
       padding: 10px 30px;
+      text-decoration: none;
+      color: $primary_font_color;
       cursor: pointer;
 
       &:hover{
         background: #f1f1f1;
+        text-decoration: none;
       }
     }
 

@@ -259,11 +259,11 @@
 @endsection
 
 @push('script_dependencies')
-    <script type="text/javascript" src="{{ asset('admin/plugins/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('admin/plugins/tinymce/tinymce-config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admins/plugins/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admins/plugins/tinymce/tinymce-config.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/done-typing.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('admin/js/script.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('admin/js/crud.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admins/js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admins/js/crud.js') }}"></script>
 @endpush
 
 @section('script')

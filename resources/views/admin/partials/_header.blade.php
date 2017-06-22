@@ -10,8 +10,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit/css/uikit.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/uikit/css/uikit-rtl.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('admin/css/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('admins/css/dashboard.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/chartist-tooltip.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('admin/plugins/sweetalert/dist/sweetalert.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('admin/plugins/morris/morris.css') }}">
-<script src="{{ asset('admin/plugins/sweetalert/dist/sweetalert.min.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('admins/plugins/sweetalert/dist/sweetalert.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('admins/plugins/morris/morris.css') }}">
+<script src="{{ asset('admins/plugins/sweetalert/dist/sweetalert.min.js') }}"></script>

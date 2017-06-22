@@ -10,25 +10,25 @@ jQuery(function($){
             case 'sound':
                 $(iframe).attr(
                     'src',
-                    "/admin/filemanager/dialog.php?type=2&field_id=sound_url'&fldr=musics"
+                    "/admins/filemanager/dialog.php?type=2&field_id=sound_url'&fldr=musics"
                 );
                 break;
             case 'image':
                 $(iframe).attr(
                     'src',
-                    "/admin/filemanager/dialog.php?type=1&field_id=txtFeaturedImage'&fldr=images"
+                    "/admins/filemanager/dialog.php?type=1&field_id=txtFeaturedImage'&fldr=images"
                 );
                 break;
             case 'video':
                 $(iframe).attr(
                     'src',
-                    "/admin/filemanager/dialog.php?type=3&field_id=video_url'&fldr=videos"
+                    "/admins/filemanager/dialog.php?type=3&field_id=video_url'&fldr=videos"
                 );
                 break;
             default:
                 $(iframe).attr(
                     'src',
-                    "/admin/filemanager/dialog.php?type=1&field_id=txtFeaturedImage'&fldr="
+                    "/admins/filemanager/dialog.php?type=1&field_id=txtFeaturedImage'&fldr="
                 );
         }
         uploadImageModal.toggle();

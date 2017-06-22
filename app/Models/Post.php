@@ -111,7 +111,6 @@ class Post extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
-
     public function setSoundUrlAttribute($value){
         $this->attributes['sound_url'] = str_replace(URL('/'),'',$value);
     }

@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>180 Media News | Admin Login Page</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-</head>
-<body>
+@extends('layouts.app')
 
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -64,7 +59,7 @@
                                     Login
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link" href="{{ route('admin.password.request') }}">
                                     Forgot Your Password?
                                 </a>
                             </div>
@@ -75,6 +70,4 @@
         </div>
     </div>
 </div>
-
-</body>
-</html>
+@endsection

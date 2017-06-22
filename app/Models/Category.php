@@ -87,4 +87,28 @@ class Category extends Model
 
         return $this->hasMany('App\Models\Post');
     }
+
+    /**
+     * @override boot function in order to fire up model events
+     * creating, created, update, deleting ...
+     *
+     */
+    public static function boot(){
+        parent::boot();
+
+        static::deleting(function($category){
+            try {
+                $category->mediaTypes()->sync([]);
+                $category->posts()->each(function($post){
+                    try{
+                        $post->category()->dissociate();
+                    }catch(Exception $e){
+                        throw new Exception("Error Processing while remove relationship with posts", 1);
+                    }
+                });
+            } catch (Exception $e) {
+                throw new Exception("Error Processing while deleting", 1);
+            }
+        });
+    }
 }

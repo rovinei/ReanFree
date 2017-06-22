@@ -44,7 +44,10 @@ class AdminLoginController extends Controller
      *
      * @return resources/view/admin/auth/login
      */
-    public function showLoginForm(){
+    public function showLoginForm(Request $request){
+        if(Auth::guard('admin')->check()){
+            return redirect()->route('admin.dashboard.alias');
+        }
         return view('admin.auth.login');
     }
 
@@ -63,7 +66,7 @@ class AdminLoginController extends Controller
             ], $request->remember)){
 
             // if successful, then redirect to their intent location
-            return redirect()->intended(route('admin.dashboard'));
+            return redirect()->intended(route('admin.dashboard.alias'));
 
         }
 

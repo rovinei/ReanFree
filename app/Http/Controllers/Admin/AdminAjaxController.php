@@ -21,6 +21,7 @@ use Session;
 
 class AdminAjaxController extends Controller
 {
+    // Get categories by media type
     public function getTypeCategories(Request $request){
         if($request->ajax()){
             if($request->has('typeid')){
@@ -59,6 +60,7 @@ class AdminAjaxController extends Controller
         return redirect()->back();
     }
 
+    // Add serie
     public function addSerie(Request $request){
         if($request->ajax()){
             if($request->has('title') & $request->has('type')){
@@ -114,6 +116,7 @@ class AdminAjaxController extends Controller
         return redirect()->back();
     }
 
+    // Remove post by id
     public function removePost(Request $request){
         if($request->ajax()){
 
@@ -166,6 +169,60 @@ class AdminAjaxController extends Controller
         }
 
         // Return if rquest not an AJAX
+        return redirect()->back();
+    }
+
+    // Remove category
+    public function removeCategory(Request $request){
+        if($request->ajax()){
+            // Determine if category exist
+            if($request->has('id')){
+                $categoryId = $request->input('id');
+                try{
+                    $category = Category::findOrFail($categoryId);
+                }catch(ModelNotFoundException $e){
+                    return response()->json([
+                        "status" => 202,
+                        "error" => [
+                            "code" => 202,
+                            "message" => "No Query result found for category ID : ".$categoryId
+                        ]
+                    ]);
+                }
+
+                // Try to delete post
+                try{
+                    $category->delete();
+                }catch(Exception $e){
+                    return response()->json([
+                        "status" => 505,
+                        "error" => [
+                            "code" => 505,
+                            "message" => "Error while trying to delete category"
+                        ]
+                    ]);
+                }
+
+                // Response with successful message
+                return response()->json([
+                    "status" => 200,
+                    "success" => [
+                        "code" => 200,
+                        "message" => "Successfully deleted category with ID : ".$categoryId
+                    ]
+                ]);
+            }
+
+            // Request must specify post id
+            return response()->json([
+                "status" => 202,
+                "error" => [
+                    "code" => 202,
+                    "message" => "Invalid request data"
+                ]
+            ]);
+        }
+
         return redirect()->back();
     }
 

@@ -102,7 +102,7 @@
 @endsection
 
 @push('script_dependencies')
-<script src="{{ asset('admin/js/crud.js') }}"></script>
+<script src="{{ asset('admins/js/crud.js') }}"></script>
 @endpush
 
 @section('script')

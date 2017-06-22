@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Admin File Entries List')
+@section('title', 'Admin display list of category')
 
 @section('style')
     <style></style>
@@ -17,42 +17,44 @@
                     <table class="custom-table uk-table uk-table-hover">
                         <thead>
                             <th>N|O</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <!-- <th>Content</th>
-                            <th>Thumbnail</th> -->
-                            <th>Publisher</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Created By</th>
+                            <th>Updated By</th>
                             <th></th>
                         </thead>
                         <tbody>
-                            @foreach($files as $key => $file)
+                            @foreach($categories as $key => $category)
                             <tr>
-                                <td>{{ $files->perPage() * ($files->currentPage() - 1) + (++$key) }}</td>
-                                <td class="uk-table-shrink">{{ $file->filename.'.'.$file->extension }}</td>
+                                <td>{{ $categories->perPage() * ($categories->currentPage() - 1) + (++$key) }}</td>
+                                <td>{{ Str::title($category->name) }}</td>
                                 <td>
-                                   {{ $file->mime }}
+                                    @if($category->description == "" | $category->description == null)
+                                        --unknown--
+                                    @else
+                                        {{ $category->description }}
+                                    @endif
                                 </td>
+
                                 <td>
-                                @if($post->created_by != null)
-                                    {{ $post->createdBy->username }}
+                                @if($category->created_by != null)
+                                    {{ $category->createdBy->username }}
+                                @else
+                                    --annonymous--
                                 @endif
                                 </td>
                                 <td>
-                                @if($post->updated_by != null)
-                                    {{ $post->updatedBy->username }}
+                                @if($category->updated_by != null)
+                                    {{ $category->updatedBy->username }}
+                                @else
+                                    ----
                                 @endif
                                 </td>
-                                <td>{{ $post->created_at }}</td>
-                                <td>{{ $post->updated_at }}</td>
                                 <td>
                                     <button class="action-btn"><i class="fa fa-ellipsis-v"></i></button>
 
-                                    <div data-file-id="{{ $file->id }}" class="action-box uk-card uk-card-default uk-card-body">
-                                        <a href="{{ route('admin.file.edit', $file->id) }}" class="btnEdit">Edit &amp; Update</a>
+                                    <div data-post-id="{{ $category->id }}" class="action-box uk-card uk-card-default uk-card-body">
+                                        <a href="{{ route('admin.category.edit', $category->id) }}" class="btnEdit">Edit &amp; Update</a>
                                         <li class="btnRemove">Remove</li>
                                         <li class="btnView">View</li>
                                     </div>
@@ -65,7 +67,7 @@
 
                 <div class="footer">
                     <div class="uk-width-1-1">
-                        {{ $files->links('vendor.pagination.default') }}
+                        {{ $categories->links('vendor.pagination.default') }}
                     </div>
                 </div>
             </div>
@@ -88,7 +90,7 @@
              */
             $('.action-btn').on('click', function(e){
                 e.preventDefault();
-                $('.action-box.visible').not($(this).child('.action-box')).removeClass('visible');
+                $('.action-box.visible').removeClass('visible');
                 $(this).parent('td').find('.action-box').toggleClass('visible');
             });
 
@@ -98,7 +100,7 @@
             $('.btnRemove').on('click', function(e){
                 e.preventDefault();
                 var self = $(this);
-                var route = "{{ route('admin.ajax.delete_post') }}",
+                var route = "{{ route('admin.ajax.delete_category') }}",
                     data = {
                         id: $(this).parent('.action-box').attr('data-post-id')
                     },

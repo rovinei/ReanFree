@@ -366,10 +366,10 @@
 @endsection
 
 @push('script_dependencies')
-    <script src="{{ asset('admin/plugins/morris/morris.min.js') }}"></script>
-    <script src="{{ asset('admin/js/chartist.min.js') }}"></script>
+    <script src="{{ asset('admins/plugins/morris/morris.min.js') }}"></script>
+    <script src="{{ asset('admins/js/chartist.min.js') }}"></script>
     <script src="{{ asset('js/chartist-tooltip.js') }}"></script>
-    <script src="{{ asset('admin/js/dashboard.js') }}"></script>
+    <script src="{{ asset('admins/js/dashboard.js') }}"></script>
 @endpush
 
 @section('script')

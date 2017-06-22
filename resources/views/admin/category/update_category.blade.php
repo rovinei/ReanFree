@@ -2,37 +2,6 @@
 
 @section('title', 'Admin dashboard overview')
 
-@push('styles')
-    <style>
-        #soundUpload,
-        #videoUpload{
-            display: none;
-            opacity: 0;
-            -webkit-transform: scale(0.3,0.3);
-            -moz-transform: scale(0.3,0.3);
-            -ms-transform: scale(0.3,0.3);
-            -o-transform: scale(0.3,0.3);
-            transform: scale(0.3,0.3);
-            -webkit-transition: opacity 0.2s linear, transform 0.25s ease;
-            -moz-transition: opacity 0.2s linear, transform 0.25s ease;
-            -ms-transition: opacity 0.2s linear, transform 0.25s ease;
-            -o-transition: opacity 0.2s linear, transform 0.25s ease;
-            transition: opacity 0.2s linear, transform 0.25s ease;
-        }
-
-        #soundUpload.visible,
-        #videoUpload.visible{
-            display: block;
-            opacity: 1;
-            -webkit-transform: scale(1,1);
-            -moz-transform: scale(1,1);
-            -ms-transform: scale(1,1);
-            -o-transform: scale(1,1);
-            transform: scale(1,1);
-        }
-    </style>
-@endpush
-
 @section('content')
 
     <div>

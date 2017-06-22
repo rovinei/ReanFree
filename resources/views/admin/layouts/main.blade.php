@@ -22,7 +22,7 @@
     <script src="{{ asset('lib/uikit/js/uikit.min.js') }}"></script>
     <script src="{{ asset('lib/modernizr/modernizr.min.js') }}"></script>
     <!-- FastClick -->
-    <script src="{{ asset('admin/plugins/fastclick/fastclick.min.js') }}"></script>
+    <script src="{{ asset('admins/plugins/fastclick/fastclick.min.js') }}"></script>
     @stack('script_dependencies')
 
     @yield('script')

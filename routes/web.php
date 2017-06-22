@@ -11,7 +11,6 @@
 |
 */
 
-Auth::routes();
 
 // Admin Authentication Route Group
 Route::group([
@@ -21,7 +20,13 @@ Route::group([
 
     Route::get('login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'Auth\AdminLoginController@login')->name('admin.submit.login');
-    Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::get('logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
+    // Password Reset Routes...
+    Route::get('password/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+    Route::post('password/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+    Route::get('password/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
+    Route::post('password/reset', 'Auth\AdminResetPasswordController@reset');
 
 });
 
@@ -150,6 +155,7 @@ Route::group([
 
     Route::post('posts/{post_id?}', 'AdminAjaxController@getPosts')->name('admin.ajax.posts');
     Route::delete('posts/remove', 'AdminAjaxController@removePost')->name('admin.ajax.delete_post');
+    Route::delete('category/remove', 'AdminAjaxController@removeCategory')->name('admin.ajax.delete_category');
     Route::post('users/{user_id?}', 'AdminAjaxController@getUsers')->name('admin.ajax.users');
     Route::post('admins/{admin_id?}', 'AdminAjaxController@getAdmins')->name('admin.ajax.admins');
     Route::post('upload_image', 'ImageController@store')->name('admin.ajax.upload_image');

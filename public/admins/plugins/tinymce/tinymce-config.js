@@ -1,9 +1,9 @@
 jQuery(function($){
     tinymce.init({
         selector: "textarea",theme: "modern", width: "99.5%",height: 300,
-        external_filemanager_path:"/admin/filemanager/",
+        external_filemanager_path:"/admins/filemanager/",
         filemanager_title:"Responsive Filemanager" ,
-        external_plugins: { "filemanager" : "/admin/filemanager/plugin.min.js"},
+        external_plugins: { "filemanager" : "/admins/filemanager/plugin.min.js"},
         plugins: [
             "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
             "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
@@ -21,7 +21,7 @@ jQuery(function($){
             x = w.innerWidth || e.clientWidth || g.clientWidth,
             y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-            var cmsURL = $('meta[name="domain"]').attr('content')+"/admin/filemanager/show?&field_name="+field_name+"&lang="+tinymce.settings.language;
+            var cmsURL = $('meta[name="domain"]').attr('content')+"/admins/filemanager/show?&field_name="+field_name+"&lang="+tinymce.settings.language;
 
             if(type == "image") {
                 cmsURL = cmsURL + "&type=images";
