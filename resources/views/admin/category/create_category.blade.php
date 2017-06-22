@@ -72,7 +72,7 @@
                                     </div>
 
                                     <div class="custom-form-group">
-                                        <div class="">
+                                        <div class="selectize-md">
                                             <select id="mediaField" name="mediatype_id" required>
                                                 <option hidden>Attach to type</option>
                                             </select>
