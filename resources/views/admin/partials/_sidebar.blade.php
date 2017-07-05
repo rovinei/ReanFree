@@ -38,14 +38,8 @@
 
                         <ul class="">
                             <li class="uk-active">
-                                <a href="#">
+                                <a href="{{ route('admin.tags') }}">
                                     <i class="fa fa-newspaper-o"></i> List All Tags
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-plus-square-o"></i>
-                                    Create Tag
                                 </a>
                             </li>
                         </ul>
@@ -72,40 +66,21 @@
 
                     </div>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-folder-open-o"></i> File Management</a>
-                    <div class="dropdown-nav">
 
-                        <ul class="">
-                            <li class="uk-active">
-                                <a href="{{ route('admin.files') }}">
-                                    <i class="fa fa-newspaper-o"></i> Files Entry List
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.file.create') }}">
-                                    <i class="fa fa-plus-square-o"></i>
-                                    Create File Entry
-                                </a>
-                            </li>
-                        </ul>
-
-                    </div>
-                </li>
                 <li>
-                    <a href="#"><i class="fa fa-users"></i> Staff Management</a>
+                    <a href="#"><i class="fa fa-users"></i> Author Management</a>
                     <div class="dropdown-nav">
 
                         <ul class="">
                             <li class="uk-active">
                                 <a href="#">
-                                    <i class="fa fa-newspaper-o"></i> List All Posts
+                                    <i class="fa fa-newspaper-o"></i> Manage Author
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
                                     <i class="fa fa-plus-square-o"></i>
-                                    Publish New Post
+                                    Register Author
                                 </a>
                             </li>
                         </ul>

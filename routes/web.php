@@ -67,6 +67,12 @@ Route::group([
     Route::post('category/{category_id}/edit', 'CategoryController@update')->name('admin.category.update');
     Route::delete('category/remove', 'CategoryController@destroy')->name('admin.category.destroy');
 
+    // Tag CRUD Operation
+    Route::get('tags', 'TagController@index')->name('admin.tags');
+    Route::get('tag/attach', 'TagController@getAttachForm')->name('admin.tag.attach_form');
+    Route::post('tag/attach', 'TagController@attach')->name('admin.tag.attach');
+    Route::delete('tag/remove', 'TagController@destroy')->name('admin.tag.destroy');
+
     // Media Type CRUD Operation
     Route::get('media_type', 'MediaTypeController@index')->name('admin.media_types');
     Route::get('media_type/add', 'MediaTypeController@create')->name('admin.media_type.create');
@@ -94,7 +100,7 @@ Route::group([
     Route::post('users/{user_id}/edit', 'UserController@update')->name('admin.users.update');
     Route::post('users/{user_id}/remove', 'UserController@destroy')->name('admin.users.destroy');
 
-    // Admin CRUD Operation
+    // Author CRUD Operation
     Route::get('admins', 'AdminUserController@index')->name('admin.admins');
     Route::get('admins/add', 'AdminUserController@create')->name('admin.admins.create');
     Route::post('admins/add', 'AdminUserController@store')->name('admin.admins.store');
@@ -156,6 +162,8 @@ Route::group([
     Route::post('posts/{post_id?}', 'AdminAjaxController@getPosts')->name('admin.ajax.posts');
     Route::delete('posts/remove', 'AdminAjaxController@removePost')->name('admin.ajax.delete_post');
     Route::delete('category/remove', 'AdminAjaxController@removeCategory')->name('admin.ajax.delete_category');
+    Route::delete('tag/remove', 'AdminAjaxController@removeTag')->name('admin.ajax.remove_tag');
+    Route::post('loadPostsTitle', 'AdminAjaxController@loadPostsTitle')->name('admin.ajax.loadPostTitle');
     Route::post('users/{user_id?}', 'AdminAjaxController@getUsers')->name('admin.ajax.users');
     Route::post('admins/{admin_id?}', 'AdminAjaxController@getAdmins')->name('admin.ajax.admins');
     Route::post('upload_image', 'ImageController@store')->name('admin.ajax.upload_image');

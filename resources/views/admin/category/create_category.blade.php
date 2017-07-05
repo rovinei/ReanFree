@@ -73,9 +73,7 @@
 
                                     <div class="custom-form-group">
                                         <div class="selectize-md">
-                                            <select id="mediaField" name="mediatype_id" required>
-                                                <option hidden>Attach to type</option>
-                                            </select>
+                                            <input type="text" id="mediaField" name="mediatype_id" required/>
                                         </div>
                                     </div>
 
@@ -115,6 +113,7 @@
             var mediaSelect = $('#mediaField').selectize({
                 delimiter: ',',
                 persist: false,
+                create: false,
                 valueField: 'mediaId',
                 labelField: 'mediaName',
                 searchField: 'mediaName',

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Category;
+use App\Models\CategoryType;
+use App\Http\Requests\UpdateCategory;
+use Validator;
 use Auth;
 use Session;
 class CategoryController extends Controller
@@ -30,7 +33,7 @@ class CategoryController extends Controller
         // Validate form data
         $this->validate($request,[
             'name' => 'required|min:5|unique:categories',
-            'mediatype_id' => 'required|numeric|max:2'
+            'mediatype_id' => 'required'
         ]);
 
         // Create and Store new category
@@ -38,7 +41,7 @@ class CategoryController extends Controller
             $category = new Category($request->all());
             $category->createdBy()->associate(Auth::user());
             $category->save();
-            $category->mediaTypes()->attach($request->mediatype_id);
+            $category->mediaTypes()->attach(explode(',', $request->mediatype_id));
             $category->save();
             Session::flash('success_message', 'Category '.$category->name.' successfully created.');
             return redirect()->back();
@@ -54,8 +57,12 @@ class CategoryController extends Controller
 
         // Determine if category existed
         try{
-            $category = Category::firstOrFail($category_id);
-            return view('admin.category.update_category')->with(['category', $category]);
+            $category = Category::findOrFail($category_id);
+            $mediatypes = CategoryType::where('category_id', $category_id)->pluck('mediatype_id')->toArray();
+            return view('admin.category.update_category')->with([
+                'category' => $category,
+                'mediatypes' => $mediatypes
+            ]);
         }catch(ModelNotFoundException $e){
             Session::flash('error_message', 'Query return 0 result, Category cannot be found with this id : '.$category_id);
             return redirect()->back();
@@ -63,21 +70,21 @@ class CategoryController extends Controller
     }
 
     // Update category
-    public function update(Request $request, $category_id){
-
-        // Validate form data
-        $this->validate($request, [
-            'name' => 'required|min:5|unique:categories',
-            'mediatype_id' => 'required|numeric|max:2'
-        ]);
+    public function update(UpdateCategory $request, $category_id){
 
         // Determine if category exists
         try{
             $category = Category::firstOrFail($category_id);
             $category->updatedBy()->associate(Auth::user());
+            $category->mediaTypes()->sync(explode(',', $request->mediatype_id));
             $category->update($request->all());
         }catch(Exception $e){
-
+            Session::flash('error_message', 'Error while updating category, Please try again!');
+            return redirect()->back();
         }
+
+        Session::flash('success_message', 'Successfully updated category');
+        return redirect()->back();
+
     }
 }

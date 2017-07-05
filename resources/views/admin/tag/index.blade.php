@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Admin display list of category')
+@section('title', '180 Inspire Admin panel | Display list of tag')
 
 @section('content')
 <div class="uk-section">
@@ -14,45 +14,27 @@
                         <thead>
                             <th>N|O</th>
                             <th>Name</th>
-                            <th>Description</th>
-                            <th>Created By</th>
-                            <th>Updated By</th>
+                            <th>Total Post</th>
                             <th></th>
                         </thead>
                         <tbody id="tableData">
-                            @foreach($categories as $key => $category)
+                            @foreach($tags as $key => $tag)
                             <tr>
-                                <td class="order-number">{{ $categories->perPage() * ($categories->currentPage() - 1) + (++$key) }}</td>
-                                <td>{{ Str::title($category->name) }}</td>
+                                <td class="order-number">{{ $tags->perPage() * ($tags->currentPage() - 1) + (++$key) }}</td>
+                                <td>{{ Str::title($tag->name) }}</td>
                                 <td>
-                                    @if($category->description == "" | $category->description == null)
-                                        --unknown--
+                                    @if($tag->count > 0)
+                                        <span class="uk-badge badge-primary">{{ $tag->count }}</span>
                                     @else
-                                        {{ $category->description }}
+                                        <span class="uk-badge badge-warning">None</span>
                                     @endif
                                 </td>
 
                                 <td>
-                                @if($category->created_by != null)
-                                    {{ $category->createdBy->username }}
-                                @else
-                                    --annonymous--
-                                @endif
-                                </td>
-                                <td>
-                                @if($category->updated_by != null)
-                                    {{ $category->updatedBy->username }}
-                                @else
-                                    ----
-                                @endif
-                                </td>
-                                <td>
                                     <button class="action-btn"><i class="fa fa-ellipsis-v"></i></button>
 
-                                    <div data-post-id="{{ $category->id }}" class="action-box uk-card uk-card-body">
-                                        <a href="{{ route('admin.category.edit', $category->id) }}" class="btnEdit">Edit &amp; Update</a>
-                                        <li class="btnRemove">Remove</li>
-                                        <li class="btnView">View</li>
+                                    <div data-tag-id="{{ $tag->id }}" data-tag-slug="{{ $tag->slug }}" class="action-box uk-card uk-card-body">
+                                        <li class="btnRemove">Remove &amp; Detach</li>
                                     </div>
                                 </td>
                             </tr>
@@ -63,7 +45,7 @@
 
                 <div class="footer">
                     <div class="uk-width-1-1">
-                        {{ $categories->links('vendor.pagination.default') }}
+                        {{ $tags->links('vendor.pagination.default') }}
                     </div>
                 </div>
             </div>
@@ -81,11 +63,17 @@
 @section('script')
     <script>
         $(document).ready(function(){
+
+            $(window).click(function() {
+                $('.action-box.visible').removeClass('visible');
+            });
+
             /**
              * Toggle visibility of action card box
              */
             $('.action-btn').on('click', function(e){
                 e.preventDefault();
+                e.stopPropagation();
                 var target = $(this).parent('td').find('.action-box');
                 $('.action-box.visible').not(target).removeClass('visible');
                 $(target).toggleClass('visible');
@@ -97,9 +85,9 @@
             $('.btnRemove').on('click', function(e){
                 e.preventDefault();
                 var self = $(this);
-                var route = "{{ route('admin.ajax.delete_category') }}",
+                var route = "{{ route('admin.ajax.remove_tag') }}",
                     data = {
-                        id: $(this).parent('.action-box').attr('data-post-id')
+                        slug: $(this).parent('.action-box').attr('data-tag-slug')
                     },
                     csrfToken = $('meta[name="csrf-token"]').attr('content');
                 BIGK.crud.deleteRecord(route, data, csrfToken, function(){
@@ -110,9 +98,7 @@
                 });
             });
 
-            /**
-             * Handle update
-             */
+
 
         });
     </script>

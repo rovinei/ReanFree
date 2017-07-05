@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class Category extends Model
 {
-
-    use SoftDeletes;
 
     /**
      * The guard which protect this model and table
@@ -87,6 +86,7 @@ class Category extends Model
 
         return $this->hasMany('App\Models\Post');
     }
+
 
     /**
      * @override boot function in order to fire up model events

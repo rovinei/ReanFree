@@ -798,6 +798,9 @@ button.action-btn {
     z-index: 1;
     visibility: hidden;
     opacity: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    background: #fff;
+    border: 1px solid #f5f5f5;
     @include prefixer(transform, scale(0.2, 0.2), webkit moz ms o);
     @include prefixer(transition, transform 0.2s ease, webkit moz ms o);
     a, li{
@@ -826,6 +829,7 @@ button.action-btn {
 .selectize-md{
   .selectize-input{
     padding: 12px;
+    border-radius: 4px;
 
     & > input{
       font-size: 16px;

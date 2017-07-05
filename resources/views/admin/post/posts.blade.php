@@ -2,10 +2,6 @@
 
 @section('title', 'Admin Posts Display')
 
-@section('style')
-    <style></style>
-@endsection
-
 @section('content')
 <div class="uk-section">
     <div class="uk-container">
@@ -28,10 +24,10 @@
                             <th>Updated At</th>
                             <th></th>
                         </thead>
-                        <tbody>
+                        <tbody id="tableData">
                             @foreach($posts as $key => $post)
                             <tr>
-                                <td>{{ $posts->perPage() * ($posts->currentPage() - 1) + (++$key) }}</td>
+                                <td class="order-number">{{ $posts->perPage() * ($posts->currentPage() - 1) + (++$key) }}</td>
                                 <td class="uk-table-shrink">{{ Str::title($post->title) }}</td>
                                 <td>
                                     @if($post->category_id != null)
@@ -76,7 +72,7 @@
                                 <td>
                                     <button class="action-btn"><i class="fa fa-ellipsis-v"></i></button>
 
-                                    <div data-post-id="{{ $post->id }}" class="action-box uk-card uk-card-default uk-card-body">
+                                    <div data-post-id="{{ $post->id }}" class="action-box uk-card uk-card-body">
                                         <a href="{{ route('admin.post.edit', $post->id) }}" class="btnEdit">Edit &amp; Update</a>
                                         <li class="btnRemove">Remove</li>
                                         <li class="btnView">View</li>
@@ -113,8 +109,9 @@
              */
             $('.action-btn').on('click', function(e){
                 e.preventDefault();
-                $('.action-box.visible').removeClass('visible');
-                $(this).parent('td').find('.action-box').toggleClass('visible');
+                var target = $(this).parent('td').find('.action-box');
+                $('.action-box.visible').not(target).removeClass('visible');
+                $(target).toggleClass('visible');
             });
 
             /**
@@ -130,6 +127,9 @@
                     csrfToken = $('meta[name="csrf-token"]').attr('content');
                 BIGK.crud.deleteRecord(route, data, csrfToken, function(){
                     $(self).parents('tr').remove();
+                    $('#tableData').find('tr').each(function(i, k, v){
+                        $(this).find('.order-number').empty().text(++i);
+                    });
                 });
             });
 

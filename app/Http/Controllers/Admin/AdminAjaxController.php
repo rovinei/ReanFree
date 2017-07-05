@@ -16,6 +16,8 @@ use App\Models\FileEntry;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Department;
+use Conner\Tagging\Model\Tag;
+use Conner\Tagging\Model\Tagged;
 use Auth;
 use Session;
 
@@ -219,6 +221,86 @@ class AdminAjaxController extends Controller
                 "error" => [
                     "code" => 202,
                     "message" => "Invalid request data"
+                ]
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    // Remove tag
+    public function removeTag(Request $request){
+
+        if($request->ajax()){
+
+            // Check if request had slug field
+            if($request->has('slug')){
+
+                try {
+                    Tag::where('slug', $request->slug)->firstOrFail()->delete();
+                    Tagged::where('tag_slug', $request->slug)->delete();
+                } catch (ModelNotFoundException $e) {
+                    // No tag found
+                    return response()->json([
+                        "status" => 404,
+                        "error" => [
+                            "code" => 404,
+                            "message" => "No tag found!"
+                        ]
+                    ]);
+                }
+
+                // Success deleted
+                return response()->json([
+                    "status" => 200,
+                    "success" => [
+                        "code" => 200,
+                        "message" => "Successfully deleted tag and detached from posts"
+                    ]
+                ]);
+            }
+
+            // Request must specify tag slug field
+            return response()->json([
+                "status" => 202,
+                "error" => [
+                    "code" => 202,
+                    "message" => "Invalid request data, slug field not found!"
+                ]
+            ]);
+        }
+    }
+
+    // Load post {id and title}
+    public function loadPostsTitle(Request $request){
+
+        // Allow only ajax request
+        if($request->ajax()){
+            $query = $request->input('query');
+            $tag = $request->input('tag');
+            try {
+                $posts = Post::withoutTags([$tag])
+                        ->where('title','like','%'.$query.'%')
+                        ->orderBy('created_at', 'desc')
+                        ->take(30)
+                        ->pluck('title','id');
+            } catch (Exception $e) {
+                return response()->json([
+                    "status" => 500,
+                    "error" => [
+                        "code" => 500,
+                        "message" => "Oop! Something went wrong!"
+                    ]
+                ]);
+            }
+
+            // Success retrived posts
+            return response()->json([
+                "status" => 200,
+                "data" => $posts,
+                "success" => [
+                    "code" => 200,
+                    "message" => "Successfully deleted tag and detached from posts"
                 ]
             ]);
         }
