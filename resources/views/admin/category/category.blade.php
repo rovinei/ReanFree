@@ -81,11 +81,17 @@
 @section('script')
     <script>
         $(document).ready(function(){
+
+            $(window).click(function() {
+                $('.action-box.visible').removeClass('visible');
+            });
+
             /**
              * Toggle visibility of action card box
              */
             $('.action-btn').on('click', function(e){
                 e.preventDefault();
+                e.stopPropagation();
                 var target = $(this).parent('td').find('.action-box');
                 $('.action-box.visible').not(target).removeClass('visible');
                 $(target).toggleClass('visible');

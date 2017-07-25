@@ -22,13 +22,13 @@ class DashboardController extends Controller
         $articlesCount = Post::where('mediatype_id', '=', 1)->count();
         $soundsCount = Post::where('mediatype_id', '=', 2)->count();
         $videosCount = Post::where('mediatype_id', '=', 3)->count();
-        $categoriesCount = Category::count();
+        $categoriesCount = Category::all()->count();
         $tagsCount = DB::table('tagging_tags')->count();
-        $seriesCount = PlaylistSerie::count();
-        $usersCount = User::count();
-        $staffsCount = Admin::count();
-        $departmentsCount = Department::count();
-        $filesCount = FileEntry::count();
+        $seriesCount = PlaylistSerie::all()->count();
+        $usersCount = User::all()->count();
+        $staffsCount = Admin::all()->count();
+        $departmentsCount = Department::all()->count();
+        $filesCount = FileEntry::all()->count();
         return view('admin.dashboard')->with([
             'articlesCount' => $articlesCount,
             'soundsCount' => $soundsCount,

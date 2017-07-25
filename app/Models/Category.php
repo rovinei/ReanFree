@@ -66,25 +66,60 @@ class Category extends Model
 
     public function latestArticle()
     {
-      return $this->hasOne('App\Models\Post')->where('mediatype_id', '=', 1)->latest();
+      return $this->hasOne('App\Models\Post')->where([
+                    ['mediatype_id', 1],
+                    ['status', 1]
+                  ])->latest();
+    }
+
+    public function latestArticleSerie(){
+        return $this->hasOne('App\Models\PlaylistSerie')
+                    ->where(['mediatype_id', 1])
+                    ->latest();
     }
 
     public function latestAudio()
     {
-      return $this->hasOne('App\Models\Post')->where('mediatype_id', '=', 2)->latest();
+      return $this->hasOne('App\Models\Post')->where([
+                    ['mediatype_id', 2],
+                    ['status', 1]
+                  ])->latest();
+    }
+
+    public function latestAudioAlbum(){
+        return $this->hasOne('App\Models\PlaylistSerie')
+                    ->where('mediatype_id', 2)
+                    ->whereHas('posts')
+                    ->latest();
     }
 
     public function latestVideo()
     {
-      return $this->hasOne('App\Models\Post')->where('mediatype_id', '=', 3)->latest();
+      return $this->hasOne('App\Models\Post')->where([
+                    ['mediatype_id', 3],
+                    ['status', 1]
+                  ])->latest();
+    }
+
+    public function latestVideoPlaylist(){
+        return $this->hasOne('App\Models\PlaylistSerie')
+                    ->where(['mediatype_id', 3])
+                    ->latest();
+    }
+
+    public function album(){
+        $this->hasMany('App\Models\PlaylistSerie');
     }
 
     public function posts($type=null){
         if(!$type==null){
-            return $this->hasMany('App\Models\Post')->where('mediatype_id', '=', $type);
+            return $this->hasMany('App\Models\Post')->where([
+                          ['mediatype_id', $type],
+                          ['status', 1]
+                        ]);
         }
 
-        return $this->hasMany('App\Models\Post');
+        return $this->hasMany('App\Models\Post')->where('status', 1);
     }
 
 

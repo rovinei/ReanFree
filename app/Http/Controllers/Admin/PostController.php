@@ -29,26 +29,32 @@ class PostController extends Controller
 
     // Query only posts type article
     public function articlePost(){
-        $posts = Post::where('mediatype_id', '=', 1)->paginate(15);
+        $posts = Post::where('mediatype_id', '=', 1)
+                    ->orderBy('created_at','desc')
+                    ->paginate(15);
         return view('admin.post.posts')->with(['posts' => $posts]);
     }
 
     // Query only posts type sound
-    public function soundPost(){
-        $posts = Post::where('mediatype_id', '=', 2)->paginate(15);
+    public function audioPost(){
+        $posts = Post::where('mediatype_id', '=', 2)
+                    ->orderBy('created_at','desc')
+                    ->paginate(15);
         return view('admin.post.posts')->with(['posts' => $posts]);
     }
 
     // Query only posts type video
     public function videoPost(){
-        $posts = Post::where('mediatype_id', '=', 3)->paginate(15);
+        $posts = Post::where('mediatype_id', '=', 3)
+                    ->orderBy('created_at','desc')
+                    ->paginate(15);
         return view('admin.post.posts')->with(['posts' => $posts]);
     }
 
     // Return post creation fom with default data for Article type
     public function create()
     {
-
+        $breadcrum = "Publish New Post";
         // Query all existing tags with any post
         $tags = Post::existingTags()->pluck('name');
 
@@ -57,15 +63,7 @@ class PostController extends Controller
 
         // Query all category which belong to articale type #1
         try{
-            $articalType = CategoryType::find(1);
-            $categories = $articalType->categories;
-            $categories = $articalType->categories;
-            return view('admin.post.create_post')->with([
-                    'tags' => $tags,
-                    'categories' => $categories,
-                    'series' => $series
-                ]);
-
+            $categories = CategoryType::where('mediatype_id',1)->with('categories')->firstOrFail();
         }catch(ModelNotFoundException $e){
             Session::flash('error_message', 'Seems there is no category record yet! Create it now.');
             return view('admin.post.create_post')->with([
@@ -74,6 +72,12 @@ class PostController extends Controller
                 ]);
         }
 
+        return view('admin.post.create_post')->with([
+            'tags' => $tags,
+            'categories' => $categories,
+            'series' => $series,
+            'breadcrum' => $breadcrum
+        ]);
     }
 
     /**
@@ -86,8 +90,8 @@ class PostController extends Controller
     {
 
         $this->validate($request, [
-            'title' => 'required',
-            'slug' => 'required',
+            'title' => 'required|min:5',
+            // 'slug' => 'required',
             'mediatype_id' => 'required|numeric',
             'category_id' => 'required|numeric',
             'status' => 'required',
@@ -169,6 +173,7 @@ class PostController extends Controller
      */
     public function edit($post_id)
     {
+        $breadcrum = "Edit Post";
         try{
             $post = Post::findOrFail($post_id);
         }catch(ModelNotFoundException $e){
@@ -204,7 +209,8 @@ class PostController extends Controller
                     'post' => $post,
                     'tags' => $tags,
                     'series' => $series,
-                    'categories' => $categories
+                    'categories' => $categories,
+                    'breadcrum' => $breadcrum
                 ]);
 
     }
@@ -220,7 +226,7 @@ class PostController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'slug' => 'required',
+            // 'slug' => 'required',
             'mediatype_id' => 'required|numeric',
             'category_id' => 'required|numeric',
             'status' => 'required',
@@ -267,6 +273,10 @@ class PostController extends Controller
 
                 if($request->has('tags')){
                     $post->retag(explode(',', $request->tags));
+                }
+
+                if(!$request->has('is_featured')){
+                    $post->is_featured = 0;
                 }
 
                 $post->update($request->all());

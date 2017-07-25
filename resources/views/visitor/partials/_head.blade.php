@@ -1,5 +1,6 @@
 
 <title>@yield('page_title')</title>
+<link href="https://fonts.googleapis.com/css?family=Hanuman|Nokora" rel="stylesheet">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="csrf-token" content="{{ csrf_token() }}">

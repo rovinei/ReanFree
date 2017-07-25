@@ -54,6 +54,7 @@ if(!BIGK.crud){
                         type: "error",
                         allowOutsideClick: true,
                     });
+                    console.log(err);
                 },
                 success: function(res){
                     if(res.status == 200){

@@ -1,3 +1,6 @@
+a{
+  text-decoration: none;
+}
 
 .top-header__gap{
   height: 80px;
@@ -31,12 +34,28 @@
   font-family: $font-opensans-cond;
 }
 
+.font-kh-nokora{
+  font-family: $font-nokora;
+}
+
+.font-kh-hanuman{
+  font-family: $font-hanuman;
+}
+
+.font-nokora-opensans_cond{
+  font-family: $font-nokora-opensans-cond;
+}
+
 .slideshow-overlay__box{
   & > *{
     position: relative;
     display: block;
     float: left;
-    width: auto;
+    width: 100%;
+  }
+
+  .datetime{
+    font-size: 1.15rem;
   }
 }
 
@@ -50,12 +69,15 @@
     padding: 5px 7px;
     font-size: 1rem;
     font-weight: 700;
-    vertical-align: middle;
+    vertical-align: top;
     color: #333;
 
     &.yellow{
       background: $yellow;
 
+      & > *{
+        color: #2e2e2e;
+      }
     }
 
     &.plain{
@@ -73,7 +95,7 @@
   }
 
   i{
-    vertical-align: middle;
+    vertical-align: baseline;
     font-size: 1.2rem;
   }
 }
@@ -94,8 +116,8 @@
   background: $yellow;
   color: #333;
   display: inline-block;
-  padding: 10px 40px;
-  font-size: 1.4rem;
+  padding: 8px 35px;
+  font-size: 1.3rem;
   font-weight: 600;
   font-family: $font-opensans;
   text-transform: uppercase;
@@ -106,10 +128,25 @@
     color: #222;
     background: darken($yellow, 5%);
   }
+
+  &.btn-flat-border{
+    color: $yellow;
+    border: 2px solid $yellow;
+    background: transparent;
+
+    &:hover{
+      background: $yellow;
+      color: #2a2a2a;
+    }
+  }
 }
 
 .bg-grey-transparent{
   background: rgba(0,0,0,0.4);
+}
+
+.bg-transparent{
+  background: transparent;
 }
 
 .slideshow-overlay__category{
@@ -148,12 +185,21 @@
   }
 
   h3{
+    position: relative;
     display: inline-block;
     padding: 3px 7px;
     margin: 0;
     color: darken($yellow, 1%);
     font-size: 1.1rem;
     font-weight: 700;
+
+    &.grey-color{
+      color: #777;
+    }
+
+    &.font-black{
+      color: #000;
+    }
 
     &.bg_black{
       background: rgba(#000,1);
@@ -166,12 +212,53 @@
     &.extra-pad{
       padding: 7px 15px;
     }
+
+    &.bottom-line::after{
+      position: absolute;
+      display: block;
+      content: "";
+      background: $yellow;
+      height: 3px;
+      padding: 0;
+      bottom: -2px;
+      width: 100%;
+    }
+
+    &.extra-large{
+      font-size: 1.4rem;
+      font-weight: 500;
+      font-family: $font-nokora;
+      padding-bottom: 10px;
+    }
+  }
+
+  h1{
+    font-size: 2.0rem;
   }
 
   i{
     font-size: 2rem;
     vertical-align: middle;
   }
+
+  span.bold{
+    color: #333;
+    font-weight: 800;
+    display: inline-block;
+    margin-left: 5px;
+    position: relative;
+
+    &.bottom-line::after{
+      position: absolute;
+      display: block;
+      content: "";
+      background: $yellow;
+      height: 3px;
+      bottom: -5px;
+      width: 100%;
+    }
+  }
+
 }
 
 .section-heading-large{
@@ -188,7 +275,7 @@
     color: #000;
     font-size: 1.73rem;
     font-weight: 500;
-    font-family: $font-taprom;
+    font-family: $font-nokora;
 
     &:after{
       position: absolute;
@@ -307,8 +394,40 @@
   padding-top: 0 !important;
 }
 
+.no-margin-right{
+  margin-right: 0 !important;
+}
+
+.no-margin-left{
+  margin-left: 0 !important;
+}
+
+.no-margin-bottom{
+  margin-bottom: 0 !important;
+}
+
+.no-margin-top{
+  margin-top: 0 !important;
+}
+
+.no-pad{
+  padding: 0 !important;
+}
+
 .padding-bottom-md{
   padding-bottom: 40px;
+}
+
+.padding-top-md{
+  padding-top: 40px;
+}
+
+.padding-bottom-small{
+  padding-bottom: 20px;
+}
+
+.padding-top-small{
+  padding-top: 20px;
 }
 
 .color-black{
@@ -590,7 +709,7 @@
   .heading{
     font-size: 1.3rem;
     font-weight: 700;
-    font-family: $font-siemreap;
+    font-family: $font-nokora;
     color: #9e9e9e;
     display: inline-block;
 
@@ -612,7 +731,262 @@
   .heading{
     font-size: 1.4rem;
     font-weight: 700;
-    font-family: $font-siemreap;
+    font-family: $font-nokora;
     color: #454545;
   }
+}
+
+.title-medium{
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/*
+ * Audio media player
+ */
+
+.mejs__controls {
+  padding: 0 140px 0 5%;
+  @include clearfix();
+}
+
+.mejs__container {
+    position: relative;
+}
+
+.mejs__playpause-button {
+    position: absolute !important;
+    right: 8%;
+    bottom: 95%;
+}
+
+.mejs__playpause-button button {
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    font-family: FontAwesome;
+    font-size: 23px;
+    color: #cf5da3;
+    background: transparent;
+}
+
+.mejs__volume-button button {
+    display: block;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    font-family: FontAwesome;
+    font-size: 17px;
+    color: #ccc;
+    background: transparent;
+}
+
+.mejs__play button:before {
+    content: "\f04b";
+}
+
+.mejs__controls .mejs__pause button:before {
+    content: "\f04c";
+}
+
+.mejs__controls .mejs__stop button:before {
+    content: "\f04d";
+}
+
+.mejs__controls .mejs__mute button:before {
+    content: "\f028";
+}
+
+.mejs__controls .mejs__unmute button:before {
+    content: "\f026";
+}
+
+.mejs__container .mejs__controls .mejs__time {
+    width: 100%;
+    color: #fff;
+}
+
+.mejs__controls .mejs__time-rail .mejs__time-loaded {
+  background: rgba(255,255,255,0.2);
+}
+.mejs__controls .mejs__time-rail .mejs__time-handle{
+}
+.mejs__container .mejs__controls .mejs__time span {
+    font-size: 15px;
+}
+
+.mejs__controls div.mejs__time-rail {
+  width: 100%;
+  float: left;
+}
+
+.mejs__container .mejs__controls div {
+
+}
+
+span.mejs__duration {
+    float: right;
+    text-align: right;
+    color: #ccc;
+}
+
+span.mejs__currenttime {
+    font-weight: 700;
+}
+
+.mejs__controls .mejs__time-rail {
+
+    span{
+      position: absolute;
+      top: 0;
+      height: 12px;
+      display: block;
+      border-radius: 50px;
+      cursor: pointer;
+      width: 100%;
+      @include prefixer(transform-origin, left, webkit moz ms);
+    }
+
+    .mejs__time-total{
+      position: relative;
+      background: rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+}
+
+.mejs__controls .mejs__time-rail .mejs__time-current {
+    background: darken($yellow, 3%) none repeat scroll 0 0;
+    @include prefixer(transform, scale(0),  webkit moz ms);
+}
+
+.mejs__controls .mejs__volume-button {
+    position: absolute;
+    right: 95px;
+    bottom: -8px;
+    width: 30px;
+    height: 30px;
+}
+
+.mejs__controls a.mejs__horizontal-volume-slider {
+    display: block;
+    position: absolute;
+    height: 6px;
+    width: 90px;
+    right: 0px;
+    bottom: 4px;
+}
+
+.mejs__controls .mejs__time-rail .mejs__time-float {
+    display: none;
+    top: -40px;
+    width: 40px;
+    height: 25px;
+    margin-left: -18px;
+    text-align: center;
+    font-size: 10px;
+    background: #fff;
+}
+
+.mejs__controls .mejs__time-rail .mejs__time-float-current {
+    display: block;
+    position: relative;
+    top: 0;
+    margin: 0;
+    line-height: 26px;
+    color: #000;
+}
+
+.mejs__controls .mejs__time-rail .mejs__time-float-corner {
+    top: auto;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -6px;
+    border-top: 6px solid #fff;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+}
+
+.mejs__controls .mejs__horizontal-volume-slider .mejs__horizontal-volume-total,
+.mejs__controls .mejs__horizontal-volume-slider .mejs__horizontal-volume-current {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+}
+
+.mejs__controls .mejs__horizontal-volume-slider .mejs__horizontal-volume-current {
+    background: #fff;
+}
+
+.mejs__offscreen{
+  display: none;
+}
+
+/* Checkbox */
+.custom-checkbox__outer{
+  position: relative;
+  width: 18%;
+  float: left;
+  margin-right: 2%;
+  margin-bottom: 20px;
+  @include clearfix();
+
+  label{
+    position: relative;
+    background: #f5f5f5;
+    line-height: 1;
+    float: left;
+    width: 100%;
+    cursor: pointer;
+    padding: 12px 35px 12px 12px;
+    display: inline-block;
+    @include box-sizing(border-box);
+
+  }
+
+  .checkbox{
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    top: 5px;
+    right: 5px;
+    bottom: 0;
+    height: 28px;
+    width: 28px;
+    z-index: 2;
+    cursor: pointer;
+    &:after{
+      position: absolute;
+      display: block;
+      font: normal normal normal 18px FontAwesome;
+      content: "\f00c";
+      color: $white;
+      visibility: visible;
+      -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+           background: $white;
+           color: #f1f1f1;
+           padding: 5px;
+           opacity: 1;
+           border: 1px solid #f1f1f1;
+           @include transition-prefix(all 0.4s ease);
+    }
+
+    &:checked:after{
+      color: $white;
+      background: $emerald;
+    }
+  }
+}
+
+.fb-comments{
+  width: 100%;
 }

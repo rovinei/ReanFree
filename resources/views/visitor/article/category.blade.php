@@ -16,7 +16,7 @@
 <div class="page-wrapper__bg">
     <div class="uk-container uk-container-center">
         <div class="breadcrum uk-margin-top">
-            <h3 class="font-kh-siemreap uk-margin-remove plain">
+            <h3 class="font-kh-nokora uk-margin-remove plain">
                 <a href="{{ route('visitor.index.page') }}">@lang('visitor.homepage')</a>
                 <i class="fa fa-angle-double-right"></i>
                 <a href="{{ route('visitor.article.page') }}">@lang('visitor.article')</a>
@@ -32,7 +32,7 @@
             <div class="top-post__catgory">
 
                 <div class="section-heading bottom-line">
-                    <h3 class="bg_black font-kh-siemreap extra-pad">
+                    <h3 class="bg_black font-kh-nokora extra-pad">
                         {{ $category_name }}
                     </h3>
                 </div>

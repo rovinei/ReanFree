@@ -54,6 +54,11 @@ class Post extends Model
         'featured_image',
         'sound_url',
         'video_url',
+        'genre',
+        'duration',
+        'source',
+        'artist',
+        'is_featured',
         'status',
         'created_by',
         'updated_by'
@@ -111,13 +116,18 @@ class Post extends Model
         return $this->belongsTo('App\Models\Category', 'category_id');
     }
 
+    public function setTitleAttribute($value){
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = str_slug($value, '-');
+    }
+
     public function setSoundUrlAttribute($value){
         $this->attributes['sound_url'] = str_replace(URL('/'),'',$value);
     }
 
     public function setFeaturedImageAttribute($value){
-        $this->attributes['featured_image'] = str_replace(url('/'), '', $value);
-        $this->attributes['featured_image'] = str_replace('uploads', 'thumbs', $value);
+        $imagePath = str_replace('uploads', 'thumbs', $value);
+        $this->attributes['featured_image'] = str_replace(URL('/'), '', $imagePath);
     }
 
     /**

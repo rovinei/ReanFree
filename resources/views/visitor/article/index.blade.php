@@ -16,7 +16,7 @@
 <div class="page-wrapper__bg">
     <div class="uk-container uk-container-center">
         <div class="breadcrum uk-margin-top">
-            <h3 class="font-kh-siemreap uk-margin-remove plain">
+            <h3 class="font-kh-nokora uk-margin-remove plain">
                 <a href="{{ route('visitor.index.page') }}">@lang('visitor.homepage')</a>
                 <i class="fa fa-angle-double-right"></i>
                 <a class="preventDefaultElement" href="#">@lang('visitor.article')</a>
@@ -61,13 +61,17 @@
         <!-- /Top story post -->
 
         <!-- Story serie preview large thumbnail -->
+        @if($latestSerie && !empty($latestSerie))
         <div class="section">
             <div class="section-bg__white">
                 <div class="uk-panel uk-background-image">
-                    <img class="" src="{{ asset('images/article/reading/post_article_serie_thumbnail_large.jpg') }}" />
+                    <a class="uk-display-block" href="{{ route('visitor.article.serie', $latestSerie->id) }}">
+                        <img width="100%" class="uk-display-block" src="@if($latestSerie->featured_image){{ asset(str_replace('thumbs', 'uploads', $latestSerie->featured_image)) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" />
+                    </a>
                 </div>
             </div>
         </div>
+        @endif
         <!-- /Story serie preview large thumbnail -->
 
         <!-- Bottom post grid -->

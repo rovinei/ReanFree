@@ -11,7 +11,7 @@
 <div class="page-bg__wrapper">
     <div class="uk-container uk-container-center">
         <div class="breadcrum uk-margin-top">
-            <h3 class="font-kh-siemreap uk-margin-remove plain">
+            <h3 class="font-kh-nokora uk-margin-remove plain">
                 <a href="{{ route('visitor.index.page') }}">@lang('visitor.homepage')</a>
                 <i class="fa fa-angle-double-right"></i>
                 <a href="{{ route('visitor.article.page') }}">@lang('visitor.article')</a>
@@ -27,13 +27,13 @@
                     <div class="uk-width-1-1 uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-3 uk-width-xlarge-1-3 post-preview__article">
                         <div class="uk-panel uk-panel-body">
                             <div class="breadcrum uk-margin-bottom">
-                                <h3 class="font-kh-siemreap uk-margin-remove yellow">
+                                <h3 class="font-kh-nokora uk-margin-remove yellow">
                                     <i class="fa fa-newspaper-o"></i>
                                     <a href="{{ route('visitor.article.category', $article->category->id) }}">{{ $article->category->name }}</a>
                                 </h3>
                             </div>
 
-                            <h1 class="post-preview__title font-kh-siemreap">
+                            <h1 class="post-preview__title font-kh-nokora">
                                 ​{{ $article->title }}
                             </h1>
 
@@ -100,7 +100,7 @@
                                         <h3 class="title">ពាក្យទាក់ទង</h3>
                                         <p>
                                         @foreach($article->tagged as $tag)
-                                            <a href="{{ route('visitor.tag_posts', $tag->tag_slug) }}" class="tag_item">{{ $tag->tag_name }}</a>
+                                            <a href="{{ route('visitor.tag_posts') }}?name={{$tag->tag_slug}}" class="tag_item">{{ $tag->tag_name }}</a>
                                         @endforeach
                                         </p>
                                     </div>
@@ -116,7 +116,7 @@
 
                     <!-- Facebook comment -->
                     <div class="facebook-comment uk-float-left">
-                        <div class="fb-comments" data-href="{{ route('visitor.article.detail', $article->id) }}" data-width="770" data-numposts="5"></div>
+                        <div class="fb-comments" data-href="{{ route('visitor.article.detail', $article->id) }}" data-width="100%" data-numposts="5"></div>
                     </div>
                     <!-- /Facebook comment -->
                 </div>
@@ -126,7 +126,7 @@
                 <div class="section uk-float-left">
                     <div class="related-post">
                         <div class="section-heading bottom-line plain">
-                            <h3 class="font-kh-siemreap color-black">
+                            <h3 class="font-kh-nokora color-black">
                                 អត្ថបទទាក់ទង
                             </h3>
                         </div>
@@ -169,7 +169,7 @@
                 <!-- /Popular post -->
                 <div class="sidebar-popular__post">
                     <div class="section-heading bottom-line">
-                        <h3 class="bg_grey font-kh-siemreap">
+                        <h3 class="bg_grey font-kh-nokora">
                             <i class="fa fa-newspaper-o"></i>
                             អត្តបទថ្មីបំផុត
                         </h3>

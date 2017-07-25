@@ -382,6 +382,9 @@ body{
 .page-wrapper__bg{
     background: #eee;
     padding-bottom: 40px;
+    &.bg-white{
+        background: #fff !important;
+    }
 }
 
 .post-grid__box{
@@ -458,7 +461,7 @@ body{
     }
 
     .post-grid__title{
-        font-weight: 600;
+        font-weight: bold;
         color: $post-grid-font-color;
         font-size: 1.06rem;
         line-height: 1.6;
@@ -471,6 +474,7 @@ body{
     .post-grid__snippet{
         color: #333;
         line-height: 1.9;
+        font-size: 1rem;
     }
 
     .coming-soon{
@@ -840,7 +844,7 @@ body{
         color: #111;
         line-height: 1.6;
         font-size: 1.1rem;
-        font-family: $font-metal;
+        font-family: $font-nokora;
         @include prefixer(transition, all 0.2s ease, webkit moz ms o);
 
         &:hover,
@@ -885,6 +889,17 @@ body{
             color: $yellow;
             font-weight: 700;
             font-size: 1.1rem;
+
+            &.bg-yellow{
+                background: $yellow;
+                color: #3a3a3a;
+            }
+
+            &.extra-large{
+                font-size: 1.2rem;
+                padding: 5px 10px;
+            }
+
             &:after{
                 position: absolute;
                 display: block;
@@ -1001,7 +1016,7 @@ body{
     .post-preview__title{
         font-size: 1.55rem;
         font-weight: 700;
-        font-family: $font-siemreap;
+        font-family: $font-nokora;
         color: #222;
         margin: 5px 0;
         line-height: 1.8;
@@ -1010,7 +1025,7 @@ body{
     .datetime{
         color: #c4c4c4;
         font-size: 0.9rem;
-        font-family: $font-siemreap;
+        font-family: $font-opensans-cond;
 
         i{
             margin-right: 5px;
@@ -1022,7 +1037,7 @@ body{
     }
 
     .post-preview__snippet{
-        font-family: $font-freehand;
+        font-family: $font-hanuman;
         font-size: 0.95rem;
         color: #000;
         line-height: 2;
@@ -1073,14 +1088,14 @@ body{
             font-size: 1.1rem;
             color: #4a4a4a;
             font-weight: 600;
-            font-family: $font-siemreap;
+            font-family: $font-nokora;
             margin-bottom: 5px;
         }
     }
 
     .post-detail__article{
         width: 100%;
-        font-family: $font-freehand;
+        font-family: $font-hanuman;
         padding: 20px;
 
         & > *{
@@ -1107,14 +1122,14 @@ body{
         width: 100%;
 
         .author{
-            font-family: $font-siemreap;
+            font-family: $font-nokora;
             font-size: 1.1rem;
         }
 
         .title{
             font-weight: 600;
             font-size: 1.2rem;
-            font-family: $font-siemreap;
+            font-family: $font-nokora;
             color: #333;
         }
 
@@ -1123,7 +1138,7 @@ body{
 
             .tag_item{
                 padding: 7px;
-                font-family: $font-siemreap;
+                font-family: $font-nokora;
                 color: #2a2a2a;
                 font-weight: 600;
                 background: darken($yellow, 5%);
@@ -1244,7 +1259,7 @@ body{
             margin-left: 5px;
             margin-right: 5px;
             font-size: 0.86rem;
-            font-family: $font-freehand;
+            font-family: $font-hanuman;
         }
     }
 
@@ -1291,7 +1306,7 @@ body{
     }
 
     .title{
-        font-family: $font-siemreap;
+        font-family: $font-nokora;
         font-size: 1.5rem;
         font-weight: 700;
         line-height: 1.8;
@@ -1309,7 +1324,7 @@ body{
 
     .snippet{
         color: #eee;
-        font-family: $font-siemreap;
+        font-family: $font-hanuman;
         font-size: 1rem;
         line-height: 1.8;
     }
@@ -1362,7 +1377,7 @@ body{
 
     .post-detail__article{
         p{
-            font-family: $font-siemreap;
+            font-family: $font-nokora;
             font-size: 1.1rem;
             line-height: 1.8;
         }
@@ -1526,7 +1541,7 @@ body{
 
 .video-detail__title{
     .title{
-        font-family: $font-siemreap;
+        font-family: $font-hanuman;
         font-weight: 700;
         font-size: 1.4rem;
         margin: 0;
@@ -1534,4 +1549,331 @@ body{
 }
 
 
+/* Custom Audio Player */
+.top-aduio__wrapper{
+    position: relative;
+    height: 70px;
+    width: 100%;
+    z-index: 1;
+    background: #2a2a2a;
+}
+.player-wrapper,
+.player-preview{
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 0 40px;
+    float: left;
+    @include clearfix();
+}
 
+.player-preview{
+
+    .thumbnail{
+        width: 160px;
+        height: 90px;
+        margin-top: -10px;
+        float: left;
+        padding: 5px;
+        background: #2a2a2a;
+
+        .inner{
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+        img{
+            width: 100%;
+            display: block;
+            vertical-align: top;
+        }
+    }
+
+    .title{
+        width: auto;
+        float: left;
+        padding-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        padding-right: 10px;
+
+        h3{
+            color: #fefefe;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .artist{
+            color: $yellow;
+            display: block;
+        }
+    }
+}
+
+.top-ele{
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -30px;
+    height: 50px;
+    width: 60px;
+    background: #3a3a3a;
+    z-index: 2;
+    text-align: center;
+
+    i{
+        font-size: 2.1rem;
+        line-height: 50px;
+        color: #888;
+    }
+
+    &::after,
+    &::before{
+        position: absolute;
+        content: "";
+        height: 0px;
+        width: 0px;
+        display: block;
+        z-index: 2;
+    }
+
+    &::before{
+        left: -7px;
+        border-style: solid;
+        border-width: 0 0 20px 7px;
+        border-color: transparent transparent #3a3a3a transparent;
+    }
+
+    &::after{
+        right: -7px;
+        top: 0;
+        border-style: solid;
+        border-width: 20px 0 0 7px;
+        border-color: transparent transparent transparent #3a3a3a;
+    }
+}
+
+.player-wrapper{
+    background: #252525;
+    @include display-flex();
+    @include align-items();
+}
+
+.audio-control__outter,
+.audio-timeline__outter{
+    position: relative;
+    float: left;
+}
+
+.audio-control__outter{
+    width: auto;
+    padding: 0 0 0 7px;
+    @include display-flex();
+    @include align-items();
+    .audio-control{
+        float: left;
+        width: auto;
+        padding: 0 3px;
+        text-align: center;
+        vertical-align: center;
+        @include display-flex();
+    }
+
+    button{
+        margin: 0 auto;
+        display: inline-block;
+        background: transparent;
+        border-radius: 50%;
+        border: 1px solid #5e5e5e;
+        outline: none;
+        text-align: center;
+        vertical-align: middle;
+
+        i{
+            color: #9f9f9f;
+            line-height: 1;
+            font-size: 1.1rem;
+        }
+
+        &.previous-btn,
+        &.audio-previous-btn,
+        &.next-btn,
+        &.audio-next-btn{
+            height: 35px;
+            width: 35px;
+
+        }
+
+        &.play-pause-btn,
+        &.audio-play-pause-btn{
+            height: 40px;
+            width: 40px;
+        }
+    }
+}
+
+.audio-timeline__outter{
+    flex: 1;
+    overflow: hidden;
+}
+
+.audio-page{
+
+    .latest-album{
+        position: relative;
+        float: left;
+        width: 100%;
+        @include clearfix();
+    }
+
+    .player-thumbnail{
+        position: relative;
+        width: 100%;
+        float: left;
+        min-height: 1px;
+    }
+
+    .player-caption{
+        position: relative;
+        width: 100%;
+        float: left;
+    }
+
+    .player-wrapper{
+        width: 100%;
+        height: 80px;
+    }
+}
+
+/* Audio Category Page */
+.audio-featured__album{
+    position: relative;
+    width: 100%;
+    @include clearfix();
+
+    &.zoomOut{
+
+        .overlay-hover{
+            @include prefixer(transform, scale(1.5), webkit moz ms);
+            z-index: 1;
+        }
+
+        .box-inner{
+            &:hover{
+                .overlay-hover{
+                    opacity: 1;
+                    @include prefixer(transform, scale(1), webkit moz ms);
+                }
+            }
+        }
+    }
+}
+
+.audio-featured__box{
+    position: relative;
+    width: 100%;
+    @include clearfix();
+
+    .box-inner{
+        position: relative;
+        width: 100%;
+        @include clearfix();
+        overflow: hidden;
+    }
+
+    .custom-link{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+        text-decoration: none;
+        z-index: 1;
+        color: #fff;
+        font-size: 2.2rem;
+        text-align: center;
+        @include display-flex();
+        @include align-items();
+        @include justify-content();
+
+        i{
+            font-size: 1.7rem;
+            margin-left: 10px;
+            vertical-align: bottom;
+        }
+    }
+
+    .overlay-hover{
+        position: absolute;
+        cursor: auto;
+        backface-visibility: hidden;
+        background: rgba(0,0,0,0.6);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+        @include prefixer(transition,all 0.3s ease, webkit moz ms);
+    }
+
+    .thumbnail,
+    .meta,
+    .title{
+        position: relative;
+        width: 100%;
+        float: left;
+        overflow: hidden;
+    }
+
+    img{
+        width: 100%;
+        display: block;
+        vertical-align: top;
+    }
+
+    .meta{
+        margin-top: 10px;
+        @include clearfix();
+        color: #3a3a3a;
+        .genre{
+            float: left;
+            font-size: 1rem;
+        }
+
+        .date{
+            float: right;
+            font-size: 1rem;
+        }
+
+        i{
+            color: darken($yellow, 5%);
+            margin-right: 5px;
+        }
+    }
+
+    .title{
+        margin-top: 5px;
+        font-size: 1.3rem;
+        color: #3a3a3a;
+        font-weight: 600;
+    }
+}
+
+/* Audio Album Detail */
+.top-audio__playlist{
+    position: relative;
+    width: 100%;
+    background: #3a3a3a;
+    @include clearfix();
+    padding: 35px 0;
+}
+
+.related-audio__album{
+    padding: 50px 0;
+    margin-top: 20px;
+}

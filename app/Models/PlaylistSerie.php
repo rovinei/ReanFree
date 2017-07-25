@@ -45,12 +45,23 @@ class PlaylistSerie extends Model
     protected $fillable = [
         'title',
         'mediatype_id',
+        'featured_image',
         'description',
         'num_of_episode',
+        'genre',
+        'is_featured',
+        'category_id',
         'created_by',
         'updated_by'
     ];
 
+    // Override feature image
+    public function setFeaturedImageAttribute($value){
+        $this->attributes['featured_image'] = str_replace(url('/'), '', $value);
+        $this->attributes['featured_image'] = str_replace('uploads', 'thumbs', $value);
+    }
+
+    // Eloquent related to posts
     public function posts(){
         return $this->belongsToMany(
                         'App\Models\Post',
@@ -59,12 +70,43 @@ class PlaylistSerie extends Model
                         'post_id')->withTimestamps();
     }
 
+    public function count($serie_id){
+        return $this->belongsToMany(
+                        'App\Models\Post',
+                        'post_serie',
+                        'serie_id',
+                        'post_id')->where('serie_id', $serie_id)->count();
+    }
+
+    // Eloquent related to category
+    public function category(){
+        return $this->belongsTo('App\Models\Category', 'category_id');
+    }
+
     public function createdBy(){
         return $this->belongsTo('App\Models\Admin', 'created_by');
     }
 
     public function updatedBy(){
         return $this->belongsTo('App\Models\Admin', 'updated_by');
+    }
+
+    /**
+     * @override boot function in order to fire up model events
+     * creating, created, update, deleting ...
+     *
+     */
+    public static function boot(){
+        parent::boot();
+
+        static::deleting(function($serie){
+            try {
+                $serie->posts()->sync([]);
+                $serie->save();
+            } catch (Exception $e) {
+                throw new Exception("Error Processing while deleting", 1);
+            }
+        });
     }
 
 }

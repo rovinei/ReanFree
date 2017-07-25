@@ -102,11 +102,11 @@
                                     </div>
                                 </div>
 
-                                <div class="custom-form-group">
+                                <!-- <div class="custom-form-group">
                                     <div class="uk-width-1-1">
                                         <input class="custom-input-text" name="slug" type="text" value="{{ $post->slug }}" />
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="custom-form-group">
                                     <div class="uk-width-1-1">
@@ -181,10 +181,25 @@
                             <input type="text" name="tags" id="tags">
                         </div>
 
+                        <div class="custom-form-group">
+                            <h3 class="uk-float-left uk-display-block uk-width-1-1"> Featured Post?</h3>
+                            <div class="custom-checkbox__outer">
+                                <input @if($post->is_featured == 1){{ 'checked="checked"' }}@endif name="is_featured" id="is_featured" type="checkbox" value="1" class="checkbox">
+                            </div>
+                        </div>
+
+                        <div class="custom-form-group">
+                            <input value="{{ $post->genre }}" placeholder="Genre type ..." type="text" name="genre" class="custom-input-text" />
+                        </div>
+
+                        <div class="custom-form-group">
+                            <input value="{{ $post->source }}" placeholder="Source ..." type="text" name="source" class="custom-input-text" />
+                        </div>
+
                         <!-- Featured image field -->
                         <div class="custom-form-group">
                             <div class="file-input-wrapper">
-                                <button class="custom-upload-btn image" uk-toggle="target : #fileManagerModal"><i class="fa fa-upload"></i> Upload</button>
+                                <button class="custom-upload-btn image uploadFile" data-type="image" id="uploadImage"><i class="fa fa-upload"></i> Image Thumbnail</button>
                                 <input @if($post->featured_image) value="{{ $post->featured_image }}" @endif type="hidden" name="featured_image" id="txtFeaturedImage" />
                             </div>
                             <div class="imagePreview">
@@ -200,18 +215,23 @@
                         <!-- Sound url field -->
                         <div class="custom-form-group @if($post->mediatype_id == '2'){{ 'visible' }}@endif" id="soundUpload">
                             <div class="file-input-wrapper">
-                                <button class="custom-upload-btn sound">Attach Sound File</button>
+                                <button class="custom-upload-btn sound uploadFile" data-type="sound" id="uploadSound"><i class="fa fa-sound"></i> Attach Sound File</button>
                                 <input @if($post->sound_url) value="{{ $post->sound_url }}" @endif type="hidden" name="sound_url" id="sound_url">
+                                <div id="soundPreview" class="uk-panel uk-margin-medium-top">
+                                    <audio @if($post->sound_url) src="{{ $post->sound_url }}" @endif preload id="audioEle" controls="controls">Your browser does not support HTML5 Audio!
+
+                                    </audio>
+                                </div>
                             </div>
                         </div>
 
                         <!-- video url field -->
                         <div class="custom-form-group @if($post->mediatype_id == '3'){{ 'visible' }}@endif" id="videoUpload">
                             <div class="file-input-wrapper">
-                                <button class="custom-upload-btn video">Embed Video</button>
-                                <input @if($post->video_url) value="{{ $post->video_url }}" @endif type="hidden" name="video_url" id="video_url">
+                                <!-- <button class="custom-upload-btn video">Embed Video</button> -->
+                                <input class="custom-input-text" @if($post->video_url) value="{{ $post->video_url }}" @endif type="text" name="video_url" id="video_url">
 
-                                <div class="videoPreview">
+                                <div class="videoPreview uk-margin-small-top">
                                     <iframe width="100%" src="https://youtube.com/embed/{{ $post->video_url }}"></iframe>
                                 </div>
                             </div>
@@ -378,59 +398,59 @@
                         return '<div class="option">' + escape(item.title) + '</div>';
                     }
                 },
-                create: function(input) {
-                    $thisSelect = serieSelect[0].selectize;
-                    $.ajax({
-                        url: "{{ route('admin.ajax.add_serie') }}",
-                        type: "POST",
-                        data: {
-                            title: input,
-                            type: $('#mediaField').val() || 'null'
-                        },
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        error: function(err){
-                            swal({
-                                title: "Opp! Something went wrong",
-                                text: err,
-                                type: "error",
-                                timer: 5000,
-                                allowOutsideClick: true
-                            });
-                        },
-                        success: function(res){
-                            if(res.status == 200){
+                // create: function(input) {
+                //     $thisSelect = serieSelect[0].selectize;
+                //     $.ajax({
+                //         url: "{{ route('admin.ajax.add_serie') }}",
+                //         type: "POST",
+                //         data: {
+                //             title: input,
+                //             type: $('#mediaField').val() || 'null'
+                //         },
+                //         headers: {
+                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //         },
+                //         error: function(err){
+                //             swal({
+                //                 title: "Opp! Something went wrong",
+                //                 text: err,
+                //                 type: "error",
+                //                 timer: 5000,
+                //                 allowOutsideClick: true
+                //             });
+                //         },
+                //         success: function(res){
+                //             if(res.status == 200){
 
-                                serieOptions.push({
-                                    id: res.data.id,
-                                    title: res.data.title
-                                });
+                //                 serieOptions.push({
+                //                     id: res.data.id,
+                //                     title: res.data.title
+                //                 });
 
-                                $thisSelect.load(function(callback){
-                                    callback(serieOptions);
-                                });
+                //                 $thisSelect.load(function(callback){
+                //                     callback(serieOptions);
+                //                 });
 
-                                swal({
-                                    title: "succeed",
-                                    text: res.success.message,
-                                    type: "success",
-                                    timer: 2500,
-                                    allowOutsideClick: true
-                                });
+                //                 swal({
+                //                     title: "succeed",
+                //                     text: res.success.message,
+                //                     type: "success",
+                //                     timer: 2500,
+                //                     allowOutsideClick: true
+                //                 });
 
-                            }else{
-                                swal({
-                                    title: "Opp! Something went wrong",
-                                    text: res.error.message,
-                                    type: "error",
-                                    timer: 5000,
-                                    allowOutsideClick: true
-                                });
-                            }
-                        }
-                    });
-                }
+                //             }else{
+                //                 swal({
+                //                     title: "Opp! Something went wrong",
+                //                     text: res.error.message,
+                //                     type: "error",
+                //                     timer: 5000,
+                //                     allowOutsideClick: true
+                //                 });
+                //             }
+                //         }
+                //     });
+                // }
             });
 
             var mediaSelect = $('#mediaField').selectize({

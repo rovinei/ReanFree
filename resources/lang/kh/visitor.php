@@ -7,5 +7,6 @@ return [
     'latest_song' => 'ស្តាប់ចំរៀងថ្មី',
     'homepage' => 'ទំព័រដើម',
     'article' => 'អត្ថបទ',
-    'video' => 'វីដេអូ'
+    'video' => 'វីដេអូ',
+    'audio' => 'ស្តាប់'
 ];

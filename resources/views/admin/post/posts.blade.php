@@ -20,15 +20,16 @@
                             <!-- <th>Content</th>
                             <th>Thumbnail</th> -->
                             <th>Publisher</th>
+                            <th>Featured</th>
                             <th>Created At</th>
-                            <th>Updated At</th>
+                            <!-- <th>Updated At</th> -->
                             <th></th>
                         </thead>
                         <tbody id="tableData">
                             @foreach($posts as $key => $post)
                             <tr>
                                 <td class="order-number">{{ $posts->perPage() * ($posts->currentPage() - 1) + (++$key) }}</td>
-                                <td class="uk-table-shrink">{{ Str::title($post->title) }}</td>
+                                <td class="uk-text-ellipse">{{ Str::title($post->title) }}</td>
                                 <td>
                                     @if($post->category_id != null)
                                         {{ Str::title($post->category->name) }}
@@ -67,8 +68,13 @@
                                     {{ $post->createdBy->username }}
                                 @endif
                                 </td>
+                                <td>
+                                    <div class="custom-checkbox__outer">
+                                        <input disabled @if($post->is_featured == 1){{ 'checked="checked"' }}@endif type="checkbox" class="checkbox" id="_pF{{ $post->id }}">
+                                    </div>
+                                </td>
                                 <td>{{ $post->created_at->diffForHumans() }}</td>
-                                <td>{{ $post->updated_at->diffForHumans() }}</td>
+                                <!-- <td>{{ $post->updated_at->diffForHumans() }}</td> -->
                                 <td>
                                     <button class="action-btn"><i class="fa fa-ellipsis-v"></i></button>
 
@@ -104,11 +110,17 @@
 @section('script')
     <script>
         $(document).ready(function(){
+
+            $(window).click(function() {
+                $('.action-box.visible').removeClass('visible');
+            });
+
             /**
              * Toggle visibility of action card box
              */
             $('.action-btn').on('click', function(e){
                 e.preventDefault();
+                e.stopPropagation();
                 var target = $(this).parent('td').find('.action-box');
                 $('.action-box.visible').not(target).removeClass('visible');
                 $(target).toggleClass('visible');

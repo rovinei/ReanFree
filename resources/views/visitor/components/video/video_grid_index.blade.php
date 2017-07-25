@@ -11,13 +11,13 @@
             </div>
             <div class="post-grid__caption">
 
-                <p class="post-grid__title font-kh-freehand">
+                <p class="post-grid__title font-nokora-opensans_cond">
                     <span class="coming-soon">Coming Soon</span> {{ str_limit($video->title, 50) }}
                 </p>
                 <div class="divider"></div>
 
                 <div class="post-grid__meta">
-                    <span class="post-grid__category font-kh-freehand">
+                    <span class="post-grid__category font-kh-hanuman">
                         {{ $video->category->name }}
                     </span>
                     <span class="post-grid__datetime">

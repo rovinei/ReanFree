@@ -17,6 +17,7 @@ jQuery(function ($) {
     if (supportsAudio) {
         var index = 0,
             playing = false,
+            mediaPath = '',
             extension = '',
             buildPlaylist = $.each(tracks, function(key, value) {
                 var trackNumber = value.track,
@@ -30,7 +31,7 @@ jQuery(function ($) {
                 $('#music-box__playlist').append(
                     '<li>'+
                         '<div class="playlist__item">'+
-                            '<div class="playlist__track-number">'+
+                            '<div data-track-number="'+trackNumber+'" class="playlist__track-number">'+
                                 trackNumber +
                             '</div>'+
                             '<div class="playlist__title">'+
@@ -52,6 +53,7 @@ jQuery(function ($) {
             }).bind('pause', function () {
                 playing = false;
                 npAction.text('Paused...');
+
             }).bind('ended', function () {
                 npAction.text('Paused...');
                 if ((index + 1) < trackCount) {
@@ -97,8 +99,14 @@ jQuery(function ($) {
                 }
             }),
             loadTrack = function (id) {
-                $('.plSel').removeClass('plSel');
-                $('#music-box__playlist li:eq(' + id + ')').addClass('plSel');
+                $('.plSel').removeClass('plSel')
+                .find('.playlist__track-number')
+                .html($(this).attr('data-track-number'));
+
+                $('#music-box__playlist li:eq(' + id + ')')
+                .addClass('plSel')
+                .find('.playlist__track-number')
+                .html($(this).find('.playlist__track-number').attr('data-track-number'));
                 npTitle.text(tracks[id].name);
                 index = id;
                 audio.src = tracks[id].file;
@@ -107,7 +115,7 @@ jQuery(function ($) {
                 loadTrack(id);
                 audio.play();
             };
-        extension = audio.canPlayType('audio/mpeg') ? '.mp3' : audio.canPlayType('audio/ogg') ? '.ogg' : '';
+        extension = audio.canPlayType('audio/mpeg') ? '.mp3' : audio.canPlayType('audio/ogg') ? '.ogg' : '.mp3';
         loadTrack(index);
     }
 });

@@ -5,7 +5,9 @@
         <div class="uk-container uk-container-center">
             <div class="header-wrapper">
                 <div class="site_logo">
-                    <img src="{{ asset('images/logo/site_logo_large.png') }}" alt="180 INSPIRE site logo">
+                    <a href="{{ url('/') }}" class="uk-display-block">
+                        <img src="{{ asset('images/logo/site_logo_large.png') }}" alt="180 INSPIRE site logo">
+                    </a>
                 </div>
 
                 <div class="navigation-wrapper">
@@ -34,8 +36,10 @@
 
                             <div class="header-nav__right">
                                 <div class="header-nav__search">
-                                    <input type="text" name="q" placeholder="Search" id="header-nav__search-input" class="search-input"/>
-                                    <label for="header-nav__search-input" class="search-icon"><i class="fa fa-search"></i></label>
+                                    <form method="get" action="{{ route('visitor.search') }}">
+                                        <input type="text" name="q" placeholder="Search" id="header-nav__search-input" class="search-input"/>
+                                        <label for="header-nav__search-input" class="search-icon"><i class="fa fa-search"></i></label>
+                                    </form>
                                 </div>
 
                                 <div class="header-nav__social">
@@ -62,7 +66,7 @@
                                 @if(!empty($reading_menus))
                                     @foreach($reading_menus->categories as $category)
                                     <li>
-                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                        <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-nokora">
                                             {{ $category->name }}
                                         </a>
                                     </li>
@@ -74,7 +78,7 @@
                                 @if(!empty($listen_menus))
                                     @foreach($listen_menus->categories as $category)
                                     <li>
-                                        <a href="{{ route('visitor.audio.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                        <a href="{{ route('visitor.audio.category', $category->id) }}" class="custom-a__link font-kh-nokora">
                                             {{ $category->name }}
                                         </a>
                                     </li>
@@ -86,7 +90,7 @@
                                 @if(!empty($video_menus))
                                     @foreach($video_menus->categories as $category)
                                     <li>
-                                        <a href="{{ route('visitor.video.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                                        <a href="{{ route('visitor.video.category', $category->id) }}" class="custom-a__link font-kh-nokora">
                                             {{ $category->name }}
                                         </a>
                                     </li>
@@ -136,7 +140,7 @@
                     @if(!empty($reading_menus))
                         @foreach($reading_menus->categories as $category)
                         <li>
-                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-nokora">
                                 {{ $category->name }}
                             </a>
                         </li>
@@ -148,7 +152,7 @@
                     @if(!empty($listen_menus))
                         @foreach($listen_menus->categories as $category)
                         <li>
-                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-nokora">
                                 {{ $category->name }}
                             </a>
                         </li>
@@ -160,7 +164,7 @@
                     @if(!empty($video_menus))
                         @foreach($video_menus->categories as $category)
                         <li>
-                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-siemreap">
+                            <a href="{{ route('visitor.article.category', $category->id) }}" class="custom-a__link font-kh-nokora">
                                 {{ $category->name }}
                             </a>
                         </li>

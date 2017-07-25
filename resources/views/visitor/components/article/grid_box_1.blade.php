@@ -15,7 +15,7 @@
                     {{ $article->created_at->format('D\\, d M\\, Y') }}
                 </span>
 
-                <p class="post-grid__title font-kh-freehand">
+                <p class="post-grid__title font-kh-nokora">
                     {{ str_limit($article->title, 70) }}
                 </p>
             </div>

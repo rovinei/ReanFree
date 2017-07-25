@@ -12,7 +12,7 @@
                             <div class="uk-container uk-container-center uk-height-1-1 uk-width-1-1 uk-flex margin-bottom-large">
                                 <div class="uk-width-1-1">
                                     <div class="padding-left-md breadcrum">
-                                        <h3 class="font-kh-siemreap yellow">
+                                        <h3 class="font-kh-nokora yellow">
                                             <i class="fa fa-newspaper-o fa-big"></i>
                                             <a href="#">អត្ថបទ</a>
                                             <i class="fa fa-angle-double-right"></i>
@@ -23,7 +23,7 @@
 
                                         <div class="uk-panel-body bg-grey-transparent">
 
-                                            <h2 class="uk-display-inline-block font-yellow font-kh-taprom uk-margin-remove">
+                                            <h2 class="uk-display-inline-block font-yellow font-kh-nokora uk-margin-remove">
                                                 {{ $slideshow->title }}
                                             </h2>
                                         </div>

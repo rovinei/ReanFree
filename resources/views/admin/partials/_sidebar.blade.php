@@ -1,7 +1,8 @@
 <div class="sidebar">
     <div class="inner">
         <div class="sidebar-heading">
-            <h3>១៨០<span>MEDIA &amp; NEWS</span></h3>
+            <h3 style="display:none;">១៨០<span>MEDIA &amp; NEWS</span></h3>
+            <img src="{{ asset('images/logo/site_logo_large.png') }}">
         </div>
         <div class="main-nav">
             <ul>
@@ -17,9 +18,24 @@
                     <div class="dropdown-nav">
 
                         <ul class="">
-                            <li class="uk-active">
+                            <li class="">
                                 <a href="{{ route('admin.posts') }}">
                                     <i class="fa fa-newspaper-o"></i> List All Posts
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('admin.post.videos') }}">
+                                    <i class="fa fa-play"></i> Videos
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('admin.post.articles') }}">
+                                    <i class="fa fa-newspaper-o"></i> Articles
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ route('admin.post.audios') }}">
+                                    <i class="fa fa-music"></i> Audios
                                 </a>
                             </li>
                             <li>
@@ -68,23 +84,61 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-users"></i> Author Management</a>
+                    <a href="#"><i class="fa fa-chain"></i> Album &amp; Playlist</a>
                     <div class="dropdown-nav">
 
                         <ul class="">
                             <li class="uk-active">
-                                <a href="#">
-                                    <i class="fa fa-newspaper-o"></i> Manage Author
+                                <a href="{{ route('admin.series') }}">
+                                    <i class="fa fa-book"></i> Albums &amp; Playlist Record
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('admin.article_series') }}">
+                                    <i class="fa fa-newspaper-o"></i>
+                                    Article Series
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.audio_albums') }}">
+                                    <i class="fa fa-music"></i>
+                                    Audio Albums
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.video_playlists') }}">
+                                    <i class="fa fa-play"></i>
+                                    Video Playlists
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.serie.create') }}">
                                     <i class="fa fa-plus-square-o"></i>
-                                    Register Author
+                                    Create Album | Playlist | Serie
                                 </a>
                             </li>
                         </ul>
 
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-users"></i> Author Management</a>
+                    <div class="dropdown-nav">
+                        <ul class="">
+                            <li class="uk-active">
+                                <a href="{{ route('admin.author.manage') }}">
+                                    <i class="fa fa-book"></i>
+                                    Manage Author
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.author.create') }}">
+                                    <i class="fa fa-newspaper-o"></i>
+                                    Register Author
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </li>
 

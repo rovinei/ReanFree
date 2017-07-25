@@ -27,8 +27,8 @@ audio { width:670px; }
 .music-box__player-title { margin:0; padding:21px; text-align:right; }
 .music-box__player-action { padding:21px; position:absolute; }
 #music-box__playlist { position: relative; width: 100%; float: left; @include clearfix(); margin:0; padding: 0;}
-#music-box__playlist li { background-color:#231F20; cursor:pointer; display:block; margin:0; padding:15px 0; }
-#music-box__playlist li:hover { background-color:#262223; }
+#music-box__playlist li { background-color:#fafafa; cursor:pointer; display:block; margin:0; padding:15px 0; }
+#music-box__playlist li:hover { background-color:#eee; }
 .playlist__item { position:relative; }
 .playlist__title { left:50px; overflow:hidden; position:absolute; right:65px; text-overflow:ellipsis; top:0; white-space:nowrap; }
 .playlist__track-number { padding-left:21px; width:50px; }
@@ -44,40 +44,25 @@ html[data-useragent*="MSIE 9.0"] audio { margin-top: 31px; outline:none; width:6
 html[data-useragent*="MSIE 9.0"] .music-box__player-audiowrap { background-color:#000; }
 html[data-useragent*="MSIE 9.0"] .audio-control-next-pre {text-decoration: none; background-color:#000; }
 html[data-useragent*="MSIE 9.0"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
-html[data-useragent*="MSIE 9.0"] #music-box__playlist li { background-color:#000; }
-html[data-useragent*="MSIE 9.0"] #music-box__playlist li:hover { background-color:#080808; }
-html[data-useragent*="MSIE 9.0"] .plSel,
-html[data-useragent*="MSIE 9.0"] .plSel:hover { background-color:#080808!important; }
 
 /* IE 10 */
 html[data-useragent*="MSIE 10.0"] audio { margin-top: 31px; width:687px; }
 html[data-useragent*="MSIE 10.0"] .music-box__player-audiowrap { background-color:#000; }
 html[data-useragent*="MSIE 10.0"] .audio-control-next-pre { background-color:#000; }
 html[data-useragent*="MSIE 10.0"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
-html[data-useragent*="MSIE 10.0"] #music-box__playlist li { background-color:#000; }
-html[data-useragent*="MSIE 10.0"] #music-box__playlist li:hover { background-color:#080808; }
-html[data-useragent*="MSIE 10.0"] .plSel,
-html[data-useragent*="MSIE 10.0"] .plSel:hover { background-color:#080808!important; }
+
 
 /* IE 11 */
 html[data-useragent*="rv:11.0"] audio { margin-top: 31px; width:695px; }
 html[data-useragent*="rv:11.0"] .music-box__player-audiowrap { background-color:#000; }
 html[data-useragent*="rv:11.0"] .audio-control-next-pre { background-color:#000; }
 html[data-useragent*="rv:11.0"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
-html[data-useragent*="rv:11.0"] #music-box__playlist li { background-color:#000; }
-html[data-useragent*="rv:11.0"] #music-box__playlist li:hover { background-color:#080808; }
-html[data-useragent*="rv:11.0"] .plSel,
-html[data-useragent*="rv:11.0"] .plSel:hover { background-color:#080808!important; }
 
 /* All Apple Products */
 html[data-useragent*="Apple"] audio { margin-top: 31px; width:100%; }
 html[data-useragent*="Apple"] .music-box__player-audiowrap { background-color:#000; }
 html[data-useragent*="Apple"] .audio-control-next-pre { background-color:#000; }
 html[data-useragent*="Apple"] .audio-control-next-pre:hover { text-decoration: none; background-color:#080808; }
-html[data-useragent*="Apple"] #music-box__playlist li { background-color:#000; }
-html[data-useragent*="Apple"] #music-box__playlist li:hover { background-color:#080808; }
-html[data-useragent*="Apple"] .plSel,
-html[data-useragent*="Apple"] .plSel:hover { background-color:#080808!important; }
 
 /* IOS 7 */
 

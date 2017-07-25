@@ -42,6 +42,9 @@ Route::group([
 
     // Post Content CRUD Operation
     Route::get('posts', 'PostController@index')->name('admin.posts');
+    Route::get('post/articles', 'PostController@articlePost')->name('admin.post.articles');
+    Route::get('post/videos', 'PostController@videoPost')->name('admin.post.videos');
+    Route::get('post/audio', 'PostController@audioPost')->name('admin.post.audios');
     Route::get('post/add', 'PostController@create')->name('admin.post.create');
     Route::post('post/add', 'PostController@store')->name('admin.post.store');
     Route::get('post/{post_id}/edit', 'PostController@edit')->name('admin.post.edit');
@@ -73,40 +76,43 @@ Route::group([
     Route::post('tag/attach', 'TagController@attach')->name('admin.tag.attach');
     Route::delete('tag/remove', 'TagController@destroy')->name('admin.tag.destroy');
 
-    // Media Type CRUD Operation
-    Route::get('media_type', 'MediaTypeController@index')->name('admin.media_types');
-    Route::get('media_type/add', 'MediaTypeController@create')->name('admin.media_type.create');
-    Route::post('media_type/add', 'MediaTypeController@store')->name('admin.media_type.store');
-    Route::get('media_type/{media_type_id}/edit', 'MediaTypeController@edit')->name('admin.media_type.edit');
-    Route::post('media_type/{media_type_id}/edit', 'MediaTypeController@update')->name('admin.media_type.update');
-    Route::delete('category/remove', 'MediaTypeController@destroy')->name('admin.media_type.destroy');
+    // Serie CRUD Operation
+    Route::get('series', 'SerieController@index')->name('admin.series');
+    Route::get('article_series', 'SerieController@articleSerie')->name('admin.article_series');
+    Route::get('video_playlists', 'SerieController@videoPlaylist')->name('admin.video_playlists');
+    Route::get('audio_albums', 'SerieController@audioAlbum')->name('admin.audio_albums');
+    Route::get('serie/create', 'SerieController@create')->name('admin.serie.create');
+    Route::post('serie/create', 'SerieController@store')->name('admin.serie.store');
+    Route::get('serie/{serie_id}/edit', 'SerieController@edit')->name('admin.serie.edit');
+    Route::post('serie/{serie_id}/update', 'SerieController@update')->name('admin.serie.update');
 
     // File Entry CRUD Operation
-    Route::get('files', 'FileController@index')->name('admin.files');
-    Route::get('file/add', 'FileController@create')->name('admin.file.create');
-    Route::post('file/{disk}/add', 'FileController@store')->name('admin.file.store');
-    Route::get('file/{file_id}/edit', 'FileController@edit')->name('admin.file.edit');
-    Route::post('file/{file_id}/edit', 'FileController@update')->name('admin.file.update');
-    Route::delete('file/remove', 'FileController@destroy')->name('admin.file.destroy');
+    // Route::get('files', 'FileController@index')->name('admin.files');
+    // Route::get('file/add', 'FileController@create')->name('admin.file.create');
+    // Route::post('file/{disk}/add', 'FileController@store')->name('admin.file.store');
+    // Route::get('file/{file_id}/edit', 'FileController@edit')->name('admin.file.edit');
+    // Route::post('file/{file_id}/edit', 'FileController@update')->name('admin.file.update');
+    // Route::delete('file/remove', 'FileController@destroy')->name('admin.file.destroy');
 
     // Sound Post
     Route::get('sound/{id}/preview', 'FileController@previewSound')->name('admin.sound.preview');
 
     // User CRUD Operation
-    Route::get('users', 'UserController@index')->name('admin.users');
-    Route::get('users/add', 'UserController@create')->name('admin.users.create');
-    Route::post('users/add', 'UserController@store')->name('admin.users.store');
-    Route::get('users/{user_id}/edit', 'UserController@edit')->name('admin.users.edit');
-    Route::post('users/{user_id}/edit', 'UserController@update')->name('admin.users.update');
-    Route::post('users/{user_id}/remove', 'UserController@destroy')->name('admin.users.destroy');
+    // Route::get('users', 'UserController@index')->name('admin.users');
+    // Route::get('users/add', 'UserController@create')->name('admin.users.create');
+    // Route::post('users/add', 'UserController@store')->name('admin.users.store');
+    // Route::get('users/{user_id}/edit', 'UserController@edit')->name('admin.users.edit');
+    // Route::post('users/{user_id}/edit', 'UserController@update')->name('admin.users.update');
+    // Route::post('users/{user_id}/remove', 'UserController@destroy')->name('admin.users.destroy');
 
     // Author CRUD Operation
-    Route::get('admins', 'AdminUserController@index')->name('admin.admins');
-    Route::get('admins/add', 'AdminUserController@create')->name('admin.admins.create');
-    Route::post('admins/add', 'AdminUserController@store')->name('admin.admins.store');
-    Route::get('admins/{admin_id}/edit', 'AdminUserController@edit')->name('admin.admins.edit');
-    Route::post('admins/{admin_id}/edit', 'AdminUserController@update')->name('admin.admins.update');
-    Route::post('admins/{admin_id}/remove', 'AdminUserController@destroy')->name('admin.admins.destroy');
+    Route::get('authors', 'AdminController@index')->name('admin.author');
+    Route::get('author/add', 'AdminController@create')->name('admin.author.create');
+    Route::post('author/add', 'AdminController@store')->name('admin.author.store');
+    Route::post('author/manage', 'AdminController@manageAuthor')->name('admin.author.manage');
+    Route::get('author/{author_id}/edit', 'AdminController@edit')->name('admin.author.edit');
+    Route::post('author/{author_id}/edit', 'AdminController@update')->name('admin.author.update');
+    Route::post('author/{author_id}/remove', 'AdminController@destroy')->name('admin.author.destroy');
 
     // Setting CRUD Operation
     Route::get('setting', 'SettingController@index')->name('admin.setting');
@@ -135,15 +141,17 @@ Route::group([
     // Article route
     Route::get('/page/articles', 'PageController@articlePage')->name('visitor.article.page');
     Route::get('/page/article/category/{category_id}', 'PageController@articleCategory')->name('visitor.article.category');
+    Route::get('/page/article/serie/{serie_id}', 'PageController@articleSerie')->name('visitor.article.serie');
     Route::get('/page/article/read/{article_id}', 'PageController@articleDetail')->name('visitor.article.detail');
 
     // Audio route
     Route::get('/page/audios', 'PageController@audioPage')->name('visitor.audio.page');
-    Route::get('/page/audio/category/{audio_id}', 'PageController@audioCategory')->name('visitor.audio.category');
+    Route::get('/page/audio/category/{category_id}', 'PageController@audioCategory')->name('visitor.audio.category');
+    Route::get('/page/audio/album/{album_id}', 'PageController@audioAlbum')->name('visitor.audio.album');
     Route::get('/page/audio/listen/{audio_id}', 'PageController@audioDetail')->name('visitor.audio.detail');
 
     // Tag
-    Route::get('/tag/{tag_id}', 'PageController@findPostsByTag')->name('visitor.tag_posts');
+    Route::get('/tag/search', 'PageController@findPostsByTag')->name('visitor.tag_posts');
 
     // Search
     Route::get('/search', 'PageController@search')->name('visitor.search');
@@ -163,6 +171,7 @@ Route::group([
     Route::delete('posts/remove', 'AdminAjaxController@removePost')->name('admin.ajax.delete_post');
     Route::delete('category/remove', 'AdminAjaxController@removeCategory')->name('admin.ajax.delete_category');
     Route::delete('tag/remove', 'AdminAjaxController@removeTag')->name('admin.ajax.remove_tag');
+    Route::delete('serie/remove', 'AdminAjaxController@removeSerie')->name('admin.ajax.remove_serie');
     Route::post('loadPostsTitle', 'AdminAjaxController@loadPostsTitle')->name('admin.ajax.loadPostTitle');
     Route::post('users/{user_id?}', 'AdminAjaxController@getUsers')->name('admin.ajax.users');
     Route::post('admins/{admin_id?}', 'AdminAjaxController@getAdmins')->name('admin.ajax.admins');

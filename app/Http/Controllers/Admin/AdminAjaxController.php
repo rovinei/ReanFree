@@ -300,7 +300,38 @@ class AdminAjaxController extends Controller
                 "data" => $posts,
                 "success" => [
                     "code" => 200,
-                    "message" => "Successfully deleted tag and detached from posts"
+                    "message" => "Successfully query posts"
+                ]
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function removeSerie(Request $request){
+        // Allow only ajax request
+        if($request->ajax()){
+
+            $serie_id = $request->input('id');
+            try {
+                $serie = PlaylistSerie::findOrFail($serie_id);
+                $serie->delete();
+            } catch (ModelNotFoundException $e) {
+                return response()->json([
+                    "status" => 500,
+                    "error" => [
+                        "code" => 500,
+                        "message" => "Oop! there is no record found!"
+                    ]
+                ]);
+            }
+
+            // Success retrived posts
+            return response()->json([
+                "status" => 200,
+                "success" => [
+                    "code" => 200,
+                    "message" => "Successfully deleted serie and detached from posts"
                 ]
             ]);
         }

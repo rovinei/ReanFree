@@ -2,14 +2,27 @@
 
 @section('page_title', 'welcome to 180 inspire website')
 
-@push('styles')
-<style type="text/css">
-
-</style>
-@endpush
-
 @section('slideshow')
-    @includeIf('visitor.partials._homepage_slideshow')
+    @if(!empty($sliders) && count($sliders) > 0)
+    <!-- Slideshow -->
+    <div class="slideshow_container">
+        <div class="uk-panel">
+            <div class="slideshow_section" data-uk-slideshow="{animation: 'swipe'}">
+                <div class="uk-slidenav-position">
+                    <ul class="uk-slideshow uk-overlay-active">
+                    @foreach($sliders as $slider)
+                        @includeIf('visitor.partials._homepage_slideshow', ['slider' => $slider])
+                    @endforeach
+                    </ul>
+
+                    <a href="#" class="uk-slidenav uk-slidenav-previous uk-hidden-touch" data-uk-slideshow-item="previous"></a>
+                    <a href="#" class="uk-slidenav uk-slidenav-next uk-hidden-touch" data-uk-slideshow-item="next"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Slideshow -->
+    @endif
 @endsection
 
 @section('content')
@@ -22,7 +35,7 @@
 
                     <div class="uk-width-small-1-1 uk-width-medium-2-3 uk-width-large-2-3 uk-width-xlarge-2-3">
                         <div class="section-heading bottom-line">
-                            <h3 class="bg_grey font-kh-siemreap">
+                            <h3 class="bg_grey font-kh-nokora">
                                 <i class="fa fa-newspaper-o"></i>
                                 @lang('visitor.latest_post')
                             </h3>
@@ -68,7 +81,7 @@
             <div class="uk-container uk-container-center">
 
                 <div class="section-heading bottom-line">
-                    <h3 class="bg_grey font-kh-siemreap">
+                    <h3 class="bg_grey font-kh-nokora">
                         <i class="fa fa-play"></i>
                         @lang('visitor.latest_video')
                     </h3>
@@ -90,7 +103,7 @@
         <div class="latest-song">
             <div class="uk-container uk-container-center">
                 <div class="section-heading bottom-line">
-                    <h3 class="bg_grey font-kh-siemreap">
+                    <h3 class="bg_grey font-kh-nokora">
                         <i class="fa fa-music"></i>
                         @lang('visitor.latest_song')
                     </h3>
@@ -147,7 +160,7 @@
                 {
                     "track": '{{ ++$key }}',
                     "name": "{{ $audio->title }}",
-                    "length": "3:26",
+                    "length": "{{ $audio->duration }}",
                     "file": "{{ $audio->sound_url }}"
                 },
                 @endforeach

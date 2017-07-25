@@ -13,7 +13,7 @@
             <div class="video-desc">
                 <div class="inner uk-clearfix">
                     <div class="breadcrum uk-margin-top">
-                        <h3 class="font-kh-siemreap uk-margin-remove yellow">
+                        <h3 class="font-kh-nokora uk-margin-remove yellow">
                             <i class="fa fa-play"></i>
                             <a href="{{ route('visitor.video.page') }}">@lang('visitor.video')</a>
                             <i class="fa fa-angle-double-right"></i>

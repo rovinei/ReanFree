@@ -17,7 +17,7 @@
     <div class="uk-container uk-container-center">
 
         <div class="breadcrum uk-margin-top">
-            <h3 class="font-kh-siemreap uk-margin-remove plain">
+            <h3 class="font-kh-nokora uk-margin-remove plain">
                 <a href="{{ route('visitor.index.page') }}">@lang('visitor.homepage')</a>
                 <i class="fa fa-angle-double-right"></i>
                 <a href="{{ route('visitor.video.page') }}">@lang('visitor.video')</a>
@@ -52,10 +52,10 @@
                     <div class="uk-panel-body no-pad-right no-pad-bottom no-pad-left">
                         <figure class="uk-overlay uk-overlay-hover">
                             <div class="post-grid__categoy">
-                                <h3 class="font-kh-siemreap">{{ $categories->categories[0]->name }}</h3>
+                                <h3 class="font-kh-nokora">{{ $categories->categories[0]->name }}</h3>
                             </div>
                             <img class="uk-overlay-scale" src="@if($categories->categories[0]->latestVideo->featured_image){{ asset($categories->categories[0]->latestVideo->featured_image) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="">
-                            <figcaption class="font-kh-freehand uk-overlay-background uk-ignore uk-overlay-panel uk-flex uk-flex-bottom">
+                            <figcaption class="font-kh-hanuman uk-overlay-background uk-ignore uk-overlay-panel uk-flex uk-flex-bottom">
                                 <div class="inner">
                                     <p>
                                         {{ str_limit($categories->categories[0]->latestVideo->title, 70) }}
