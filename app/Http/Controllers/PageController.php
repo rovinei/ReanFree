@@ -319,7 +319,7 @@ class PageController extends Controller
         $serieid = $video->series->pluck('id')->first();
         if($serieid !== null){
             $serie = PlaylistSerie::where('id', $serieid)
-                                ->with(['posts' => function($query){
+                                ->with(['posts' => function($query) use($vid) {
                                         $query->where([
                                                 ['id', '!=', $vid],
                                                 ['status', 1]
@@ -358,7 +358,7 @@ class PageController extends Controller
 
 
         // Query videos base on category
-        $relatedVideos = Post::whereNotIn('id', [$vid])
+        $relatedVideos = Post::whereNotIn('id', [$vid,$nextVideo])
                             ->where([
                                     ['mediatype_id', 3],
                                     ['category_id', $video->category->id],
@@ -396,7 +396,7 @@ class PageController extends Controller
         // Query featured albums
         $latestAlbum = PlaylistSerie::where([
                                             ['mediatype_id', 2],
-                                            ['status', 1]
+                                            ['is_featured', 1]
                                         ])
                                         ->whereHas('posts')
                                         ->orderBy('created_at', 'desc')
