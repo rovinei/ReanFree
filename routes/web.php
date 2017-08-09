@@ -54,6 +54,14 @@ Route::group([
     // Media Advertisement CRUD Operation
 
 
+    // Partner CRUD Operation
+    Route::get('partners', 'PartnerController@index')->name('admin.partners');
+    Route::get('partner/add', 'PartnerController@create')->name('admin.partner.create');
+    Route::post('partner/add', 'PartnerController@store')->name('admin.partner.store');
+    Route::get('partner/{partner_id}/edit', 'PartnerController@edit')->name('admin.partner.edit');
+    Route::post('partner/{partner_id}/edit', 'PartnerController@update')->name('admin.partner.update');
+    Route::post('partner/{partner_id}/remove', 'PartnerController@destroy')->name('admin.partner.destroy');
+
     // Slider CRUD Operation
     Route::get('slider', 'SliderController@index')->name('admin.slider');
     Route::get('slider/add', 'SliderController@create')->name('admin.slider.create');
@@ -169,6 +177,7 @@ Route::group([
 
     Route::post('posts/{post_id?}', 'AdminAjaxController@getPosts')->name('admin.ajax.posts');
     Route::delete('posts/remove', 'AdminAjaxController@removePost')->name('admin.ajax.delete_post');
+    Route::delete('partner/remove', 'AdminAjaxController@removePartner')->name('admin.ajax.delete_partner');
     Route::delete('category/remove', 'AdminAjaxController@removeCategory')->name('admin.ajax.delete_category');
     Route::delete('tag/remove', 'AdminAjaxController@removeTag')->name('admin.ajax.remove_tag');
     Route::delete('serie/remove', 'AdminAjaxController@removeSerie')->name('admin.ajax.remove_serie');

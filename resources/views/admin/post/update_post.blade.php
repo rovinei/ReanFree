@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Admin dashboard overview')
+@section('title', 'Update Post')
 
 @push('styles')
     <style>
@@ -84,7 +84,7 @@
                 <!-- Card Form -->
                 <div class="uk-flex-1">
                     <h2 class="form-title uk-text-center">
-                        POST REGISTRATION FORM
+                        POST UPDATION FORM
                         <span>
                             Start publishing something great
                         </span>
@@ -316,11 +316,13 @@
             switch(field_id){
                 case 'txtFeaturedImage':
                     imageUrl = $('#'+field_id).val();
-                    $('#imagePreviewDiv').css({
-                        'background' : 'url("'+imageUrl+'") center center / cover no-repeat',
-                        'position' : 'relative',
-                        'min-height' : '130px'
-                    });
+                    // $('#imagePreviewDiv').empty().css({
+                    //     'background' : 'url("'+imageUrl+'") center center / cover no-repeat',
+                    //     'position' : 'relative',
+                    //     'min-height' : '130px'
+                    // });
+
+                    $('#imagePreviewDiv img').attr('src', imageUrl);
                     break;
                 case 'sound_url':
                     var playing = false,

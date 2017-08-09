@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Admin dashboard overview')
+@section('title', 'Publishing new post')
 
 @push('styles')
     <style>
@@ -230,7 +230,9 @@
                             </div>
                             <div class="imagePreview">
                                 <p>Image Preview</p>
-                                <div id="imagePreviewDiv"></div>
+                                <div id="imagePreviewDiv">
+
+                                </div>
                             </div>
                         </div>
 

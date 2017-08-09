@@ -41,13 +41,21 @@
                             </h3>
                         </div>
 
-                        <div class="section-bg__white padding-small uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3">
+                        <div class="section-bg__white">
+                            <div class="padding-small uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-3 uk-grid-width-xlarge-1-3">
+                                @foreach($articles as $article)
+                                    @includeIf('visitor.components.article.grid_box_1', ['article' => $article])
+                                @endforeach
+                            </div>
 
-                            @foreach($articles as $article)
-                                @includeIf('visitor.components.article.grid_box_1', ['article' => $article])
-                            @endforeach
+                            <div class="sponsor-slideset__footer">
+                                <div class="inner">
+                                    <a href="{{ route('visitor.article.page') }}">READ MORE</a>
+                                </div>
+                            </div>
 
                         </div>
+
                     </div>
 
                     <div class="uk-width-small-1-1 uk-width-medium-1-3 uk-width-large-1-3 uk-width-xlarge-1-3">
@@ -87,10 +95,18 @@
                     </h3>
                 </div>
 
-                <div class="section-bg__white uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4 padding-small">
-                    @foreach($videos as $video)
-                        @includeIf('visitor.components.video.video_grid_index', ['video' => $video])
-                    @endforeach
+                <div class="section-bg__white">
+                    <div class=" uk-grid uk-grid-collapse uk-grid-width-1-1 uk-grid-width-small-1-2 uk-grid-width-medium-1-3 uk-grid-width-large-1-4 uk-grid-width-xlarge-1-4 padding-small">
+                        @foreach($videos as $video)
+                            @includeIf('visitor.components.video.video_grid_index', ['video' => $video])
+                        @endforeach
+                    </div>
+
+                    <div class="sponsor-slideset__footer">
+                        <div class="inner">
+                            <a href="{{ route('visitor.video.page') }}">WATCH MORE</a>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -145,10 +161,64 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="section-bg__white">
+                    <div class="sponsor-slideset__footer">
+                        <div class="inner">
+                            <a href="{{ route('visitor.audio.page') }}">LISTEN MORE</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
     <!-- /Latest music -->
+
+    @if(count($partners) > 0)
+    <!-- Sponsor slideset -->
+    <div class="section">
+        <div class="sponsor-slideset">
+            <div class="uk-container uk-container-center">
+                <div class="section-heading-large">
+                    <h3>
+                        @lang('visitor.partner')
+                    </h3>
+                </div>
+
+                <div class="section-bg__white">
+                    <div class="uk-panel sponsor-slideset__wrapper">
+                        <div>
+                            <div data-uk-slideset="{small: 2, medium: 4, large: 6, animation: 'slide-horizontal', autoplay: true}">
+                                <div class="uk-slidenav-position">
+                                    <ul class="sponsor-slideset__list uk-grid uk-grid-collapse uk-slideset">
+                                    @foreach($partners as $partner)
+                                        @if($partner->logo_src)
+                                        <li>
+                                            <a href="{{ $partner->external_url }}" class="uk-display-block">
+                                                <img src="{{ asset(str_replace('thumbs', 'uploads', $partner->logo_src)) }}" alt="{{ $partner->company_name }}">
+                                            </a>
+                                        </li>
+                                        @endif
+                                    @endforeach
+                                    </ul>
+                                    <a href="" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>
+                                    <a href="" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sponsor-slideset__footer">
+                        <div class="inner">
+                            <a href="#">SEE ALL</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Sponsor slideset -->
+    @endif
 </div>
 @endsection
 

@@ -123,6 +123,27 @@
                 </li>
 
                 <li>
+                    <a href="#"><i class="fa fa-chain"></i> Partner &amp; Sponsor</a>
+                    <div class="dropdown-nav">
+
+                        <ul class="">
+                            <li class="uk-active">
+                                <a href="{{ route('admin.partners') }}">
+                                    <i class="fa fa-book"></i> Partner List
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.partner.create') }}">
+                                    <i class="fa fa-newspaper-o"></i>
+                                    Create New Partner
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+
+                <li>
                     <a href="#"><i class="fa fa-users"></i> Author Management</a>
                     <div class="dropdown-nav">
                         <ul class="">

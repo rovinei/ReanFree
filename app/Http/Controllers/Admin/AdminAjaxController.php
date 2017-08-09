@@ -16,10 +16,12 @@ use App\Models\FileEntry;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Department;
+use App\Models\Partner;
 use Conner\Tagging\Model\Tag;
 use Conner\Tagging\Model\Tagged;
 use Auth;
 use Session;
+use Exception;
 
 class AdminAjaxController extends Controller
 {
@@ -173,6 +175,63 @@ class AdminAjaxController extends Controller
         // Return if rquest not an AJAX
         return redirect()->back();
     }
+
+    // Remove Partner
+    public function removePartner(Request $request){
+        if($request->ajax()){
+
+            // Determine if post exist
+            if($request->has('id')){
+                $partnerId = $request->input('id');
+                try{
+                    $partner = Partner::findOrFail($partnerId);
+                }catch(ModelNotFoundException $e){
+                    return response()->json([
+                        "status" => 202,
+                        "error" => [
+                            "code" => 202,
+                            "message" => "No Query result found for partner ID : ".$partnerId
+                        ]
+                    ]);
+                }
+
+                // Try to delete post
+                try{
+                    $partner->delete();
+                }catch(Exception $e){
+                    return response()->json([
+                        "status" => 505,
+                        "error" => [
+                            "code" => 505,
+                            "message" => "Error while trying to delete partner"
+                        ]
+                    ]);
+                }
+
+                // Response with successful message
+                return response()->json([
+                    "status" => 200,
+                    "success" => [
+                        "code" => 200,
+                        "message" => "Successfully deleted partner with ID : ".$partnerId
+                    ]
+                ]);
+            }
+
+            // Request must specify post id
+            return response()->json([
+                "status" => 202,
+                "error" => [
+                    "code" => 202,
+                    "message" => "Invalid request data"
+                ]
+            ]);
+        }
+
+        // Return if rquest not an AJAX
+        return redirect()->back();
+    }
+
 
     // Remove category
     public function removeCategory(Request $request){

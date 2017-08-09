@@ -9,6 +9,7 @@ use Conner\Tagging\Model\Tag;
 use Conner\Tagging\Model\Tagged;
 use Session;
 use Auth;
+use Exception;
 
 class TagController extends Controller
 {

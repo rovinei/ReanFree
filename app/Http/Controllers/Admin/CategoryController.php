@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateCategory;
 use Validator;
 use Auth;
 use Session;
+use Exception;
+
 class CategoryController extends Controller
 {
     // Display list of categories

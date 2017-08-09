@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Admin;
 use Session;
 use Auth;
+use Exception;
 
 class AdminController extends Controller
 {

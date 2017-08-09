@@ -10,6 +10,8 @@ use App\Models\CategoryType;
 use App\Models\Category;
 use Auth;
 use Session;
+use Exception;
+
 class SerieController extends Controller
 {
 

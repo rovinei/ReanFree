@@ -16,6 +16,7 @@ use App\Models\Admin;
 use App\Models\FileEntry;
 use Auth;
 use Session;
+use Exception;
 
 class PostController extends Controller
 {

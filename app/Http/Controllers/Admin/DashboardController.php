@@ -13,6 +13,7 @@ use App\Models\Admin;
 use App\Models\FileEntry;
 use App\Models\Department;
 use DB;
+use Exception;
 
 class DashboardController extends Controller
 {

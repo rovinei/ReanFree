@@ -7,5 +7,6 @@ return [
     'homepage' => 'Home',
     'article' => 'Article',
     'video' => 'Video',
-    'audio' => 'Audio'
+    'audio' => 'Audio',
+    'partner' => 'Partner'
 ];

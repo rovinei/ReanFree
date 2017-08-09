@@ -8,7 +8,9 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\CategoryType;
 use App\Models\PlaylistSerie;
+use App\Models\Partner;
 use Carbon\Carbon;
+use Exception;
 
 class PageController extends Controller
 {
@@ -54,12 +56,19 @@ class PageController extends Controller
                         ->take(4)
                         ->get();
 
+        // Partners
+        $partners = Partner::where([
+            'status' => 1,
+            'is_featured' => 1,
+        ])->get();
+
 
         return view('visitor.index')->with([
                 'articles' => $articles,
                 'videos' => $videos,
                 'audios' => $audios,
-                'sliders' => $sliders
+                'sliders' => $sliders,
+                'partners' => $partners
             ]);
     }
 

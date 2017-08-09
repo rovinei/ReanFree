@@ -57,8 +57,8 @@ class PlaylistSerie extends Model
 
     // Override feature image
     public function setFeaturedImageAttribute($value){
-        $this->attributes['featured_image'] = str_replace(url('/'), '', $value);
-        $this->attributes['featured_image'] = str_replace('uploads', 'thumbs', $value);
+        $imagePath = str_replace('uploads', 'thumbs', $value);
+        $this->attributes['featured_image'] = str_replace(URL('/'), '', $imagePath);
     }
 
     // Eloquent related to posts

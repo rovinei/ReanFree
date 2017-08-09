@@ -12,6 +12,7 @@ use Auth;
 use Storage;
 use Validator;
 use Session;
+use Exception;
 
 class FileController extends Controller
 {
