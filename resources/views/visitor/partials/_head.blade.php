@@ -1,6 +1,5 @@
 
 <title>@yield('page_title')</title>
-<link href="https://fonts.googleapis.com/css?family=Hanuman|Nokora" rel="stylesheet">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,6 +20,8 @@
 <meta property="og:description"   content="We are the next leading media and news website in cambodia" />
 <meta property="og:image"         content="http://180inspires.com/images/website_default_image.jpg" />
 @endif
+
+<link href="https://fonts.googleapis.com/css?family=Hanuman|Nokora" rel="stylesheet">
 
 <link href="https://fonts.googleapis.com/css?family=Fasthand|Freehand|Metal|Open+Sans+Condensed:300,400,600|Open+Sans:400,500,600|Siemreap|Taprom&amp;subset=khmer" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{{ asset('lib/font-awesome/css/font-awesome.min.css') }}">
