@@ -1,18 +1,64 @@
 @extends('admin.layouts.main')
 
-@section('title', '180 Inspire admin dashboard | Update Serie, Album and Playlist')
+@section('title', 'Publishing new post')
 
 @push('styles')
-    <style type="text/css">
-        .label{
-            font-size: 1.3rem;
-            color: #817b73;
-            font-weight: 500;
-            margin: 0;
-            padding: 10px 0;
+    <style>
+        #soundUpload,
+        #videoUpload{
+            display: none;
+            opacity: 0;
+            -webkit-transform: scale(0.3,0.3);
+            -moz-transform: scale(0.3,0.3);
+            -ms-transform: scale(0.3,0.3);
+            -o-transform: scale(0.3,0.3);
+            transform: scale(0.3,0.3);
+            -webkit-transition: opacity 0.2s linear, transform 0.25s ease;
+            -moz-transition: opacity 0.2s linear, transform 0.25s ease;
+            -ms-transition: opacity 0.2s linear, transform 0.25s ease;
+            -o-transition: opacity 0.2s linear, transform 0.25s ease;
+            transition: opacity 0.2s linear, transform 0.25s ease;
+        }
+
+        #soundUpload.visible,
+        #videoUpload.visible{
+            display: block;
+            opacity: 1;
+            -webkit-transform: scale(1,1);
+            -moz-transform: scale(1,1);
+            -ms-transform: scale(1,1);
+            -o-transform: scale(1,1);
+            transform: scale(1,1);
+        }
+
+        #progressbar-wrap {
+            border: 1px solid #0099CC;
+            padding: 1px;
+            position: relative;
+            height: 30px;
+            border-radius: 3px;
+            margin: 10px;
+            text-align: left;
+            background: #fff;
+            box-shadow: inset 1px 3px 6px rgba(0, 0, 0, 0.12);
+        }
+        #progressbar-wrap .progress-bar{
+            height: 100%;
+            border-radius: 3px;
+            background-color: #f39ac7;
+            width: 0;
+            box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.11);
+        }
+        #progressbar-wrap .status{
+            top:3px;
+            left:50%;
+            position:absolute;
+            display:inline-block;
+            color: #000000;
         }
     </style>
 @endpush
+
 @section('content')
 
     <div>
@@ -58,16 +104,15 @@
             });
         </script>
         @endif
-
-        <form class="custom-form" enctype="multipart/form-data" action="{{ route('admin.serie.update', $serie->id) }}" method="POST">
+        <form class="custom-form" enctype="multipart/form-data" action="{{ route('admin.post.store') }}" method="POST">
             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
             <div class="uk-flex">
                 <!-- Card Form -->
                 <div class="uk-flex-1">
                     <h2 class="form-title uk-text-center">
-                        Update Album, Playlist &amp; Serie Form
+                        POST REGISTRATION FORM
                         <span>
-                            It's ok, People usually made problem
+                            Start publishing something great
                         </span>
                     </h2>
 
@@ -78,26 +123,8 @@
                             <div class="uk-width-1-1">
 
                                 <div class="custom-form-group">
-                                    <div class="uk-width-1-1">
-                                        <input type="text" value="@if($serie->title){{ $serie->title }}@endif" placeholder="Album, Serie, Playlist title here ..." name="title" class="custom-input-text" required/>
-                                    </div>
-                                </div>
-
-                                <div class="custom-form-group">
-                                    <h2 class="label">
-                                        Description
-                                    </h2>
-                                    <div class="uk-width-1-1">
-                                        <textarea id="description" name="description" class="custom-input-textarea">
-                                        @if($serie->description){{ $serie->description }}@endif
-                                        </textarea>
-                                    </div>
-                                </div>
-
-                                <div class="custom-form-group">
                                     <div class="padding-top-sm"></div>
-                                    <input type="reset" class="custom-btn-cancel" value="Cancel">
-                                    <input type="submit" class="custom-btn-submit" value="Update Now"/>
+                                    <input type="submit" class="custom-btn-submit" value="Save"/>
                                 </div>
 
                             </div>
@@ -110,88 +137,37 @@
 
                 </div>
                 <!-- /Card From -->
-
-                <!-- Advance Options -->
-                <div class="sidebar-form-advance">
-                    <div class="avoid-click-overlay">
-                        <div uk-spinner></div>
-                    </div>
-                    <div class="heading">
-                        <h2>
-                            Advance Options
-                        </h2>
-                    </div>
-                    <div class="advance-options">
-                        <div class="custom-form-group clearfix uk-flex">
-                            <div class="media_-select">
-                                <select id="mediaField" name="mediatype_id" required>
-                                </select>
-                            </div>
-
-                            <div class="category-select uk-flex-1">
-                                <select id="categoryField" name="category_id" required>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="custom-form-group">
-                            <h3 class="uk-float-left uk-display-block uk-width-1-1"> Featured Post?</h3>
-                            <div class="custom-checkbox__outer">
-                                <input @if($serie->is_featured == 1){{ 'checked="checked"' }}@endif name="is_featured" id="is_featured" type="checkbox" value="1" class="checkbox">
-                            </div>
-                        </div>
-
-                        <div class="custom-form-group">
-                            <div class="uk-width-1-1">
-                                <input value="@if($serie->genre){{ $serie->genre }}@endif" type="text" placeholder="Genre" name="genre" class="custom-input-text" />
-                            </div>
-                        </div>
-
-                        <!-- Featured image field -->
-                        <div class="custom-form-group">
-                            <div class="file-input-wrapper">
-                                <button class="custom-upload-btn image uploadFile" data-type="image" id="uploadImage"><i class="fa fa-upload"></i> Upload</button>
-                                <input type="hidden" value="@if($serie->featured_image){{ $serie->featured_image }}@endif" name="featured_image" id="txtFeaturedImage" />
-                            </div>
-                            <div class="imagePreview">
-                                <p>Image Preview</p>
-                                <div id="imagePreviewDiv">
-                                    @if($serie->featured_image)
-                                    <img src="{{ $serie->featured_image }}" alt="">
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- /Advance Options -->
             </div>
         </form>
-
     </div>
     @includeIf('admin.partials._uploadfile')
 @endsection
 
 @push('script_dependencies')
+    <script type="text/javascript" src="{{ asset('admins/plugins/tinymce/tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admins/plugins/tinymce/tinymce-config.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/done-typing.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admins/js/script.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admins/js/crud.js') }}"></script>
 @endpush
 
 @section('script')
 
     <script>
 
-        var categoryOptions = [
-            @if($categories)
-                @foreach ($categories as $category)
-                { id: "{{ $category->id }}", name: "{{ $category->name }}" },
+        var tagOptions = [
+            @if(!empty($tags))
+                @foreach ($tags as $tag)
+                {tag: "{{$tag}}" },
                 @endforeach
             @endif
         ];
 
-        var categorySeletedItems = [
-            @if($serie->category)
-                {{ $serie->category->id }},
+        var categoryOptions = [
+            @if(!empty($categories))
+                @foreach ($categories as $category)
+                { id: "{{ $category->id }}", name: "{{ $category->name }}" },
+                @endforeach
             @endif
         ];
 
@@ -208,6 +184,18 @@
                     });
                     break;
                 case 'sound_url':
+                    var playing = false,
+                        audioEle = $('#audioEle').bind('play', function () {
+                                    playing = true;
+                                }).bind('pause', function () {
+                                    playing = false;
+                                }).bind('ended', function () {
+                                    audio.pause();
+                                }).get(0);
+                    var supportsAudio = !!document.createElement('audio').canPlayType;
+                    if (supportsAudio){
+                        $(audioEle).attr('src', $('#'+field_id).val());
+                    }
                     break;
 
                 default:
@@ -225,6 +213,27 @@
         });
 
         $(document).ready(function(){
+            $('#video_url').donetyping(function(){
+                $iframe = $('<iframe></iframe>');
+                $iframe.attr('src', 'https://www.youtube.com/embed/'+$.trim($(this).val())).css({'width':'100%'});
+                $('#videoPreview').empty().append($iframe);
+            }, 2000);
+
+            var tagSelect = $('#tags').selectize({
+                plugins: ['restore_on_backspace', 'remove_button'],
+                delimiter: ',',
+                persist: false,
+                valueField: 'tag',
+                labelField: 'tag',
+                searchField: 'tag',
+                options: tagOptions,
+                placeholder: 'Attach tags ...',
+                create: function(input) {
+                    return {
+                        tag: input
+                    }
+                }
+            });
 
             var mediaSelect = $('#mediaField').selectize({
                 delimiter: ',',
@@ -237,9 +246,7 @@
                     {id: 3, name: 'Video'}
                 ],
                 items: [
-                    @if($serie->mediatype_id)
-                        {{ $serie->mediatype_id }}
-                    @endif
+                    1
                 ],
                 placeholder: 'Type',
                 onChange: function(value){
@@ -249,7 +256,17 @@
                     category_select.clearOptions();
                     category_select.renderCache['option'] = {};
                     category_select.renderCache['item'] = {};
+
                     categoryOptions = [];
+                    if(value == 3){
+                        $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
+                        $('#videoUpload').toggleClass('visible');
+                    }else if(value == 1){
+                        $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
+                        $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
+                    }else{
+                        return;
+                    }
 
                     $('.sidebar-form-advance')
                     .addClass('avoid-click');
@@ -299,11 +316,6 @@
                 create: false,
                 options: categoryOptions,
                 placeholder: 'Choose category',
-                items: [
-                    @if($serie->category)
-                        {{ $serie->category->id }},
-                    @endif
-                ],
             });
         });
 

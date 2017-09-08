@@ -73,7 +73,23 @@
 
                                     <div class="custom-form-group">
                                         <div class="selectize-md">
-                                            <input type="text" id="mediaField" name="mediatype_id" required/>
+                                            <select id="mediaField" name="mediatype_id" required>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="custom-form-group">
+                                        <div class="selectize-md">
+                                            <select id="categoryParent" name="parent_id">
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="custom-form-group">
+                                        <div class="">
+                                            <input class="custom-input-text" placeholder="Order" name="order" value="{{ $category->order }}" type="text" />
                                         </div>
                                     </div>
 
@@ -105,7 +121,15 @@
 @endsection
 
 @section('script')
-
+    <script>
+        var categoryOptions = [
+            @if(!empty($categories))
+                @foreach ($categories as $cate)
+                { id: "{{ $cate->id }}", name: "{{ $cate->name }}" },
+                @endforeach
+            @endif
+        ];
+    </script>
     <script>
         $(document).ready(function(){
             // Initialize media select option
@@ -118,18 +142,33 @@
                 searchField: 'mediaName',
                 placeholder: 'Attach media type',
                 options: [
-                    {mediaId: 1, mediaName: 'Reading'},
-                    {mediaId: 2, mediaName: 'Listening'},
-                    {mediaId: 3, mediaName: 'Watching'}
+                    {mediaId: 1, mediaName: 'Article'},
+                    {mediaId: 3, mediaName: 'Video'}
                 ],
                 items: [
-                @if($mediatypes)
-                    @foreach($mediatypes as $media)
-                        {{ $media }},
-                    @endforeach
+                @if($category->mediatype_id)
+                    {{ $category->mediatype_id }}
                 @endif
                 ],
             });
+
+            // Initialize category parent
+            var categories = $('#categoryParent').selectize({
+                delimiter: ',',
+                persist: false,
+                create: false,
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                placeholder: '-----Parent-----',
+                options: categoryOptions,
+                items: [
+                @if($category->parent_id)
+                    {{ $category->parent_id }}
+                @endif
+                ],
+            });
+
         });
 
     </script>

@@ -21,8 +21,8 @@ class CreatePostsTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('mediatype_id')->unsigned()->index();
             $table->string('featured_image', 500)->nullable();
-            $table->string('sound_url', 500)->nullable();
             $table->string('video_url', 500)->nullable();
+            $table->string('sound_url', 500)->nullable();
             $table->integer('status')->unsigned()->default(1);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

@@ -36,7 +36,7 @@
                     <ul class="top-post__list">
                     @foreach($articles as $article)
                         <li class="top-post__item">
-                            <a href="{{ route('visitor.article.detail', $article->id) }}" class="custom-a__link overflow-ellipsis">
+                            <a href="{{ route('visitor.article.detail', $article->slug) }}" class="custom-a__link overflow-ellipsis">
                                 {{ str_limit($article->title, 70) }}
                             </a>
                         </li>
@@ -44,14 +44,14 @@
                     </ul>
 
                     <div class="uk-text-center">
-                        <a id="loadmore" href="#" class="preventDefaultElement readmore uk-display-inline-block">
+                        <a id="loadmore" href="{{ route('visitor.article.page') }}" class="preventDefaultElement readmore uk-display-inline-block">
                             READ MORE
                         </a>
                     </div>
                 </div>
 
                 <div class="uk-width-1-1 uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2 uk-width-xlarge-1-2 no-pad-top uk-panel-body post-grid uk-grid uk-grid-collapse uk-grid-width-1-2">
-                @foreach($categories->categories as $category)
+                @foreach($categories as $category)
                     @includeIf('visitor.components.article.category_box', ['category' => $category])
                 @endforeach
                 </div>

@@ -31,7 +31,7 @@ class AdminAjaxController extends Controller
             if($request->has('typeid')){
                 $mediaid = $request->input('typeid');
                 try {
-                    $type = CategoryType::findOrFail($mediaid);
+                    $categories = Category::where('mediatype_id', $mediaid)->orderBy('order','desc')->get();
                 } catch (ModelNotFoundException $e) {
                     return response()->json([
                         "status" => 404,
@@ -42,16 +42,13 @@ class AdminAjaxController extends Controller
                     ]);
                 }
 
-                // Query categories by type
-                $categories = $type->categories;
-
                 // Query all series related to articale type #1
                 $series = PlaylistSerie::where('mediatype_id','=', $mediaid)->get();
 
                 return response()->json([
-                        'categories' => $categories,
-                        'series' => $series
-                    ]);
+                    'categories' => $categories,
+                    'series' => $series
+                ]);
             }
             return response()->json([
                 "status" => 202,

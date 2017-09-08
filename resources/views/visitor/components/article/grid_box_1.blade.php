@@ -2,7 +2,7 @@
 @if(!empty($article))
 <div class="custom-grid__item">
     <div class="uk-panel padding-small">
-        <a href="{{ route('visitor.article.detail', $article->id) }}" class="post-grid__box">
+        <a href="{{ route('visitor.article.detail', $article->slug) }}" class="post-grid__box">
             <div class="post-thumbnail fade scale">
                 <img src="@if($article->featured_image)
                 {{ asset($article->featured_image) }}

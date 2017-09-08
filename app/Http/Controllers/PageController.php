@@ -36,15 +36,6 @@ class PageController extends Controller
                         ->latest()
                         ->take(8)->get();
 
-        // Query 8 popular audios
-        $audios = Post::where([
-                            ['mediatype_id', 2],
-                            ['status', 1]
-                        ])
-                        ->with('tagged', 'category')
-                        ->latest()
-                        ->take(8)->get();
-
         // Featured Slider Post
         $sliders = Post::whereNull('deleted_at')
                         ->where([
@@ -66,7 +57,6 @@ class PageController extends Controller
         return view('visitor.index')->with([
                 'articles' => $articles,
                 'videos' => $videos,
-                'audios' => $audios,
                 'sliders' => $sliders,
                 'partners' => $partners
             ]);
@@ -76,9 +66,11 @@ class PageController extends Controller
     public function articlePage(){
 
         // Find categories of type reading
-        $categories = CategoryType::where('mediatype_id', 1)->with(['categories'=>function($query){
-            $query->has('latestArticle')->get();
-        }])->first();
+        $categories = Category::where('mediatype_id', 1)
+                            ->whereHas('latestArticle')
+                            ->with('latestArticle')
+                            ->get();
+
         $articles = Post::where([
                             ['mediatype_id', 1],
                             ['status', 1]
@@ -110,14 +102,16 @@ class PageController extends Controller
     }
 
     // Article Category Page
-    public function articleCategory(Request $request, $category_id){
+    public function articleCategory(Request $request, $slug){
 
         // Find category by id
         try{
+            $category = Category::where('slug', $slug)->firstOrFail();
+
             $articles = Post::where([
                                 ['mediatype_id', 1],
                                 ['status', 1],
-                                ['category_id', $category_id]
+                                ['category_id', $category->id]
                             ])
                             ->orderBy('created_at', 'desc')
                             ->paginate(16);
@@ -128,7 +122,7 @@ class PageController extends Controller
                                 ])
                                 ->take(4)
                                 ->get();
-            $category_name = $articles[0]->category->name;
+            $category_name = $category->name;
         }catch(ModelNotFoundException $e){
             return view('errors.404')->with('exception', 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
         }
@@ -177,12 +171,12 @@ class PageController extends Controller
     }
 
     // Article Detail Page
-    public function articleDetail(Request $request, $article_id){
+    public function articleDetail(Request $request, $slug){
 
         // Find article by id
         try {
             $article = Post::where([
-                                ['id', $article_id],
+                                ['slug', $slug],
                                 ['status', 1]
                             ])
                             ->with('tagged','category')
@@ -193,7 +187,7 @@ class PageController extends Controller
 
         // Query related article base on tag
         $relatedArticles = Post::where([
-                                ['id', '!=', $article_id],
+                                ['id', '!=', $article->id],
                                 ['mediatype_id', 1],
                                 ['status', 1]
 
@@ -204,7 +198,7 @@ class PageController extends Controller
 
         // Query the most latest article cross category
         $recentArticles = Post::where([
-                                ['id', '!=', $article_id],
+                                ['id', '!=', $article->id],
                                 ['mediatype_id', 1],
                                 ['status', 1]
 
@@ -217,7 +211,7 @@ class PageController extends Controller
         // Query article base on category instead
         if(count($relatedArticles) <= 0){
             $relatedArticles = Post::where([
-                                ['id', '!=', $article_id],
+                                ['id', '!=', $article->id],
                                 ['mediatype_id', 1],
                                 ['category_id', $article->category->id],
                                 ['status', 1]
@@ -238,13 +232,10 @@ class PageController extends Controller
     // Video Page
     public function videoPage(){
         // Find categories of type video
-        $categories = CategoryType::where([
-                                    ['mediatype_id', 3]
-                                ])
-                                ->with(['categories'=>function($query){
-                                    $query->has('latestVideo')->get();
-                                }])
-                                ->first();
+        $categories = Category::where('mediatype_id', 3)
+                            ->whereHas('latestVideo')
+                            ->with('latestVideo')
+                            ->get();
         $videos = Post::where([
                             ['mediatype_id', 3],
                             ['status', 1]
@@ -267,15 +258,15 @@ class PageController extends Controller
     }
 
     // Video Category Page
-    public function videoCategory(Request $request, $category_id){
+    public function videoCategory(Request $request, $slug){
 
         // Find category by id
         try{
-            $category = Category::findOrFail($category_id);
+            $category = Category::where('slug', $slug)->firstOrFail();
             $videos = Post::where([
                                 ['mediatype_id', 3],
                                 ['status', 1],
-                                ['category_id', $category_id]
+                                ['category_id', $category->id]
                             ])
                             ->orderBy('created_at', 'desc')
                             ->paginate(16);
@@ -286,7 +277,7 @@ class PageController extends Controller
                                 ])
                                 ->take(8)
                                 ->get();
-            $category_name = $videos[0]->category->name;
+            $category_name = $category->name;
         }catch(ModelNotFoundException $e){
             return view('errors.404')->with('exception', 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
         }
@@ -300,17 +291,17 @@ class PageController extends Controller
     }
 
     // Video Detail Page
-    public function videoDetail(Request $request, $video_id){
+    public function videoDetail(Request $request, $slug){
 
-        $vid = $video_id;
         // Find video by id
         try {
             $video = Post::where([
-                            ['id', $vid],
+                            ['slug', $slug],
                             ['status', 1]
                         ])
                         ->with('tagged','category','series')
                         ->firstOrFail();
+            $vid = $video->id;
         } catch (ModelNotFoundException $e) {
             return view('errors.404')->with('exception', 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
         }
@@ -388,183 +379,6 @@ class PageController extends Controller
             'nextVideo' => $nextVideo
         ]);
 
-    }
-
-
-    // Audio Page
-    public function audioPage(){
-        // Query featured albums
-        $latestAlbum = PlaylistSerie::where([
-                                            ['mediatype_id', 2],
-                                            ['is_featured', 1]
-                                        ])
-                                        ->whereHas('posts')
-                                        ->orderBy('created_at', 'desc')
-                                        ->with('category','posts')
-                                        ->first();
-
-        // Find categories of type audio
-        $categories = CategoryType::where('mediatype_id', 2)
-                                ->with(['categories'=>function($query){
-                                    $query->has('latestAudioAlbum')->get();
-                                }])->first();
-
-        if(!empty($latestAlbum)){
-            $relatedAlbums = PlaylistSerie::where('mediatype_id', 2)
-                                ->whereNotIn('id', [$latestAlbum->id])
-                                ->whereHas('posts')
-                                ->where('created_at', '<', Carbon::today())
-                                ->take(6)->get();
-        }else{
-            $relatedAlbums = null;
-        }
-
-
-        return view('visitor.listen.index')->with([
-            'categories' => $categories,
-            'latestAlbum' => $latestAlbum,
-            'relatedAlbums' => $relatedAlbums
-        ]);
-    }
-
-    // Audio Album Detail Page
-    public function audioAlbum(Request $request, $album_id){
-
-        // Find album by id
-        try {
-            $album = PlaylistSerie::where([
-                                        ['mediatype_id', 2],
-                                        ['id', $album_id]
-                                    ])
-                                    ->whereHas('posts')
-                                    ->with('posts')
-                                    ->firstOrFail();
-
-            $nextAlbum = PlaylistSerie::where([
-                                        ['mediatype_id', 2],
-                                        ['id', '>', $album_id]
-                                    ])
-                                    ->whereHas('posts')
-                                    ->first();
-
-            if(empty($nextAlbum)){
-                $nextAlbum = PlaylistSerie::where([
-                                        ['mediatype_id', 2]
-                                    ])
-                                    ->whereNotIn('id', [$album->id])
-                                    ->whereHas('posts')
-                                    ->orderBy('created_at', 'desc')
-                                    ->first();
-            }
-
-            if(!empty($nextAlbum)){
-                $relatedAlbums = PlaylistSerie::where('mediatype_id',  2)
-                                            ->whereNotIn('id', [$album->id, $nextAlbum->id])
-                                            ->orderBy('created_at', 'desc')
-                                            ->take(3)
-                                            ->get();
-            }else{
-                $relatedAlbums = null;
-            }
-
-        } catch (ModelNotFoundException $e) {
-            return view('errors.404')->with('exception', 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
-        }
-
-        return view('visitor.listen.album_detail')->with([
-            'audioAlbum' => $album,
-            'nextAlbum' => $nextAlbum,
-            'relatedAlbums' => $relatedAlbums
-        ]);
-    }
-
-    // Audio Category Page
-    public function audioCategory(Request $request, $category_id){
-        // Find category by id
-        try{
-
-            $category = Category::findOrFail($category_id);
-            $albums = PlaylistSerie::where([
-                                ['mediatype_id', 2],
-                                ['category_id', $category_id],
-                                ['is_featured', false]
-                            ])
-                            ->whereHas('posts')
-                            ->orderBy('created_at', 'desc')
-                            ->paginate(8);
-            $featuredAlbums = PlaylistSerie::where([
-                                ['mediatype_id', 2],
-                                ['category_id', $category_id],
-                                ['is_featured', true]
-                            ])
-                            ->whereHas('posts')
-                            ->orderBy('created_at', 'desc')
-                            ->take(3)->get();
-            $latestAlbum = PlaylistSerie::where([
-                                ['mediatype_id', 2],
-                                ['category_id', $category_id],
-                            ])
-                            ->whereNotIn('id', $featuredAlbums->pluck('id')->toArray())
-                            ->whereHas('posts')
-                            ->take(1)
-                            ->with('category','posts')
-                            ->first();
-
-        }catch(ModelNotFoundException $e){
-            return view('errors.404')->with('exception', 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
-        }
-
-        return view('visitor.listen.category')->with([
-            'category' => $category,
-            'albums' => $albums,
-            'featuredAlbums' => $featuredAlbums,
-            'latestAlbum' => $latestAlbum
-        ]);
-    }
-
-    // Audio Detail Page
-    public function audioDetail(Request $request, $audio_id){
-
-        // Find audio by id
-        try{
-
-            $audio = Post::findOrFail($audio_id);
-            // $albums = PlaylistSerie::where([
-            //                     ['mediatype_id', 2],
-            //                     ['category_id', $category_id],
-            //                     ['is_featured', false]
-            //                 ])
-            //                 ->whereHas('posts')
-            //                 ->orderBy('created_at', 'desc')
-            //                 ->paginate(8);
-            // $featuredAlbums = PlaylistSerie::where([
-            //                     ['mediatype_id', 2],
-            //                     ['category_id', $category_id],
-            //                     ['is_featured', true]
-            //                 ])
-            //                 ->whereHas('posts')
-            //                 ->orderBy('created_at', 'desc')
-            //                 ->take(3)->get();
-            // $latestAlbum = PlaylistSerie::where([
-            //                     ['mediatype_id', 2],
-            //                     ['category_id', $category_id],
-            //                 ])
-            //                 ->whereNotIn('id', $featuredAlbums->pluck('id')->toArray())
-            //                 ->whereHas('posts')
-            //                 ->take(1)
-            //                 ->with('category','posts')
-            //                 ->first();
-
-        }catch(ModelNotFoundException $e){
-            return view('errors.404')->with('exception', 'Oop! you have requested the resource that does not exists.\n We may considered create something new for you :D');
-        }
-
-        return view('visitor.listen.detail')->with([
-            // 'category' => $category,
-            'audio' => $audio,
-            // 'featuredAlbums' => $featuredAlbums,
-            // 'latestAlbum' => $latestAlbum
-        ]);
     }
 
     // Search page

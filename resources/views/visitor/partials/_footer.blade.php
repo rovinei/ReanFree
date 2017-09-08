@@ -7,7 +7,7 @@
             <div class="footer-gird__item">
                 <div class="inner">
                     <div class="footer-logo">
-                        <img src="{{ asset('images/logo/site_logo_large.png') }}" alt="">
+                        <img src="{{ asset('images/logo/logo_168x90.png') }}" alt="">
                     </div>
                     <div class="footer-copyright">
                         <p class="font-kh-hanuman">
@@ -36,7 +36,7 @@
                             ផលិតផលនិងសេវាកម្មរបស់
                         </strong>
                         <p>
-                            <img src="{{ asset('images/logo/site_logo_medium.png') }}" alt="">
+                            <img src="{{ asset('images/logo/logo_150x80.png') }}" alt="">
                             <img src="{{ asset('images/ads/media_ads_bigk_film.png') }}" alt="">
                         </p>
                     </div>

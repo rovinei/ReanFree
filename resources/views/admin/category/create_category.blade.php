@@ -73,7 +73,23 @@
 
                                     <div class="custom-form-group">
                                         <div class="selectize-md">
-                                            <input type="text" id="mediaField" name="mediatype_id" required/>
+                                            <select id="mediaField" name="mediatype_id" required>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="custom-form-group">
+                                        <div class="selectize-md">
+                                            <select id="categoryParent" name="parent_id">
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="custom-form-group">
+                                        <div class="">
+                                            <input class="custom-input-text" placeholder="Order" name="order" value="1" type="text" />
                                         </div>
                                     </div>
 
@@ -106,6 +122,15 @@
 
 @section('script')
     <script>
+        var categoryOptions = [
+            @if(!empty($categories))
+                @foreach ($categories as $category)
+                { id: "{{ $category->id }}", name: "{{ $category->name }}" },
+                @endforeach
+            @endif
+        ];
+    </script>
+    <script>
 
         $(document).ready(function(){
 
@@ -119,10 +144,21 @@
                 searchField: 'mediaName',
                 placeholder: 'Attach media type',
                 options: [
-                    {mediaId: 1, mediaName: 'Reading'},
-                    {mediaId: 2, mediaName: 'Listening'},
-                    {mediaId: 3, mediaName: 'Watching'}
+                    {mediaId: 1, mediaName: 'Article'},
+                    {mediaId: 3, mediaName: 'Video'}
                 ]
+            });
+
+            // Initialize category parent
+            var categories = $('#categoryParent').selectize({
+                delimiter: ',',
+                persist: false,
+                create: false,
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                placeholder: '-----Parent-----',
+                options: categoryOptions
             });
         });
 

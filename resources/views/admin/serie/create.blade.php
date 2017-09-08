@@ -176,8 +176,8 @@
     <script>
 
         var categoryOptions = [
-            @if(!empty($categories->categories))
-                @foreach ($categories->categories as $category)
+            @if(!empty($categories))
+                @foreach ($categories as $category)
                 { id: "{{ $category->id }}", name: "{{ $category->name }}" },
                 @endforeach
             @endif
@@ -217,13 +217,12 @@
             var mediaSelect = $('#mediaField').selectize({
                 delimiter: ',',
                 persist: false,
-                valueField: 'mediaId',
-                labelField: 'mediaName',
-                searchField: 'mediaName',
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
                 options: [
-                    {mediaId: 1, mediaName: 'Reading'},
-                    {mediaId: 2, mediaName: 'Listening'},
-                    {mediaId: 3, mediaName: 'Watching'}
+                    {id: 1, name: 'Article'},
+                    {id: 3, name: 'Video'}
                 ],
                 items: [
                     1

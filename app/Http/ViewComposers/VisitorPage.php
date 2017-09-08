@@ -4,13 +4,12 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
 use App\Models\CategoryType;
+use App\Models\Category;
 
 class VisitorPage
 {
 
-    protected $reading_menus;
-    protected $listen_menus;
-    protected $video_menus;
+    protected $menus;
     /**
      * Create a new profile composer.
      *
@@ -19,10 +18,7 @@ class VisitorPage
      */
     public function __construct()
     {
-        $menus = CategoryType::with('categories')->get();
-        $this->reading_menus = $menus->where('mediatype_id', '=', 1)->first();
-        $this->listen_menus = $menus->where('mediatype_id', '=', 2)->first();
-        $this->video_menus = $menus->where('mediatype_id', '=', 3)->first();
+        $this->menus = Category::whereNull('parent_id')->with('children')->get();
     }
 
     /**
@@ -35,9 +31,7 @@ class VisitorPage
     {
 
         $view->with([
-            'reading_menus' => $this->reading_menus,
-            'listen_menus' => $this->listen_menus,
-            'video_menus' => $this->video_menus
+            'menus' => $this->menus
         ]);
     }
 }

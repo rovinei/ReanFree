@@ -1,7 +1,7 @@
 @if(!empty($video))
 <div class="video-box-feature no-margin-left no-margin-right uk-margin-bottom">
     <div class="inner">
-        <a class="mansory-container" href="{{ route('visitor.video.detail', $video->id) }}">
+        <a class="mansory-container" href="{{ route('visitor.video.detail', $video->slug) }}">
             <div class="feature-box-teaser row">
                 <div class="thumbnail">
                 @if($video->featured_image)

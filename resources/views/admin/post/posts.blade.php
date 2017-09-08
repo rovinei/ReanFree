@@ -39,9 +39,7 @@
                                 </td>
                                 <td>
                                     @if($post->mediatype_id == 1)
-                                        Reading
-                                    @elseif($post->mediatype_id == 2)
-                                        Listening
+                                        Article
                                     @elseif($post->mediatype_id == 3)
                                         Video
                                     @endif

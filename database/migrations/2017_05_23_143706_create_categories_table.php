@@ -16,7 +16,10 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255)->unique();
+            $table->string('slug')->unique();
+            $table->integer('parent_id')->unsigned()->nullable()->default(null);
             $table->string('description')->nullable();
+            $table->integer('order')->default(1);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->softDeletes();
@@ -24,6 +27,7 @@ class CreateCategoriesTable extends Migration
 
             $table->foreign('created_by')->references('id')->on('admins');
             $table->foreign('updated_by')->references('id')->on('admins');
+            $table->foreign('parent_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('set null');
         });
     }
 

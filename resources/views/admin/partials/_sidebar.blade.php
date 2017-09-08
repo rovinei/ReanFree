@@ -2,7 +2,7 @@
     <div class="inner">
         <div class="sidebar-heading">
             <h3 style="display:none;">១៨០<span>MEDIA &amp; NEWS</span></h3>
-            <img src="{{ asset('images/logo/site_logo_large.png') }}">
+            <img src="{{ asset('images/logo/logo_150x80.png') }}">
         </div>
         <div class="main-nav">
             <ul>
@@ -31,11 +31,6 @@
                             <li class="">
                                 <a href="{{ route('admin.post.articles') }}">
                                     <i class="fa fa-newspaper-o"></i> Articles
-                                </a>
-                            </li>
-                            <li class="">
-                                <a href="{{ route('admin.post.audios') }}">
-                                    <i class="fa fa-music"></i> Audios
                                 </a>
                             </li>
                             <li>
@@ -84,25 +79,19 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-chain"></i> Album &amp; Playlist</a>
+                    <a href="#"><i class="fa fa-chain"></i> Serie &amp; Playlist</a>
                     <div class="dropdown-nav">
 
                         <ul class="">
                             <li class="uk-active">
                                 <a href="{{ route('admin.series') }}">
-                                    <i class="fa fa-book"></i> Albums &amp; Playlist Record
+                                    <i class="fa fa-book"></i> All Playlists
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.article_series') }}">
                                     <i class="fa fa-newspaper-o"></i>
                                     Article Series
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.audio_albums') }}">
-                                    <i class="fa fa-music"></i>
-                                    Audio Albums
                                 </a>
                             </li>
                             <li>
@@ -114,7 +103,7 @@
                             <li>
                                 <a href="{{ route('admin.serie.create') }}">
                                     <i class="fa fa-plus-square-o"></i>
-                                    Create Album | Playlist | Serie
+                                    Create Playlist | Serie
                                 </a>
                             </li>
                         </ul>

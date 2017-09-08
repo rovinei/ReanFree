@@ -33,7 +33,7 @@ class SerieController extends Controller
     public function create(Request $request){
 
         // Query all category of type article
-        $categories = CategoryType::where('mediatype_id', 1)->with('categories')->first();
+        $categories = Category::where('mediatype_id',1)->orderBy('order','desc')->get();
         return view('admin.serie.create')->with([
             'categories' => $categories
         ]);
@@ -82,7 +82,8 @@ class SerieController extends Controller
         // Determine if serie existed
         try {
             $serie = PlaylistSerie::findOrFail($serie_id);
-            $categories = CategoryType::where('mediatype_id', $serie->mediatype_id)->with('categories')->first();
+            $categories = Category::where('mediatype_id', $serie->mediatype_id)->orderBy('order','desc')->get();
+
         } catch (ModelNotFoundException $e) {
             Session::flash('error_message', 'Cannot find serie with id : '.$serie_id);
             return redirect(route('admin.series'));

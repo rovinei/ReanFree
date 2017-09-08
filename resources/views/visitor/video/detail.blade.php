@@ -75,7 +75,7 @@
                             <i class="fa fa-facebook-square"></i>
                             មតិយោបល់
                         </h3>
-                        <div class="fb-comments" data-href="{{ route('visitor.video.detail', $video->id) }}" data-width="100%" data-numposts="5"></div>
+                        <div class="fb-comments" data-href="{{ route('visitor.video.detail', $video->slug) }}" data-width="100%" data-numposts="5"></div>
                     </div>
                 </div>
                 <!-- /Video left description -->
@@ -84,7 +84,7 @@
                 <div class="video-detail__sidebar">
                     <div class="inner uk-margin-bottom uk-margin-top uk-clearfix">
                     @if(count($nextVideo) > 0)
-                        <a href="{{ route('visitor.video.detail', $nextVideo->id) }}" class="section-bg__white next-video padding-small uk-float-left">
+                        <a href="{{ route('visitor.video.detail', $nextVideo->slug) }}" class="section-bg__white next-video padding-small uk-float-left">
                             <div class="uk-flex uk-flex-inline">
                                 <div class="thumbnail-outer">
                                     <img src="@if($nextVideo->featured_image){{ asset($nextVideo->featured_image) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" class="thumbnail-img" alt="{{ $nextVideo->title }}" />

@@ -236,24 +236,11 @@
                             </div>
                         </div>
 
-                        <!-- Sound url field -->
-                        <div class="custom-form-group" id="soundUpload">
-                            <div class="file-input-wrapper">
-                                <!-- <label for="uploadSoundFile">Attach Sound File</label> -->
-                                <button class="custom-upload-btn sound uploadFile" data-type="sound" id="uploadSound"><i class="fa fa-sound"></i> Attach Sound File</button>
-                                <input type="hidden" class="custom-input-text" name="sound_url" id="sound_url">
-
-                                <div id="soundPreview" class="uk-panel uk-margin-medium-top">
-                                    <audio preload id="audioEle" controls="controls">Your browser does not support HTML5 Audio!</audio>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- video url field -->
                         <div class="custom-form-group" id="videoUpload">
                             <div class="file-input-wrapper">
                                 <!-- <button class="custom-upload-btn video">Embed Video</button> -->
-                                <input type="text" class="custom-input-text" name="video_url" id="video_url">
+                                <input type="text" class="custom-input-text" placeholder="Youtube Short Code" name="video_url" id="video_url">
 
                                 <div id="videoPreview">
 
@@ -261,7 +248,6 @@
                             </div>
                         </div>
 
-                        <!-- video url field -->
                         <div class="custom-form-group">
                             <input name="series" id="seriesField" />
                         </div>
@@ -304,8 +290,8 @@
         ];
 
         var categoryOptions = [
-            @if(!empty($categories->categories))
-                @foreach ($categories->categories as $category)
+            @if(!empty($categories))
+                @foreach ($categories as $category)
                 { id: "{{ $category->id }}", name: "{{ $category->name }}" },
                 @endforeach
             @endif
@@ -447,13 +433,12 @@
             var mediaSelect = $('#mediaField').selectize({
                 delimiter: ',',
                 persist: false,
-                valueField: 'mediaId',
-                labelField: 'mediaName',
-                searchField: 'mediaName',
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
                 options: [
-                    {mediaId: 1, mediaName: 'Reading'},
-                    {mediaId: 2, mediaName: 'Listening'},
-                    {mediaId: 3, mediaName: 'Watching'}
+                    {id: 1, name: 'Article'},
+                    {id: 3, name: 'Video'}
                 ],
                 items: [
                     1
@@ -475,11 +460,7 @@
 
                     categoryOptions = [];
                     serieOptions = [];
-                    if(value == 2){
-                        $('#videoUpload').hasClass('visible') ? $('#videoUpload').removeClass('visible') : $('#videoUpload').removeClass('');
-                        $('#soundUpload').toggleClass('visible');
-
-                    }else if(value == 3){
+                    if(value == 3){
                         $('#soundUpload').hasClass('visible') ? $('#soundUpload').removeClass('visible') : $('#soundUpload').removeClass('');
                         $('#videoUpload').toggleClass('visible');
                     }else if(value == 1){
@@ -554,3 +535,4 @@
 
     </script>
 @endsection
+

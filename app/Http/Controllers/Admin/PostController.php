@@ -36,14 +36,6 @@ class PostController extends Controller
         return view('admin.post.posts')->with(['posts' => $posts]);
     }
 
-    // Query only posts type sound
-    public function audioPost(){
-        $posts = Post::where('mediatype_id', '=', 2)
-                    ->orderBy('created_at','desc')
-                    ->paginate(15);
-        return view('admin.post.posts')->with(['posts' => $posts]);
-    }
-
     // Query only posts type video
     public function videoPost(){
         $posts = Post::where('mediatype_id', '=', 3)
@@ -64,13 +56,10 @@ class PostController extends Controller
 
         // Query all category which belong to articale type #1
         try{
-            $categories = CategoryType::where('mediatype_id',1)->with('categories')->firstOrFail();
+            $categories = Category::where('mediatype_id',1)->orderBy('order','desc')->get();
         }catch(ModelNotFoundException $e){
             Session::flash('error_message', 'Seems there is no category record yet! Create it now.');
-            return view('admin.post.create_post')->with([
-                    'tags' => $tags,
-                    'series' => $series
-                ]);
+            return redirect()->route('admin.category.create');
         }
 
         return view('admin.post.create_post')->with([
@@ -103,10 +92,6 @@ class PostController extends Controller
             $this->validate($request, [
                 'content' => 'required|min:10',
             ]);
-        }else if($request->mediatype_id == '2'){ // Sound type #2
-            $this->validate($request, [
-                'sound_url' => 'required',
-            ]);
         }else if($request->mediatype_id == '3'){ // Video type
             $this->validate($request, [
                 'video_url' => 'required',
@@ -134,12 +119,12 @@ class PostController extends Controller
             // Save post once before attach Series and Tags
             $post->save();
 
-            if($request->has('series')){
-                $post->attachSeries($request->input('series'));
-            }
-
             if($request->has('tags')){
                 $post->tag(explode(',', $request->tags));
+            }
+
+            if($request->has('series')){
+                $post->attachSeries($request->input('series'));
             }
 
             // Save post again after attach Series and Tags
@@ -189,13 +174,14 @@ class PostController extends Controller
 
             // Query all category which belong to this post type
             try{
-                $articalType = CategoryType::findOrFail($post->mediatype_id);
+                $categories = Category::where('mediatype_id', $post->mediatype_id)
+                                    ->orderBy('order','desc')
+                                    ->get();
+
             }catch(ModelNotFoundException $e){
                 Session::flash('error_message', 'Cannot find media type by id');
                 return redirect()->back();
             }
-
-            $categories = $articalType->categories;
 
             // Query all series related to articale type #1
             $series = PlaylistSerie::where('mediatype_id','=', $post->mediatype_id)->get();
@@ -238,10 +224,6 @@ class PostController extends Controller
             $this->validate($request, [
                 'content' => 'required|min:10',
             ]);
-        }else if($request->mediatype_id == '2'){ // Sound type #2
-            $this->validate($request, [
-                'sound_url' => 'required',
-            ]);
         }else if($request->mediatype_id == '3'){ // Video type
             $this->validate($request, [
                 'video_url' => 'required',
@@ -268,12 +250,12 @@ class PostController extends Controller
             if(!$category->count() <= 0){
                 $post->category()->associate($category);
 
-                if($request->has('series')){
-                    $post->attachSeries($request->input('series'));
-                }
-
                 if($request->has('tags')){
                     $post->retag(explode(',', $request->tags));
+                }
+
+                if($request->has('series')){
+                    $post->attachSeries($request->input('series'));
                 }
 
                 if(!$request->has('is_featured')){

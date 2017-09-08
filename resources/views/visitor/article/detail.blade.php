@@ -16,7 +16,7 @@
                 <i class="fa fa-angle-double-right"></i>
                 <a href="{{ route('visitor.article.page') }}">@lang('visitor.article')</a>
                 <i class="fa fa-angle-double-right"></i>
-                <a href="{{ route('visitor.article.category', $article->category->id) }}">{{ $article->category->name }}</a>
+                <a href="{{ route('visitor.article.category', $article->category->slug) }}">{{ $article->category->name }}</a>
             </h3>
         </div>
 
@@ -29,7 +29,7 @@
                             <div class="breadcrum uk-margin-bottom">
                                 <h3 class="font-kh-nokora uk-margin-remove yellow">
                                     <i class="fa fa-newspaper-o"></i>
-                                    <a href="{{ route('visitor.article.category', $article->category->id) }}">{{ $article->category->name }}</a>
+                                    <a href="{{ route('visitor.article.category', $article->category->slug) }}">{{ $article->category->name }}</a>
                                 </h3>
                             </div>
 
@@ -116,7 +116,7 @@
 
                     <!-- Facebook comment -->
                     <div class="facebook-comment uk-float-left">
-                        <div class="fb-comments" data-href="{{ route('visitor.article.detail', $article->id) }}" data-width="100%" data-numposts="5"></div>
+                        <div class="fb-comments" data-href="{{ route('visitor.article.detail', $article->slug) }}" data-width="100%" data-numposts="5"></div>
                     </div>
                     <!-- /Facebook comment -->
                 </div>
@@ -179,7 +179,7 @@
                         @if($recentArticles->isNotEmpty())
                             @foreach($recentArticles as $post)
                                 <li class="post-list__view post-list__item">
-                                    <a href="{{ route('visitor.article.detail', $post->id) }}" class="custom-a__link uk-flex uk-flex-inline">
+                                    <a href="{{ route('visitor.article.detail', $post->slug) }}" class="custom-a__link uk-flex uk-flex-inline">
                                         <div class="uk-flex-first post-list__thumbnail">
                                             <img src="@if($post->featured_image){{ asset($post->featured_image) }}@else {{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="{{ $post->title }}">
                                         </div>

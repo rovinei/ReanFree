@@ -7,7 +7,7 @@
         <figcaption class="font-kh-hanuman uk-overlay-background uk-ignore uk-overlay-panel uk-flex uk-flex-bottom">
             {{ str_limit($category->latestArticle->title, 50) }}
         </figcaption>
-        <a href="{{ route('visitor.article.detail', $category->latestArticle->id) }}" class="uk-position-cover"></a>
+        <a href="{{ route('visitor.article.detail', $category->latestArticle->slug) }}" class="uk-position-cover"></a>
     </figure>
 </div>
 

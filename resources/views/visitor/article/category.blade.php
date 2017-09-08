@@ -1,6 +1,6 @@
 @extends('visitor.layouts.main')
 
-@section('page_title', '180 INSPIRES | Article by category {{ $category->name }}')
+@section('page_title', '180 INSPIRES | Article by category')
 
 @push('styles')
     <style>

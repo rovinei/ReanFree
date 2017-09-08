@@ -143,20 +143,14 @@ Route::group([
 
     // Video route
     Route::get('/page/videos', 'PageController@videoPage')->name('visitor.video.page');
-    Route::get('/page/video/category/{category_id}', 'PageController@videoCategory')->name('visitor.video.category');
+    Route::get('/page/video/category/{slug}', 'PageController@videoCategory')->name('visitor.video.category');
     Route::get('/page/video/watch/{video_id}', 'PageController@videoDetail')->name('visitor.video.detail');
 
     // Article route
     Route::get('/page/articles', 'PageController@articlePage')->name('visitor.article.page');
-    Route::get('/page/article/category/{category_id}', 'PageController@articleCategory')->name('visitor.article.category');
+    Route::get('/page/article/category/{slug}', 'PageController@articleCategory')->name('visitor.article.category');
     Route::get('/page/article/serie/{serie_id}', 'PageController@articleSerie')->name('visitor.article.serie');
     Route::get('/page/article/read/{article_id}', 'PageController@articleDetail')->name('visitor.article.detail');
-
-    // Audio route
-    Route::get('/page/audios', 'PageController@audioPage')->name('visitor.audio.page');
-    Route::get('/page/audio/category/{category_id}', 'PageController@audioCategory')->name('visitor.audio.category');
-    Route::get('/page/audio/album/{album_id}', 'PageController@audioAlbum')->name('visitor.audio.album');
-    Route::get('/page/audio/listen/{audio_id}', 'PageController@audioDetail')->name('visitor.audio.detail');
 
     // Tag
     Route::get('/tag/search', 'PageController@findPostsByTag')->name('visitor.tag_posts');

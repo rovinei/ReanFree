@@ -16,7 +16,7 @@
                                             <i class="fa fa-newspaper-o fa-big"></i>
                                             <a href="#">អត្ថបទ</a>
                                             <i class="fa fa-angle-double-right"></i>
-                                            <a href="{{ route('visitor.article.category', $slideshow->category->id) }}">{{ $slideshow->category->name }}</a>
+                                            <a href="{{ route('visitor.article.category', $slideshow->category->slug) }}">{{ $slideshow->category->name }}</a>
                                         </h3>
                                     </div>
                                     <div class="slideshow-overlay__box">

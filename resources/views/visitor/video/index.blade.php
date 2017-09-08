@@ -52,27 +52,27 @@
                     <div class="uk-panel-body no-pad-right no-pad-bottom no-pad-left">
                         <figure class="uk-overlay uk-overlay-hover">
                             <div class="post-grid__categoy">
-                                <h3 class="font-kh-nokora">{{ $categories->categories[0]->name }}</h3>
+                                <h3 class="font-kh-nokora">{{ $categories[0]->name }}</h3>
                             </div>
-                            <img class="uk-overlay-scale" src="@if($categories->categories[0]->latestVideo->featured_image){{ asset($categories->categories[0]->latestVideo->featured_image) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="">
+                            <img class="uk-overlay-scale" src="@if($categories[0]->latestVideo->featured_image){{ asset($categories[0]->latestVideo->featured_image) }}@else{{ asset('images/no_thumbnail_img.jpg') }}@endif" alt="">
                             <figcaption class="font-kh-hanuman uk-overlay-background uk-ignore uk-overlay-panel uk-flex uk-flex-bottom">
                                 <div class="inner">
                                     <p>
-                                        {{ str_limit($categories->categories[0]->latestVideo->title, 70) }}
+                                        {{ str_limit($categories[0]->latestVideo->title, 70) }}
                                     </p>
                                     <div class="datetime">
                                         <i class="fa fa-clock-o"></i>
-                                        {{ $categories->categories[0]->latestVideo->created_at->format('d\\, M\\, Y') }}
+                                        {{ $categories[0]->latestVideo->created_at->format('d\\, M\\, Y') }}
                                     </div>
                                 </div>
                             </figcaption>
-                            <a href="{{ route('visitor.video.detail', $categories->categories[0]->latestVideo->id) }}" class="uk-position-cover"></a>
+                            <a href="{{ route('visitor.video.detail', $categories[0]->latestVideo->slug) }}" class="uk-position-cover"></a>
                         </figure>
                     </div>
                 </div>
 
                 <div class="uk-width-1-1 uk-width-small-1-1 uk-width-medium-1-2 uk-width-large-1-2 uk-width-xlarge-1-2 no-pad-top post-grid uk-grid uk-grid-collapse uk-grid-width-1-2">
-                @foreach($categories->categories as $key => $category)
+                @foreach($categories as $key => $category)
                     @if($key==0 || $key > 4)
                     @else
                         @includeIf('visitor.components.video.category_box', ['category' => $category])

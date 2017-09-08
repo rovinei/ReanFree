@@ -18,8 +18,6 @@
                 @foreach($searchResults as $post)
                     @if($post->mediatype_id==1)
                         @includeIf('visitor.components.article.grid_box_4', ['article' => $post])
-                    @elseif($post->mediatype_id==2)
-                        @includeIf('visitor.components.listen.single_audio_box', ['audio' => $post])
                     @elseif($post->mediatype_id==3)
                         @includeIf('visitor.components.video.grid_box_2', ['video' => $post])
                     @endif

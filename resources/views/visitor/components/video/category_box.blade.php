@@ -16,7 +16,7 @@
                 </div>
             </div>
         </figcaption>
-        <a href="{{ route('visitor.video.detail', $category->latestVideo->id) }}" class="uk-position-cover"></a>
+        <a href="{{ route('visitor.video.detail', $category->latestVideo->slug) }}" class="uk-position-cover"></a>
     </figure>
 </div>
 @endif

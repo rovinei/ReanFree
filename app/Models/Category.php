@@ -43,10 +43,19 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
+        'parent_id',
+        'mediatype_id',
+        'order',
+        'slug',
         'description',
         'created_by',
         'updated_by',
     ];
+
+    public function setNameAttribute($value){
+      $this->attributes['name'] = $value;
+      $this->attributes['slug'] = str_slug($value, '-');
+    }
 
     public function mediaTypes(){
         return $this->belongsToMany(
@@ -54,6 +63,14 @@ class Category extends Model
                         'category_type',
                         'category_id',
                         'mediatype_id')->withTimestamps();
+    }
+
+    public function parent(){
+      return $this->belongsTo('App\Models\Category', 'parent_id');
+    }
+
+    public function children(){
+      return $this->hasMany('App\Models\Category', 'parent_id');
     }
 
     public function createdBy(){
@@ -75,21 +92,6 @@ class Category extends Model
     public function latestArticleSerie(){
         return $this->hasOne('App\Models\PlaylistSerie')
                     ->where(['mediatype_id', 1])
-                    ->latest();
-    }
-
-    public function latestAudio()
-    {
-      return $this->hasOne('App\Models\Post')->where([
-                    ['mediatype_id', 2],
-                    ['status', 1]
-                  ])->latest();
-    }
-
-    public function latestAudioAlbum(){
-        return $this->hasOne('App\Models\PlaylistSerie')
-                    ->where('mediatype_id', 2)
-                    ->whereHas('posts')
                     ->latest();
     }
 

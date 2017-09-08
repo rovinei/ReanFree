@@ -26,7 +26,10 @@ class CategoryController extends Controller
     // Creation category form
     public function create(Request $request){
 
-        return view('admin.category.create_category');
+        $categories = Category::orderBy('order', 'desc')->get();
+        return view('admin.category.create_category')->with([
+            'categories' => $categories
+        ]);
     }
 
     // Store new category
@@ -43,8 +46,6 @@ class CategoryController extends Controller
             $category = new Category($request->all());
             $category->createdBy()->associate(Auth::user());
             $category->save();
-            $category->mediaTypes()->attach(explode(',', $request->mediatype_id));
-            $category->save();
             Session::flash('success_message', 'Category '.$category->name.' successfully created.');
             return redirect()->back();
 
@@ -59,11 +60,11 @@ class CategoryController extends Controller
 
         // Determine if category existed
         try{
+            $categories = Category::whereNotIn('id', [$category_id])->orderBy('order', 'desc')->get();
             $category = Category::findOrFail($category_id);
-            $mediatypes = CategoryType::where('category_id', $category_id)->pluck('mediatype_id')->toArray();
             return view('admin.category.update_category')->with([
                 'category' => $category,
-                'mediatypes' => $mediatypes
+                'categories' => $categories
             ]);
         }catch(ModelNotFoundException $e){
             Session::flash('error_message', 'Query return 0 result, Category cannot be found with this id : '.$category_id);
@@ -72,13 +73,17 @@ class CategoryController extends Controller
     }
 
     // Update category
-    public function update(UpdateCategory $request, $category_id){
+    public function update(Request $request, $category_id){
+        // Validate form data
+        $this->validate($request,[
+            'name' => 'required|min:5',
+            'mediatype_id' => 'required'
+        ]);
 
         // Determine if category exists
         try{
-            $category = Category::firstOrFail($category_id);
+            $category = Category::findOrFail($category_id);
             $category->updatedBy()->associate(Auth::user());
-            $category->mediaTypes()->sync(explode(',', $request->mediatype_id));
             $category->update($request->all());
         }catch(Exception $e){
             Session::flash('error_message', 'Error while updating category, Please try again!');

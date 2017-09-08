@@ -17,7 +17,7 @@
                             <i class="fa fa-play"></i>
                             <a href="{{ route('visitor.video.page') }}">@lang('visitor.video')</a>
                             <i class="fa fa-angle-double-right"></i>
-                            <a href="{{ route('visitor.video.category', $video->category->id) }}">{{ $video->category->name }}</a>
+                            <a href="{{ route('visitor.video.category', $video->category->slug) }}">{{ $video->category->name }}</a>
                         </h3>
                     </div>
 
