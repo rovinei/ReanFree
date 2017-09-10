@@ -64,17 +64,6 @@
 }
 
 @media only screen and (max-width: 959px){
-    .player-preview{
-        width: 35%;
-    }
-
-    .top-ele{
-        left: 35%;
-    }
-
-    .player-wrapper{
-        width: 65%;
-    }
 
     .header-nav__type{
         a{
@@ -214,57 +203,127 @@
         }
     }
 
-    .header-nav__search{
-        width: calc(100% - 95px);
+    .site_header{
+        position: fixed;
+    }
 
-        .search-input{
-            background: rgba(255, 255, 255, 0.1);
-            width: 100%;
-
-            &:focus,
-            &:active,
-            &:visited{
-                width: 100%;
-            }
+    .site_logo{
+        height: 70px;
+        padding: 10px 0;
+        .hambuger_menu{
+            opacity: 1;
+            visibility: visible;
         }
     }
 
-    .header-nav__right{
-        width: 100%;
-        padding-left: 20px;
+    .top-header__gap{
+        height: 70px;
     }
 
-    .header-nav__category{
-        a{
-            position: relative;
-            font-size: 1.15rem;
-            padding: 10px 12px;
-            font-family: $font-opensans-cond;
+    .navigation-wrapper{
+        visibility: hidden;
+        height: 0;
+        overflow: auto;
+        &::-webkit-scrollbar {
+            width:  8px;
+            height: 8px;
+        }
 
-            &:after{
-                position: absolute;
+        &::-webkit-scrollbar-thumb {
+            background: lighten($black, 5%);
+            border-radius: 12px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgba(#534847,1);
+
+        }
+
+        &::-moz-scrollbar {
+            width:  8px;
+            height: 8px;
+        }
+
+        &::-moz-scrollbar-thumb {
+            background: lighten($black, 5%);
+            border-radius: 12px;
+        }
+
+        &::-moz-scrollbar-track {
+            background: rgba(#534847,1);
+        }
+
+        &::-ms-scrollbar {
+            width:  8px;
+            height: 8px;
+        }
+
+        &::-ms-scrollbar-thumb {
+            background: lighten($black, 5%);
+            border-radius: 12px;
+        }
+
+        &::-ms-scrollbar-track {
+            background: rgba(#534847,1);
+        }
+        &.active{
+            height: 100vh;
+            visibility: visible;
+        }
+        > ul{
+            padding-left: 40px;
+            padding-bottom: 20px;
+
+            > li{
+                position: relative;
                 display: block;
-                content: " ";
-                bottom: 0;
-                width: 0;
-                height: 3px;
-                background: #000;
-                @include prefixer(transition, width 0.25s ease, webkit moz ms o);
-            }
+                width: 100%;
 
-            &:hover,
-            &.active{
-                &:after{
-                    width: calc(100% - 24px);
+                > a {
+                    padding-left: 0;
+
+                    &:hover{
+                        &::after{
+                            opacity: 0;
+                        }
+                        ~ ul{
+                            height: auto;
+                            opacity: 1;
+                            @include prefixer(transform, translate(10px, 0), webkit ms moz);
+                        }
+                    }
                 }
+
+                ul{
+                    position: relative;
+                    opacity: 1;
+                    height: 0;
+                    opacity: 0;
+                    padding-left: 10px;
+                    width: 100%;
+                    @include prefixer(transform, translate(0, 0), webkit ms moz);
+                    @include prefixer(transition, all 0.3s ease, webkit moz ms);
+                    li{
+                        position: relative;
+                        display: block;
+                    }
+
+                    &:hover{
+
+                        height: auto;
+                        opacity: 1;
+                        @include prefixer(transform, translate(10px, 0), webkit ms moz);
+                    }
+                }
+
             }
-        }
 
-        i{
-            font-size: 1.45rem;
-            vertical-align: text-bottom;
-        }
+            a{
+                display: block;
+            }
 
+
+        }
     }
 
     .left-column{
@@ -294,30 +353,6 @@
         video{
             height: 380px;
         }
-    }
-
-    .video-detail__sidebar{
-        width: 100%;
-    }
-
-    .video-detail__bottom{
-
-        .detail-left{
-            width: 100%;
-        }
-    }
-
-    .player-preview{
-        width: 0;
-        display: none;
-    }
-
-    .top-ele{
-        left: 50%;
-    }
-
-    .player-wrapper{
-        width: 100%;
     }
 
 }

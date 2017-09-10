@@ -16,9 +16,9 @@
 @else
 <meta property="og:url"           content="http://180inspires.com" />
 <meta property="og:type"          content="website" />
-<meta property="og:title"         content="180 INSPIRES MEDIAS &amp; NEWS WEBSITE" />
+<meta property="og:title"         content="REAN FREE MEDIA SITE" />
 <meta property="og:description"   content="We are the next leading media and news website in cambodia" />
-<meta property="og:image"         content="http://180inspires.com/images/website_default_image.jpg" />
+<meta property="og:image"         content="" />
 @endif
 
 <link href="https://fonts.googleapis.com/css?family=Hanuman|Nokora" rel="stylesheet">

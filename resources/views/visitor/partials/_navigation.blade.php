@@ -7,6 +7,11 @@
                 <div class="site_logo">
                     <a href="{{ url('/') }}" class="uk-display-block">
                         <img src="{{ asset('images/logo/logo_168x90.png') }}" alt="Rean Free site logo">
+                        <div class="hambuger_menu" id="toggleMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
                     </a>
                 </div>
 
