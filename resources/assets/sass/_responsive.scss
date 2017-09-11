@@ -205,10 +205,11 @@
 
     .site_header{
         position: fixed;
+        max-height: initial;
     }
 
     .site_logo{
-        height: 70px;
+        height: 60px;
         padding: 10px 0;
         .hambuger_menu{
             opacity: 1;
@@ -217,7 +218,7 @@
     }
 
     .top-header__gap{
-        height: 70px;
+        height: 60px;
     }
 
     .navigation-wrapper{
@@ -301,11 +302,17 @@
                     opacity: 0;
                     padding-left: 10px;
                     width: 100%;
+                    top: 0;
                     @include prefixer(transform, translate(0, 0), webkit ms moz);
                     @include prefixer(transition, all 0.3s ease, webkit moz ms);
+
                     li{
                         position: relative;
                         display: block;
+                    }
+
+                    a{
+                        padding: 5px 8px;
                     }
 
                     &:hover{

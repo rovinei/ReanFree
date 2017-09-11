@@ -34,6 +34,7 @@ body{
     width: 100%;
     top: 0;
     height: auto;
+    max-height: 130px;
     z-index: 10;
     background: #f6bf3d;
     @include clearfix();
@@ -49,13 +50,13 @@ body{
     width: 100%;
     position: relative;
     float: left;
-    padding: 20px 0;
-    height: 130px;
+    padding: 10px 0;
+    height: 70px;
     @include clearfix();
     @include prefixer(transition, height 0.45s ease, webkit moz ms);
     &.scaleIn{
         padding: 10px 0;
-        height: 70px;
+        height: 60px;
     }
 
     img{
@@ -79,8 +80,8 @@ body{
         top: 50%;
         margin-top: -10px;
         right: 0;
-        width: 35px;
-        height: 20px;
+        width: 30px;
+        height: 18px;
         @include prefixer(transition, all 0.3s ease);
 
         &.active{
@@ -126,7 +127,7 @@ body{
             position: absolute;
             content: "";
             width: 100%;
-            height: 4px;
+            height: 3px;
             background: #222;
             @include prefixer(transition, all 0.3s ease, webkit moz ms);
             @include prefixer(transform, rotate(0deg), webkit moz ms);
@@ -151,7 +152,7 @@ body{
     position: relative;
     float: left;
     width: 100%;
-    height: 70px;
+    height: 60px;
     z-index: 1;
     @include clearfix();
 
@@ -180,10 +181,11 @@ body{
             > a {
                 color: #000;
                 font-weight: 800;
-                font-size: 1.5em;
+                font-size: 1.3em;
                 position: relative;
                 z-index: 10;
-                padding: 10px 18px;
+                display: block;
+                padding: 5px 10px;
                 @include prefixer(transition, all 0.2s ease, webkit moz ms);
 
 
@@ -194,8 +196,8 @@ body{
                         content: "";
                         display: block;
                         opacity: 0;
-                        height: 15px;
-                        bottom: -5px;
+                        height: 10px;
+                        bottom: -6px;
                         width: 1px;
                         background: #000;
                         left: 50%;
@@ -224,10 +226,10 @@ body{
             > ul {
                 position: absolute;
                 display: block;
-                padding: 0;
+                padding: 5px 0;
                 margin: 0;
                 width: max-content;
-                bottom: 0;
+                top: 30px;
                 opacity: 0;
                 @include prefixer(transform, translate(-42%, -30px), webkit ms moz);
                 @include prefixer(transition, all 0.25s ease, webkit moz ms);
@@ -243,8 +245,8 @@ body{
 
                 a{
                     display: block;
-                    padding: 10px 8px;
-                    font-size: 1.2em;
+                    padding: 0 8px;
+                    font-size: 1.1em;
                     color: darken(#9b5d24, 20%);
                     font-weight: 500;
                     font-style: italic;
@@ -349,7 +351,7 @@ body{
     }
 
     .post-grid__title{
-        font-weight: bold;
+        font-weight: 600;
         color: $post-grid-font-color;
         font-size: 1.06rem;
         line-height: 1.6;
@@ -362,7 +364,6 @@ body{
     .post-grid__snippet{
         color: #333;
         line-height: 1.9;
-        font-size: 1rem;
     }
 
     .coming-soon{
@@ -732,7 +733,7 @@ body{
         color: #111;
         line-height: 1.6;
         font-size: 1.1rem;
-        font-family: $font-nokora;
+        font-family: $font-metal;
         @include prefixer(transition, all 0.2s ease, webkit moz ms o);
 
         &:hover,
@@ -904,7 +905,7 @@ body{
     .post-preview__title{
         font-size: 1.55rem;
         font-weight: 700;
-        font-family: $font-nokora;
+        font-family: $font-siemreap;
         color: #222;
         margin: 5px 0;
         line-height: 1.8;
@@ -913,7 +914,7 @@ body{
     .datetime{
         color: #c4c4c4;
         font-size: 0.9rem;
-        font-family: $font-opensans-cond;
+        font-family: $font-siemreap;
 
         i{
             margin-right: 5px;
@@ -925,7 +926,7 @@ body{
     }
 
     .post-preview__snippet{
-        font-family: $font-hanuman;
+        font-family: $font-freehand;
         font-size: 0.95rem;
         color: #000;
         line-height: 2;
@@ -976,14 +977,14 @@ body{
             font-size: 1.1rem;
             color: #4a4a4a;
             font-weight: 600;
-            font-family: $font-nokora;
+            font-family: $font-siemreap;
             margin-bottom: 5px;
         }
     }
 
     .post-detail__article{
         width: 100%;
-        font-family: $font-hanuman;
+        font-family: $font-freehand;
         padding: 20px;
 
         & > *{
@@ -1010,14 +1011,14 @@ body{
         width: 100%;
 
         .author{
-            font-family: $font-nokora;
+            font-family: $font-siemreap;
             font-size: 1.1rem;
         }
 
         .title{
             font-weight: 600;
             font-size: 1.2rem;
-            font-family: $font-nokora;
+            font-family: $font-siemreap;
             color: #333;
         }
 
@@ -1026,7 +1027,7 @@ body{
 
             .tag_item{
                 padding: 7px;
-                font-family: $font-nokora;
+                font-family: $font-siemreap;
                 color: #2a2a2a;
                 font-weight: 600;
                 background: darken($yellow, 5%);
@@ -1147,7 +1148,7 @@ body{
             margin-left: 5px;
             margin-right: 5px;
             font-size: 0.86rem;
-            font-family: $font-hanuman;
+            font-family: $font-freehand;
         }
     }
 
@@ -1194,7 +1195,7 @@ body{
     }
 
     .title{
-        font-family: $font-nokora;
+        font-family: $font-siemreap;
         font-size: 1.5rem;
         font-weight: 700;
         line-height: 1.8;
@@ -1212,7 +1213,7 @@ body{
 
     .snippet{
         color: #eee;
-        font-family: $font-hanuman;
+        font-family: $font-siemreap;
         font-size: 1rem;
         line-height: 1.8;
     }
@@ -1265,7 +1266,7 @@ body{
 
     .post-detail__article{
         p{
-            font-family: $font-nokora;
+            font-family: $font-siemreap;
             font-size: 1.1rem;
             line-height: 1.8;
         }
@@ -1429,7 +1430,7 @@ body{
 
 .video-detail__title{
     .title{
-        font-family: $font-hanuman;
+        font-family: $font-siemreap;
         font-weight: 700;
         font-size: 1.4rem;
         margin: 0;
@@ -1765,3 +1766,5 @@ body{
     padding: 50px 0;
     margin-top: 20px;
 }
+
+
