@@ -162,21 +162,7 @@
 @endsection
 
 @push('script_dependencies')
-    <script>
-        var tracks = [
-            @if(!empty($audios))
-                @foreach($audios as $key => $audio)
-                {
-                    "track": '{{ ++$key }}',
-                    "name": "{{ $audio->title }}",
-                    "length": "{{ $audio->duration }}",
-                    "file": "{{ $audio->sound_url }}"
-                },
-                @endforeach
-            @endif
-        ];
-    </script>
-    <script src="{{ asset('js/sound-player.js') }}"></script>
+
 @endpush
 
 @section('scripts')
